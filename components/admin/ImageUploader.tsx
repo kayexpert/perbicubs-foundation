@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { Upload, Link, X, Loader2, CheckCircle2 } from 'lucide-react';
+import { Upload, Link, X, Loader2, CheckCircle2, ImageIcon } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import FormField, { inputCls } from './FormField';
 
@@ -13,6 +13,39 @@ interface ImageUploaderProps {
 }
 
 const BUCKET = 'content-images';
+const MAX_WIDTH = 1920;
+const QUALITY = 0.85;
+
+async function compressImage(file: File): Promise<File> {
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const scale = Math.min(1, MAX_WIDTH / img.naturalWidth);
+      const w = Math.round(img.naturalWidth * scale);
+      const h = Math.round(img.naturalHeight * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, w, h);
+      canvas.toBlob(
+        (blob) => {
+          const name = file.name.replace(/\.[^.]+$/, '.webp');
+          resolve(new File([blob!], name, { type: 'image/webp' }));
+        },
+        'image/webp',
+        QUALITY,
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(file);
+    };
+    img.src = objectUrl;
+  });
+}
 
 export default function ImageUploader({
   value,
@@ -22,6 +55,7 @@ export default function ImageUploader({
 }: ImageUploaderProps) {
   const [mode, setMode] = useState<'upload' | 'url'>('upload');
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [uploadError, setUploadError] = useState('');
   const [uploaded, setUploaded] = useState(false);
@@ -33,21 +67,24 @@ export default function ImageUploader({
       setUploadError('Please select a valid image file (JPG, PNG, WebP, etc.)');
       return;
     }
-    if (file.size > 8 * 1024 * 1024) {
-      setUploadError('Image must be under 8 MB. Please resize and try again.');
+    if (file.size > 20 * 1024 * 1024) {
+      setUploadError('Image must be under 20 MB.');
       return;
     }
     setUploading(true);
     setUploadError('');
     setUploaded(false);
 
+    setUploadProgress('Optimising image…');
+    const compressed = await compressImage(file);
+
+    setUploadProgress('Uploading…');
     const supabase = createClient();
-    const ext = file.name.split('.').pop() ?? 'jpg';
-    const filename = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const filename = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
 
     const { data, error } = await supabase.storage
       .from(BUCKET)
-      .upload(filename, file, { upsert: false, contentType: file.type });
+      .upload(filename, compressed, { upsert: false, contentType: 'image/webp' });
 
     if (error) {
       setUploadError(
@@ -56,6 +93,7 @@ export default function ImageUploader({
           : `Upload failed: ${error.message}`,
       );
       setUploading(false);
+      setUploadProgress('');
       return;
     }
 
@@ -63,6 +101,7 @@ export default function ImageUploader({
     onChange(publicUrl);
     setUploaded(true);
     setUploading(false);
+    setUploadProgress('');
   }, [onChange]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -82,7 +121,7 @@ export default function ImageUploader({
   return (
     <FormField
       label={label}
-      hint={hint ?? (mode === 'upload' ? 'JPG, PNG, or WebP · Max 8 MB' : 'Paste a full URL to an image')}
+      hint={hint ?? (mode === 'upload' ? 'JPG, PNG, or WebP · Auto-optimised before upload' : 'Paste a full URL to an image')}
     >
       {/* Tab switcher */}
       <div className="flex bg-gray-100 rounded-xl p-1 mb-2">
@@ -106,30 +145,40 @@ export default function ImageUploader({
         </button>
       </div>
 
-      {/* Current image preview */}
+      {/* Current image preview (with uploading overlay) */}
       {value && (
         <div className="relative rounded-xl overflow-hidden border border-gray-200 mb-2" style={{ aspectRatio: '16/7' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={value} alt="Preview" className="w-full h-full object-cover" onError={(e) => {
             (e.currentTarget as HTMLImageElement).style.display = 'none';
           }} />
-          <div className="absolute inset-0 bg-black/0 hover:bg-black/50 transition-colors group flex items-center justify-center gap-2">
-            <button
-              type="button"
-              onClick={() => inputRef.current?.click()}
-              className="opacity-0 group-hover:opacity-100 bg-white text-gray-800 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity flex items-center gap-1.5"
-            >
-              <Upload size={12} /> Change
-            </button>
-            <button
-              type="button"
-              onClick={() => { onChange(''); setUploaded(false); setUrlInput(''); }}
-              className="opacity-0 group-hover:opacity-100 bg-red-500 text-white p-1.5 rounded-lg transition-opacity"
-            >
-              <X size={13} />
-            </button>
-          </div>
-          {uploaded && (
+
+          {/* Upload-in-progress overlay */}
+          {uploading ? (
+            <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-3">
+              <Loader2 size={30} className="text-[#00ABBE] animate-spin" />
+              <p className="text-white text-sm font-semibold">{uploadProgress || 'Uploading…'}</p>
+            </div>
+          ) : (
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/50 transition-colors group flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => inputRef.current?.click()}
+                className="opacity-0 group-hover:opacity-100 bg-white text-gray-800 px-3 py-1.5 rounded-lg text-xs font-bold transition-opacity flex items-center gap-1.5"
+              >
+                <Upload size={12} /> Change
+              </button>
+              <button
+                type="button"
+                onClick={() => { onChange(''); setUploaded(false); setUrlInput(''); }}
+                className="opacity-0 group-hover:opacity-100 bg-red-500 text-white p-1.5 rounded-lg transition-opacity"
+              >
+                <X size={13} />
+              </button>
+            </div>
+          )}
+
+          {uploaded && !uploading && (
             <div className="absolute top-2 right-2 bg-emerald-500 text-white rounded-full px-2.5 py-1 text-[10px] font-bold flex items-center gap-1">
               <CheckCircle2 size={11} /> Uploaded
             </div>
@@ -137,32 +186,39 @@ export default function ImageUploader({
         </div>
       )}
 
-      {/* Upload zone */}
+      {/* Upload drop zone (shown when no image set) */}
       {mode === 'upload' && !value && (
         <div
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          onClick={() => inputRef.current?.click()}
-          className={`rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition-all ${
-            isDragging
-              ? 'border-[#00ABBE] bg-[#00ABBE]/5 scale-[1.01]'
-              : 'border-gray-200 hover:border-[#00ABBE]/60 hover:bg-gray-50/80'
+          onClick={() => !uploading && inputRef.current?.click()}
+          className={`rounded-xl border-2 border-dashed p-8 text-center transition-all ${
+            uploading
+              ? 'border-[#00ABBE] bg-[#00ABBE]/5 cursor-default'
+              : isDragging
+              ? 'border-[#00ABBE] bg-[#00ABBE]/5 scale-[1.01] cursor-copy'
+              : 'border-gray-200 hover:border-[#00ABBE]/60 hover:bg-gray-50/80 cursor-pointer'
           }`}
         >
           {uploading ? (
             <div className="flex flex-col items-center gap-3">
-              <Loader2 size={28} className="text-[#00ABBE] animate-spin" />
-              <p className="text-sm text-gray-500 font-medium">Uploading your image…</p>
+              <div className="w-14 h-14 rounded-2xl bg-[#00ABBE]/10 flex items-center justify-center">
+                <Loader2 size={24} className="text-[#00ABBE] animate-spin" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#00ABBE]">{uploadProgress || 'Uploading…'}</p>
+                <p className="text-gray-400 text-xs mt-1">Please wait, do not close this panel</p>
+              </div>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2.5">
               <div className="w-14 h-14 rounded-2xl bg-[#00ABBE]/10 flex items-center justify-center">
-                <Upload size={24} className="text-[#00ABBE]" />
+                <ImageIcon size={24} className="text-[#00ABBE]" />
               </div>
               <div>
                 <p className="font-semibold text-gray-700 text-sm">Drag & drop or click to browse</p>
-                <p className="text-gray-400 text-xs mt-1">JPG, PNG, WebP — max 8 MB</p>
+                <p className="text-gray-400 text-xs mt-1">JPG, PNG, WebP — auto-compressed &amp; optimised</p>
               </div>
             </div>
           )}
