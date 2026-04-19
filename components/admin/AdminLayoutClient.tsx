@@ -14,7 +14,6 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
 
   // Close sidebar on route change
   useEffect(() => {
-    // Wrap in setTimeout to decouple state update from the route change render phase
     const t = setTimeout(() => setSidebarOpen(false), 0);
     return () => clearTimeout(t);
   }, [pathname]);
@@ -25,6 +24,9 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
     document.body.style.overflow = sidebarOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [sidebarOpen]);
+
+  // Render login page without the admin shell (must be after all hooks)
+  if (pathname === '/admin/login') return <>{children}</>;
 
 
   return (
