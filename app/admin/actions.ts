@@ -265,3 +265,66 @@ export async function deleteBlogPost(id: number) {
   revalidatePath('/admin/blog');
   return { error: error?.message };
 }
+
+// ─────────────────────────────────────────────────────────────
+// TEAM MEMBERS
+// ─────────────────────────────────────────────────────────────
+
+export async function upsertTeamMember(data: Record<string, unknown>, id?: number) {
+  const supabase = await createClient();
+
+  if (id) {
+    const { data: existing } = await supabase
+      .from('team_members')
+      .select('image')
+      .eq('id', id)
+      .single();
+
+    if (existing?.image && existing.image !== data.image) {
+      await deleteStorageFile(supabase, existing.image as string);
+    }
+
+    const { data: updated, error } = await supabase
+      .from('team_members')
+      .update(cleanData(data))
+      .eq('id', id)
+      .select()
+      .single();
+
+    revalidatePath('/about');
+    revalidatePath('/our-solution');
+    revalidatePath('/admin/team');
+    return { error: error?.message, record: updated };
+  } else {
+    const { data: inserted, error } = await supabase
+      .from('team_members')
+      .insert(cleanData(data))
+      .select()
+      .single();
+
+    revalidatePath('/about');
+    revalidatePath('/our-solution');
+    revalidatePath('/admin/team');
+    return { error: error?.message, record: inserted };
+  }
+}
+
+export async function deleteTeamMember(id: number) {
+  const supabase = await createClient();
+
+  const { data: existing } = await supabase
+    .from('team_members')
+    .select('image')
+    .eq('id', id)
+    .single();
+
+  if (existing?.image) {
+    await deleteStorageFile(supabase, existing.image as string);
+  }
+
+  const { error } = await supabase.from('team_members').delete().eq('id', id);
+  revalidatePath('/about');
+  revalidatePath('/our-solution');
+  revalidatePath('/admin/team');
+  return { error: error?.message };
+}

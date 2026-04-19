@@ -11,7 +11,6 @@ import {
   Smartphone,
   Shield,
   CheckCircle2,
-  ArrowLeft,
   Heart,
   Users,
   BookOpen,
@@ -156,21 +155,14 @@ export default function DonatePage() {
       <section
         className="relative min-h-[55vh] flex items-center overflow-hidden"
         style={{
-          backgroundImage: 'url(/images/program_literacy.png)',
+          backgroundImage: 'url(/img/sponsor_banner.JPG)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center top',
+          backgroundPosition: 'center center',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/70 to-[#0a1628]/90" />
         
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 pt-28 pb-16 w-full flex flex-col items-center text-center">
-          <Link
-            href="/get-involved"
-            className="absolute top-8 left-4 sm:left-6 lg:left-6 inline-flex items-center gap-2 text-white/50 hover:text-white text-sm font-medium transition-colors"
-          >
-            <ArrowLeft size={16} /> Back
-          </Link>
-
           <RevealSection className="flex flex-col items-center max-w-2xl">
             <span className="section-tag mb-5 justify-center text-white" >
               Make a Donation
@@ -461,7 +453,6 @@ export default function DonatePage() {
                 <RevealSection delay={0.1}>
                   <div className="bg-[#00ABBE] rounded-3xl p-8 text-white shadow-xl shadow-[#00ABBE]/20">
                     <h3 className="text-lg font-bold mb-1 flex items-center gap-2">
-                      <Heart size={18} className="text-[#FF6B56]" fill="#FF6B56" />
                       Your Impact
                     </h3>
                     <p className="text-white/80 text-sm mb-6">See what your donation accomplishes</p>
@@ -493,7 +484,7 @@ export default function DonatePage() {
 
                         {impact.books > 0 && (
                           <div className="border border-white/10 rounded-2xl p-5 bg-white/5">
-                            <div className="text-4xl font-black text-[#FF6B56] mb-1">
+                            <div className="text-4xl font-black  mb-1">
                               {impact.books.toLocaleString()}+
                             </div>
                             <div className="flex items-center gap-2 text-white/70 text-sm">
@@ -559,17 +550,17 @@ export default function DonatePage() {
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Recognized & Trusted By</p>
                     <div className="grid grid-cols-2 gap-4">
                       {[
-                        { src: '/images/unesco%20logo.png', alt: 'UNESCO' },
-                        { src: '/images/Master%20card%20foundation%20.png', alt: 'Mastercard Foundation' },
-                        { src: '/images/world%20book%20capital%20logo.png', alt: 'World Book Capital' },
-                        { src: '/images/mest%20logo.png', alt: 'MEST' },
+                        { src: '/img/unesco%20logo.png', alt: 'UNESCO' },
+                        { src: '/img/Master%20card%20foundation%20.png', alt: 'Mastercard Foundation' },
+                        { src: '/img/world%20book%20capital%20logo.png', alt: 'World Book Capital' },
+                        { src: '/img/mest%20logo.png', alt: 'MEST' },
                       ].map((logo, i) => (
                         <div key={i} className="relative h-10">
                           <Image
                             src={logo.src}
                             alt={logo.alt}
                             fill
-                            sizes="150px"
+                            sizes="120px"
                             className="object-contain"
                           />
                         </div>

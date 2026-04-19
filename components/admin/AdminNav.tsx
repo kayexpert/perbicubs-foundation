@@ -8,6 +8,7 @@ import {
   BarChart3,
   Images,
   BookOpen,
+  Users,
   ExternalLink,
 } from 'lucide-react';
 import LogoutButton from './LogoutButton';
@@ -44,6 +45,12 @@ const navItems = [
     icon: BookOpen,
     desc: 'News & articles',
   },
+  {
+    href: '/admin/team',
+    label: 'Team Members',
+    icon: Users,
+    desc: 'About page team cards',
+  },
 ];
 
 interface AdminNavProps {
@@ -68,7 +75,7 @@ export default function AdminNav({ onClose }: AdminNavProps) {
             onClick={onClose}
             className={`group flex items-center gap-3.5 px-4 py-3.5 rounded-2xl transition-all duration-200 ${
               active
-                ? 'bg-[#00ABBE] text-white shadow-lg shadow-[#00ABBE]/30'
+                ? 'bg-[#00ABBE] text-white'
                 : 'text-white/60 hover:bg-white/8 hover:text-white'
             }`}
           >

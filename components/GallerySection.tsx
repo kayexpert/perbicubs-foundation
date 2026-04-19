@@ -117,7 +117,8 @@ export default function GallerySection({ images: rawImages = defaultGalleryImage
                 alt={img.caption}
                 fill
                 className="object-cover"
-                sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 40vw, 22vw"
+                quality={90}
               />
               {/* Bottom info bar */}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pt-12 pb-3 px-3">
@@ -188,6 +189,7 @@ export default function GallerySection({ images: rawImages = defaultGalleryImage
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 80vw"
+                  quality={90}
                   priority
                 />
               </div>

@@ -111,10 +111,10 @@ export default function WhoWeAreSection() {
                   {/* Inner image — fills full height of content area */}
                   <div className="relative h-full rounded-[30px] overflow-hidden bg-[#0a1628] shadow-2xl">
                     <Image
-                      src="/images/about_child_bw.png"
+                      src="/img/wea_1.jpg"
                       alt="Children in need of literacy"
                       fill
-                      className="object-cover grayscale transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"
+                      className="object-cover  transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"
                       sizes="(max-width: 768px) 100vw, 25vw"
                     />
                   </div>
@@ -124,7 +124,7 @@ export default function WhoWeAreSection() {
               {/* about-one__img2 — full-width on mobile, flex-1 on desktop */}
               <div className="relative rounded-[30px] overflow-hidden bg-[#0a1628] shadow-xl w-full mt-3 h-[240px] lg:flex-1 lg:h-[370px] lg:mt-[30px] lg:self-start lg:flex-shrink-0">
                 <Image
-                  src="/images/about_learning.png"
+                  src="/img/wea_2.jpg"
                   alt="Child learning"
                   fill
                   className="object-cover transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"

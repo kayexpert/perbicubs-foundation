@@ -103,7 +103,7 @@ export default function ImpactManager({ initialStats }: ImpactManagerProps) {
         <div className="flex justify-end sm:justify-start flex-shrink-0">
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 bg-[#FF6B56] hover:bg-[#e55a47] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-md shadow-[#FF6B56]/20"
+            className="flex items-center gap-2 bg-[#FF6B56] hover:bg-[#e55a47] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <Plus size={16} /> Add Statistic
           </button>

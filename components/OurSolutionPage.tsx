@@ -7,7 +7,9 @@ import { TabletSmartphone, Gamepad2, LineChart } from 'lucide-react';
 import SolutionApproachSection from './SolutionApproachSection';
 import ProvenImpactSection from './ProvenImpactSection';
 import GallerySection from './GallerySection';
-import TeamSection from './TeamSection';
+import BlogSection from './BlogSection';
+import TeamSection, { type TeamMember } from './TeamSection';
+import type { GalleryImage } from './HomePage';
 
 
 function RevealSection({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -26,7 +28,12 @@ function RevealSection({ children, delay = 0, className = '' }: { children: Reac
   );
 }
 
-export default function OurSolutionPage() {
+interface OurSolutionPageProps {
+  galleryImages?: GalleryImage[];
+  teamMembers?: TeamMember[];
+}
+
+export default function OurSolutionPage({ galleryImages, teamMembers }: OurSolutionPageProps) {
   return (
     <main>
       {/* ═══════════════════════════════════════════════════════
@@ -35,7 +42,7 @@ export default function OurSolutionPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/img/solution.JPG)',
+          backgroundImage: 'url(/img/solution_banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -109,9 +116,9 @@ export default function OurSolutionPage() {
           SECTION 3: IMPACT & GALLERY (Replaces "The Result")
       ═══════════════════════════════════════════════════════ */}
       <ProvenImpactSection />
-      <GallerySection />
-
-      <TeamSection />
+      <TeamSection members={teamMembers} />
+      <BlogSection />
+      <GallerySection images={galleryImages} />
 
     </main>
   );

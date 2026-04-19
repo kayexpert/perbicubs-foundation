@@ -103,7 +103,7 @@ export default function GalleryManager({ initialImages }: GalleryManagerProps) {
         <div className="flex justify-end sm:justify-start flex-shrink-0">
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 bg-[#00ABBE] hover:bg-[#0097a6] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-md shadow-[#00ABBE]/25"
+            className="flex items-center gap-2 bg-[#00ABBE] hover:bg-[#0097a6] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <Plus size={16} /> Add Photo
           </button>
@@ -221,7 +221,7 @@ export default function GalleryManager({ initialImages }: GalleryManagerProps) {
               <button
                 onClick={handleSave}
                 disabled={isPending}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold bg-[#00ABBE] hover:bg-[#0097a6] text-white transition-colors disabled:opacity-60 shadow-md shadow-[#00ABBE]/20"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold bg-[#00ABBE] hover:bg-[#0097a6] text-white transition-colors disabled:opacity-60"
               >
                 {isPending ? <Loader2 size={14} className="animate-spin" /> : null}
                 {isNew ? 'Add Photo' : 'Save Changes'}

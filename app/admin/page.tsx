@@ -5,6 +5,7 @@ import {
   BarChart3,
   Images,
   BookOpen,
+  Users,
   ArrowRight,
   Sparkles,
   CheckCircle2,
@@ -47,6 +48,15 @@ const sections = [
     desc: 'News articles and stories that appear in the "Stories of Change" section.',
     action: 'Manage Articles',
   },
+  {
+    href: '/admin/team',
+    label: 'Team Members',
+    icon: Users,
+    color: '#FF6B56',
+    bg: 'bg-[#FF6B56]/8',
+    desc: 'The team cards shown on the About Us and Our Solution pages.',
+    action: 'Manage Team',
+  },
 ];
 
 const tips = [
@@ -59,11 +69,12 @@ const tips = [
 export default async function AdminDashboard() {
   const supabase = await createClient();
 
-  const [heroCount, statsCount, galleryCount, blogCount] = await Promise.all([
+  const [heroCount, statsCount, galleryCount, blogCount, teamCount] = await Promise.all([
     supabase.from('hero_slides').select('id', { count: 'exact', head: true }),
     supabase.from('impact_stats').select('id', { count: 'exact', head: true }),
     supabase.from('gallery_images').select('id', { count: 'exact', head: true }),
     supabase.from('blog_posts').select('id', { count: 'exact', head: true }),
+    supabase.from('team_members').select('id', { count: 'exact', head: true }),
   ]);
 
   const counts = [
@@ -71,6 +82,7 @@ export default async function AdminDashboard() {
     statsCount.count ?? 0,
     galleryCount.count ?? 0,
     blogCount.count ?? 0,
+    teamCount.count ?? 0,
   ];
 
   const totalRecords = counts.reduce((a, b) => a + b, 0);
@@ -105,7 +117,7 @@ export default async function AdminDashboard() {
       </div>
 
       {/* ── Quick stats row ── */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {sections.map(({ href, label, icon: Icon, color, bg }, i) => (
           <Link
             key={href}

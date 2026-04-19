@@ -11,7 +11,7 @@ import WhoWeAreSection from './WhoWeAreSection';
 import ProvenImpactSection from './ProvenImpactSection';
 import DonationSection from './DonationSection';
 import ContactSection from './ContactSection';
-import TeamSection from './TeamSection';
+import TeamSection, { type TeamMember } from './TeamSection';
 
 function Section({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
@@ -29,14 +29,18 @@ function Section({ children, className = '' }: { children: React.ReactNode; clas
   );
 }
 
-export default function AboutPage() {
+interface AboutPageProps {
+  teamMembers?: TeamMember[];
+}
+
+export default function AboutPage({ teamMembers }: AboutPageProps) {
   return (
     <main>
       {/* ─── Page Hero ─── */}
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/img/about_learning.png)',
+          backgroundImage: 'url(/img/about_banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -84,7 +88,7 @@ export default function AboutPage() {
             <Section className="hidden lg:block relative">
               <div className="absolute inset-x-0 bottom-0 h-[860px]">
                 <Image
-                  src="/images/teacher_children_cutout.png"
+                  src="/img/wwe.png"
                   alt="Teacher and children reading"
                   fill
                   className="object-contain object-bottom"
@@ -96,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Team Members ─── */}
-      <TeamSection />
+      <TeamSection members={teamMembers} />
       {/* ─── Proven Impact ─── */}
       <ProvenImpactSection />
 

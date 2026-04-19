@@ -28,7 +28,7 @@ export default function DonationSection() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url(/hero2.png)',
+            backgroundImage: 'url(/img/impact.jpg)',
             backgroundAttachment: 'fixed',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -69,7 +69,7 @@ export default function DonationSection() {
           {/* Left col — image */}
           <div className="relative min-h-[260px] lg:min-h-0">
             <Image
-              src="/donation.jpg"
+              src="/img/donation.jpg"
               alt="Children receiving literacy support"
               fill
               className="object-cover"

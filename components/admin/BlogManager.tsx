@@ -128,7 +128,7 @@ export default function BlogManager({ initialPosts }: BlogManagerProps) {
         <div className="flex justify-end sm:justify-start flex-shrink-0">
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 bg-[#6366f1] hover:bg-[#5558e3] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-md shadow-[#6366f1]/20"
+            className="flex items-center gap-2 bg-[#6366f1] hover:bg-[#5558e3] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
           >
             <Plus size={16} /> New Article
           </button>

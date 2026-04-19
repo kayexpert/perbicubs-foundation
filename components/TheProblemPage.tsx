@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { AlertTriangle, TrendingDown, BookX, Globe, ArrowRight } from 'lucide-react';
 import DonationSection from './DonationSection';
+import ContactSection from './ContactSection';
 
 const crisisStats = [
   {
@@ -68,7 +69,7 @@ export default function TheProblemPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/img/problem.JPG)',
+          backgroundImage: 'url(/img/problem_banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -116,7 +117,7 @@ export default function TheProblemPage() {
           {/* Left: full-bleed image */}
           <RevealSection className="relative w-full lg:w-[55%] flex-shrink-0 min-h-[300px] lg:min-h-[580px] overflow-hidden">
             <Image
-              src="/images/problem_student.png"
+              src="/img/conceq.JPG"
               alt="Student affected by literacy crisis"
               fill
               className="object-cover"
@@ -160,31 +161,42 @@ export default function TheProblemPage() {
       </section>
 
       {/* Why It Matters */}
-      <section
-        className="py-24 relative overflow-hidden parallax-section"
-        style={{ backgroundImage: 'url(/images/problem_hero_bg.png)' }}
-      >
-        <div className="absolute inset-0 bg-[#0a1628]/88" />
+      <section className="py-24 relative overflow-hidden bg-white">
+        {/* Faint grayscale background image */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url(/img/intervention.JPG)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'grayscale(1)',
+            opacity: 0.03,
+          }}
+        />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-6 text-center">
           <RevealSection>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8">
-              Without Urgent Intervention, We Risk Losing an Entire Generation
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628] mb-8">
+              Without Urgent Intervention, We Risk Losing{' '}
+              <span className="text-[#00ABBE]">an Entire Generation</span>
             </h2>
-            <p className="text-white/70 text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+            <p className="text-gray-500 text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
               Sub-Saharan Africa faces the risk of losing an entire generation to learning poverty — making SDG 4 (Quality Education) unattainable without decisive action now.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/our-solution" className="btn-primary">
+              <Link href="/our-solution" className="btn-primary inline-flex">
                 See Our Solution <ArrowRight size={18} />
               </Link>
             </div>
           </RevealSection>
         </div>
       </section>
-      
-      {/* Donation Section Added at Bottom */}
+
+      {/* ── Donation ── */}
       <DonationSection />
-      
+
+      {/* ── Contact ── */}
+      <ContactSection />
+
     </main>
   );
 }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, BookOpen, Search, ArrowRight } from 'lucide-react';
+import { Menu, X, BookOpen, ArrowRight } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -87,9 +87,6 @@ export default function Navbar() {
 
           {/* Right Side Controls */}
           <div className="hidden lg:flex items-center gap-6">
-            <button className={`transition-colors ${isTransparent ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-[#00ABBE]'}`}>
-              <Search size={20} strokeWidth={2} />
-            </button>
             <Link
               href="/donate"
               className="bg-[#56B543] hover:bg-[#489938] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center gap-2"

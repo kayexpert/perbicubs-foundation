@@ -9,26 +9,34 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-const team = [
+export interface TeamMember {
+  id?: number;
+  name: string;
+  role: string;
+  image: string;
+  ordering?: number;
+}
+
+const defaultTeam: TeamMember[] = [
   {
     name: 'Kweku Andoh',
     role: 'Executive Director & Founder',
-    image: '/images/about_learning.png',
+    image: '/img/about_learning.png',
   },
   {
     name: 'Abena Asante',
     role: 'Head of Programs',
-    image: '/images/program_literacy.png',
+    image: '/img/program_literacy.png',
   },
   {
     name: 'Kofi Owusu',
     role: 'Technology Lead',
-    image: '/images/program_digital.png',
+    image: '/img/program_digital.png',
   },
   {
     name: 'Efua Boateng',
     role: 'Community Outreach Manager',
-    image: '/images/program_advocacy.png',
+    image: '/img/program_advocacy.png',
   },
 ];
 
@@ -48,7 +56,15 @@ function Section({ children, className = '' }: { children: React.ReactNode; clas
   );
 }
 
-export default function TeamSection() {
+interface TeamSectionProps {
+  members?: TeamMember[];
+}
+
+export default function TeamSection({ members }: TeamSectionProps) {
+  const team = members && members.length > 0
+    ? [...members].sort((a, b) => (a.ordering ?? 0) - (b.ordering ?? 0))
+    : defaultTeam;
+
   return (
     <section className="py-20 lg:py-28 bg-white overflow-hidden border-t border-gray-100">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">

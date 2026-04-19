@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { HandHeart, Users, Building2, ArrowRight } from 'lucide-react';
 import ContactSection from './ContactSection';
+import BlogSection from './BlogSection';
 
 // ─── Animation Helper ───
 function RevealSection({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -34,7 +35,7 @@ const INVOLVE_CARDS = [
     desc: 'For just $35 a year, you can give a child full access to our digital literacy platform. Your donation directly funds their education.',
     action: 'Donate Now',
     href: '/donate', // Fixed routing
-    image: '/img/program_literacy.png'
+    image: '/img/conceq.JPG'
   },
   {
     id: 'corporate',
@@ -43,7 +44,7 @@ const INVOLVE_CARDS = [
     desc: 'Align your brand with our mission. We work with corporations to scale our impact through CSR initiatives and employee engagement.',
     action: 'Become a Partner',
     href: '#contact', // Scrolls down
-    image: '/img/program_digital.png'
+    image: '/img/flagship_ini.JPG'
   },
   {
     id: 'volunteer',
@@ -52,7 +53,7 @@ const INVOLVE_CARDS = [
     desc: 'Give your time or platform. We need advocates to help spread the word, organize book drives, or support our operations.',
     action: 'Join the Movement',
     href: '#contact', // Scrolls down
-    image: '/img/program_advocacy.png'
+    image: '/img/wea_1.JPG'
   },
 ];
 
@@ -95,7 +96,7 @@ export default function GetInvolvedPage() {
             <RevealSection>
               <div className="relative rounded-[40px] overflow-hidden aspect-square lg:aspect-[4/5] shadow-2xl">
                 <Image
-                  src="/images/about_learning.png" 
+                  src="/img/get_involved_2.JPG" 
                   alt="Student reading"
                   fill
                   className="object-cover"
@@ -169,6 +170,11 @@ export default function GetInvolvedPage() {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          STORIES
+      ═══════════════════════════════════════════════════════ */}
+      <BlogSection />
 
       {/* ═══════════════════════════════════════════════════════
           CONTACT FORM (Using the global ContactSection UI)

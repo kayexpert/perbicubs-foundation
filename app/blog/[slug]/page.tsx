@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from 'lucide-react';
 import { blogPosts, getPostBySlug } from '@/lib/blogData';
+import Navbar from '@/components/Navbar';
 
 export async function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
@@ -31,13 +32,14 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <main className="min-h-screen bg-white">
+      <Navbar />
       {/* Hero image */}
       <div className="relative h-[55vh] min-h-[380px] bg-[#0a1628]">
         <Image
           src={post.image}
           alt={post.title}
           fill
-          className="object-cover opacity-50"
+          className="object-cover opacity-75"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/80 via-[#0a1628]/40 to-transparent" />
@@ -66,7 +68,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
       {/* Article body */}
       <div className="max-w-[860px] mx-auto px-4 sm:px-6 py-12 lg:py-16">
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-5 pb-8 mb-10 border-b border-gray-100">
+        <div className="flex flex-wrap items-center justify-evenly gap-4 pb-8 mb-10 border-b border-gray-100">
           <div className="flex items-center gap-2 text-gray-500 text-sm">
             <div className="w-9 h-9 rounded-full bg-[#00ABBE] flex items-center justify-center">
               <User size={16} className="text-white" />

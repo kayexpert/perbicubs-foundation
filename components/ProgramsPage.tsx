@@ -19,7 +19,7 @@ const programs = [
       'Personalised reading level placements',
       'Offline access capabilities for remote areas',
     ],
-    image: '/img/program_literacy.png',
+    image: '/img/pg_1.JPG',
     color: 'bg-[#0a1628]',
     accent: '#00ABBE',
     stats: { value: '12,000+', label: 'Children Targeted' },
@@ -35,7 +35,7 @@ const programs = [
       'School-based reading clubs',
       'Community literacy festivals & events',
     ],
-    image: '/img/program_digital.png',
+    image: '/img/pg_2.JPG',
     color: 'bg-[#00ABBE]', // Changed from #FF6B56 to primary color to balance
     accent: '#00ABBE',
     stats: { value: 'UNESCO', label: 'Recognized Impact' },
@@ -51,7 +51,7 @@ const programs = [
       'Impact reports for schools and partners',
       'EdTech innovation and policy recommendations',
     ],
-    image: '/img/program_advocacy.png',
+    image: '/img/pg_3.JPG',
     color: 'bg-[#0a1628]', // Shifted to dark blue
     accent: '#0a1628',
     stats: { value: '700K+', label: 'Books Read' },
@@ -234,13 +234,13 @@ export default function ProgramsPage() {
       <section className="relative overflow-hidden bg-white py-20 lg:py-28">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <Image src="/images/program_literacy.png" alt="Student using tablet" fill className="object-cover object-right" />
+          <Image src="/img/flagship_ini.JPG" alt="Student using tablet" fill className="object-cover object-right" />
           {/* Gradient: solid white left → transparent right */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(to right, #ffffff 0%, #ffffff 48%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.1) 80%, transparent 100%)',
+                'linear-gradient(to right, #ffffff 0%, #ffffff 35%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.1) 70%, transparent 100%)',
             }}
           />
           {/* Mobile: full white overlay */}
