@@ -69,7 +69,7 @@ export default function DonationSection() {
           {/* Left col — image */}
           <div className="relative min-h-[260px] lg:min-h-0">
             <Image
-              src="/images/about_learning.png"
+              src="/donation.jpg"
               alt="Children receiving literacy support"
               fill
               className="object-cover"

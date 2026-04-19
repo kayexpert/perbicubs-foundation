@@ -68,7 +68,7 @@ export default function TheProblemPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/problem.png)',
+          backgroundImage: 'url(/img/problem.JPG)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

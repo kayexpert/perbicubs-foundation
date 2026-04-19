@@ -36,7 +36,7 @@ export default function AboutPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/images/about_learning.png)',
+          backgroundImage: 'url(/img/about_learning.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -56,7 +56,7 @@ export default function AboutPage() {
       {/* ─── Why We Exist ─── */}
       <section
         className="py-20 lg:py-28 relative parallax-section"
-        style={{ backgroundImage: 'url(/images/problem_hero_bg.png)' }}
+        style={{ backgroundImage: 'url(/img/problem_hero_bg.png)' }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/95 via-[#0a1628]/90 to-[#0a1628]/70" />
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">

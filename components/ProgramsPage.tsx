@@ -19,7 +19,7 @@ const programs = [
       'Personalised reading level placements',
       'Offline access capabilities for remote areas',
     ],
-    image: '/images/program_literacy.png',
+    image: '/img/program_literacy.png',
     color: 'bg-[#0a1628]',
     accent: '#00ABBE',
     stats: { value: '12,000+', label: 'Children Targeted' },
@@ -35,7 +35,7 @@ const programs = [
       'School-based reading clubs',
       'Community literacy festivals & events',
     ],
-    image: '/images/program_digital.png',
+    image: '/img/program_digital.png',
     color: 'bg-[#00ABBE]', // Changed from #FF6B56 to primary color to balance
     accent: '#00ABBE',
     stats: { value: 'UNESCO', label: 'Recognized Impact' },
@@ -51,7 +51,7 @@ const programs = [
       'Impact reports for schools and partners',
       'EdTech innovation and policy recommendations',
     ],
-    image: '/images/program_advocacy.png',
+    image: '/img/program_advocacy.png',
     color: 'bg-[#0a1628]', // Shifted to dark blue
     accent: '#0a1628',
     stats: { value: '700K+', label: 'Books Read' },
@@ -101,7 +101,7 @@ export default function ProgramsPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/images/problem_hero_bg.png)',
+          backgroundImage: 'url(/img/programs_banner.JPG)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

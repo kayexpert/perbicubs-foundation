@@ -27,13 +27,13 @@ export default function ProvenImpactSection({ stats = defaultStats }: ProvenImpa
     <section ref={ref} className="relative overflow-hidden bg-white">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <Image src="/impact.png" alt="" fill className="object-cover object-right" />
+        <Image src="/impact.JPG" alt="" fill className="object-cover object-right" />
         {/* Gradient: solid white left → transparent right */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to right, #ffffff 0%, #ffffff 48%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.1) 80%, transparent 100%)',
+              'linear-gradient(to right, #ffffff 0%, #ffffff 38%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.1) 80%, transparent 100%)',
           }}
         />
         {/* Mobile: full white overlay */}

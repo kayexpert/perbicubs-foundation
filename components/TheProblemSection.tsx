@@ -29,7 +29,7 @@ export default function TheProblemSection() {
           className="relative w-full lg:w-[55%] flex-shrink-0 min-h-[300px] lg:min-h-[580px] overflow-hidden"
         >
           <Image
-            src="/problem.png"
+            src="/img/problem.JPG"
             alt="Children facing the literacy crisis"
             fill
             className="object-cover"

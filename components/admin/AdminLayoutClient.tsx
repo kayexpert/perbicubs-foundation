@@ -45,7 +45,7 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
             <div className="w-8 h-8 rounded-xl bg-[#00ABBE]/20 flex items-center justify-center flex-shrink-0">
               <div className="relative w-5 h-5">
                 <Image
-                  src="/images/perbicubs%20logo.png"
+                  src="/img/perbicubs%20logo.png"
                   alt="PerbiCubs"
                   fill
                   className="object-contain"
@@ -99,7 +99,7 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
                   <div className="w-9 h-9 rounded-xl bg-[#00ABBE]/20 flex items-center justify-center flex-shrink-0">
                     <div className="relative w-6 h-6">
                       <Image
-                        src="/images/perbicubs%20logo.png"
+                        src="/img/perbicubs%20logo.png"
                         alt="PerbiCubs"
                         fill
                         className="object-contain"
@@ -145,7 +145,7 @@ function SidebarContent() {
         <div className="w-10 h-10 rounded-xl bg-[#00ABBE]/20 flex items-center justify-center flex-shrink-0">
           <div className="relative w-7 h-7">
             <Image
-              src="/images/perbicubs%20logo.png"
+              src="/img/perbicubs%20logo.png"
               alt="PerbiCubs"
               fill
               className="object-contain"

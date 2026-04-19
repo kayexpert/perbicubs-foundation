@@ -35,7 +35,7 @@ export default function OurSolutionPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/solution.png)',
+          backgroundImage: 'url(/img/solution.JPG)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
