@@ -437,49 +437,44 @@ h1, h2, h3, h4, h5 {
   transform: scale(1.3);
 }
 
-/* Gallery v2: variable-height bottom-aligned coverflow */
-.gallery-v2 {
-  height: 560px;
+/* Gallery homepage: centered slider with scaled side previews */
+.gallery-home {
+  padding-bottom: 52px !important;
 }
-.gallery-v2 .swiper-wrapper {
-  align-items: flex-end !important;
-}
-.gallery-v2 .swiper-slide {
-  height: 260px !important;
+.gallery-home .swiper-slide {
+  width: 62%;
+  height: 440px;
   border-radius: 20px;
   overflow: hidden;
-  transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.85);
+  opacity: 0.65;
+  transition: transform 0.55s ease, opacity 0.55s ease;
 }
-.gallery-v2 .swiper-slide-prev,
-.gallery-v2 .swiper-slide-next {
-  height: 390px !important;
+.gallery-home .swiper-slide-active {
+  transform: scale(1);
+  opacity: 1;
 }
-.gallery-v2 .swiper-slide-active {
-  height: 520px !important;
+.gallery-home .swiper-pagination {
+  bottom: 10px !important;
+}
+.gallery-home .swiper-pagination-bullet {
+  background: #0a1628 !important;
+  opacity: 0.2 !important;
+  width: 8px !important;
+  height: 8px !important;
+  transition: all 0.3s !important;
+}
+.gallery-home .swiper-pagination-bullet-active {
+  background: #00ABBE !important;
+  opacity: 1 !important;
+  width: 28px !important;
+  border-radius: 4px !important;
 }
 
 @media (max-width: 1023px) {
-  .gallery-v2 { height: 440px; }
-  .gallery-v2 .swiper-slide          { height: 210px !important; }
-  .gallery-v2 .swiper-slide-prev,
-  .gallery-v2 .swiper-slide-next     { height: 310px !important; }
-  .gallery-v2 .swiper-slide-active   { height: 410px !important; }
+  .gallery-home .swiper-slide { width: 76%; height: 360px; }
 }
-
 @media (max-width: 639px) {
-  .gallery-v2 { height: 420px; }
-  .gallery-v2 .swiper-wrapper { align-items: center !important; }
-  .gallery-v2 .swiper-slide          { height: 390px !important; }
-  .gallery-v2 .swiper-slide-prev,
-  .gallery-v2 .swiper-slide-next     { height: 390px !important; }
-  .gallery-v2 .swiper-slide-active   { height: 400px !important; }
-}
-
-/* Gallery: dim side slides, reveal center (legacy — kept for safety) */
-.swiper-slide .gallery-overlay {
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-.swiper-slide-active .gallery-overlay {
-  opacity: 0;
+  .gallery-home .swiper-slide { width: 88%; height: 260px; transform: scale(0.88); }
+  .gallery-home .swiper-slide-active { transform: scale(1); }
 }

@@ -147,11 +147,18 @@ export default function TeamManager({ initialMembers }: TeamManagerProps) {
                     </div>
                   </div>
                 )}
-                {/* Hover action bar */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-200 flex justify-end gap-2">
+              </div>
+
+              {/* Info + actions */}
+              <div className="px-4 py-3.5 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-bold text-[#0a1628] text-sm leading-snug truncate">{member.name}</p>
+                  <p className="text-gray-400 text-xs mt-0.5 truncate">{member.role}</p>
+                </div>
+                <div className="flex items-center gap-1.5 flex-shrink-0">
                   <button
                     onClick={() => openEdit(member)}
-                    className="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors"
+                    className="w-8 h-8 rounded-lg bg-gray-100 hover:bg-[#00ABBE]/10 hover:text-[#00ABBE] text-gray-500 flex items-center justify-center transition-colors"
                     title="Edit"
                   >
                     <Pencil size={14} />
@@ -159,7 +166,7 @@ export default function TeamManager({ initialMembers }: TeamManagerProps) {
                   <button
                     onClick={() => member.id && handleDelete(member.id)}
                     disabled={deleteId === member.id}
-                    className="w-8 h-8 rounded-lg bg-red-500/80 hover:bg-red-500 text-white flex items-center justify-center transition-colors disabled:opacity-50"
+                    className="w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 text-red-500 flex items-center justify-center transition-colors disabled:opacity-50"
                     title="Delete"
                   >
                     {deleteId === member.id
@@ -167,13 +174,6 @@ export default function TeamManager({ initialMembers }: TeamManagerProps) {
                       : <Trash2 size={14} />}
                   </button>
                 </div>
-              </div>
-
-              {/* Info */}
-              <div className="px-4 py-3.5">
-                <p className="font-bold text-[#0a1628] text-sm leading-snug">{member.name}</p>
-                <p className="text-gray-400 text-xs mt-0.5">{member.role}</p>
-                <p className="text-gray-300 text-[10px] mt-1">Order: {member.ordering}</p>
               </div>
             </div>
           ))}
