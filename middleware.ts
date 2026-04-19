@@ -1,23 +1,32 @@
-import { type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from '@/utils/supabase/middleware';
+import { jwtVerify } from 'jose';
 
 export async function middleware(request: NextRequest) {
-  // Let Supabase keep the session alive
-  const response = await updateSession(request);
+  const { pathname } = request.nextUrl;
 
-  // ── Protect /admin routes ────────────────────────────────────
-  // The admin portal is behind Supabase Auth. If you have not yet
-  // set up a user, create one in your Supabase dashboard → Auth → Users,
-  // then visit /admin/login to sign in.
-  // Uncomment the block below once you have configured Auth:
-  //
-  // const supabase = await createClient();
-  // const { data: { user } } = await supabase.auth.getUser();
-  // if (request.nextUrl.pathname.startsWith('/admin') && !user) {
-  //   return NextResponse.redirect(new URL('/admin/login', request.url));
-  // }
+  // ── Protect /admin routes (except /admin/login) ───────────────
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+    const token = request.cookies.get('admin_session')?.value;
+    let authenticated = false;
 
-  return response;
+    if (token && process.env.ADMIN_SESSION_SECRET) {
+      try {
+        const secret = new TextEncoder().encode(process.env.ADMIN_SESSION_SECRET);
+        await jwtVerify(token, secret);
+        authenticated = true;
+      } catch {
+        authenticated = false;
+      }
+    }
+
+    if (!authenticated) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+  }
+
+  // ── Let Supabase keep the session alive ───────────────────────
+  return updateSession(request);
 }
 
 export const config = {

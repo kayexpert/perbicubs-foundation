@@ -8,9 +8,9 @@ import {
   BarChart3,
   Images,
   BookOpen,
-  LogOut,
   ExternalLink,
 } from 'lucide-react';
+import LogoutButton from './LogoutButton';
 
 const navItems = [
   {
@@ -107,14 +107,7 @@ export default function AdminNav({ onClose }: AdminNavProps) {
           <ExternalLink size={16} className="flex-shrink-0" />
           View Website
         </Link>
-        <Link
-          href="/"
-          onClick={onClose}
-          className="flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-red-500/20 hover:text-red-300 transition-all text-sm"
-        >
-          <LogOut size={16} className="flex-shrink-0" />
-          Exit Admin
-        </Link>
+        <LogoutButton onClose={onClose} />
       </div>
     </nav>
   );
