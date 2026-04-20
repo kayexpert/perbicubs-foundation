@@ -27,15 +27,10 @@ export default function DonationSection() {
         <div className="absolute inset-0 bg-[#0a1628]" />
         <div
           className="absolute inset-0"
-          style={{
-            backgroundImage: 'url(/img/impact.jpg)',
-            backgroundAttachment: 'fixed',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'grayscale(1)',
-            opacity: 0.2,
-          }}
-        />
+          style={{ filter: 'grayscale(1)', opacity: 0.2 }}
+        >
+          <Image src="/img/impact.jpg" alt="" fill className="object-cover object-center" />
+        </div>
         <div className="absolute inset-0 bg-[#0a1628]/65" />
       </div>
 

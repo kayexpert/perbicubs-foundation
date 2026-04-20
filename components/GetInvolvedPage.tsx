@@ -65,12 +65,8 @@ export default function GetInvolvedPage() {
       ═══════════════════════════════════════════════════════ */}
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
-        style={{
-          backgroundImage: 'url(/img/get_involved_banner.jpg)', // Using one of the cinematic hero images
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 30%', 
-        }}
       >
+        <Image src="/img/get_involved_banner.jpg" alt="" fill className="object-cover" style={{ objectPosition: 'center 30%' }} priority />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/70 to-[#0a1628]/90" />
         
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 w-full text-center flex flex-col items-center">

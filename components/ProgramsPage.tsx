@@ -100,12 +100,8 @@ export default function ProgramsPage() {
       ═══════════════════════════════════════════════════════ */}
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
-        style={{
-          backgroundImage: 'url(/img/programs_banner.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
       >
+        <Image src="/img/programs_banner.jpg" alt="" fill className="object-cover object-center" priority />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/70 to-[#0a1628]/90" />
         
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 w-full text-center flex flex-col items-center">

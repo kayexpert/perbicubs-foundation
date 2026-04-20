@@ -7,8 +7,36 @@ export default function Preloader() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(false), 2400);
-    return () => clearTimeout(t);
+    const MIN_MS = 2200;
+    const MAX_MS = 6000;
+
+    let minDone = false;
+    let loadDone = false;
+
+    function tryHide() {
+      if (minDone && loadDone) setVisible(false);
+    }
+
+    const minTimer = setTimeout(() => {
+      minDone = true;
+      tryHide();
+    }, MIN_MS);
+
+    if (document.readyState === 'complete') {
+      loadDone = true;
+    } else {
+      window.addEventListener('load', () => {
+        loadDone = true;
+        tryHide();
+      }, { once: true });
+    }
+
+    const maxTimer = setTimeout(() => setVisible(false), MAX_MS);
+
+    return () => {
+      clearTimeout(minTimer);
+      clearTimeout(maxTimer);
+    };
   }, []);
 
   return (
