@@ -115,7 +115,8 @@ export default function WhoWeAreSection() {
                       alt="Children in need of literacy"
                       fill
                       className="object-cover  transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"
-                      sizes="(max-width: 768px) 100vw, 25vw"
+                      sizes="(max-width: 1024px) 100vw, 45vw"
+                      quality={85}
                     />
                   </div>
                 </div>
@@ -128,7 +129,8 @@ export default function WhoWeAreSection() {
                   alt="Child learning"
                   fill
                   className="object-cover transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  quality={85}
                 />
               </div>
 

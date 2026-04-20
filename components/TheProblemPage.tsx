@@ -69,7 +69,7 @@ export default function TheProblemPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
       >
-        <Image src="/img/problem_banner.jpg" alt="" fill className="object-cover object-center" priority />
+        <Image src="/img/problem_banner.jpg" alt="" fill className="object-cover object-center" priority sizes="100vw" quality={80} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/70 to-[#0a1628]/90" />
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 w-full text-center flex flex-col items-center">
           <RevealSection className="flex flex-col items-center">
@@ -160,7 +160,7 @@ export default function TheProblemPage() {
       <section className="py-24 relative overflow-hidden bg-white">
         {/* Faint grayscale background image */}
         <div className="absolute inset-0" style={{ filter: 'grayscale(1)', opacity: 0.03 }}>
-          <Image src="/img/intervention.jpg" alt="" fill className="object-cover object-center" />
+          <Image src="/img/intervention.jpg" alt="" fill className="object-cover object-center" sizes="100vw" quality={75} />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-6 text-center">
           <RevealSection>

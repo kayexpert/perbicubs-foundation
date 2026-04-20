@@ -156,6 +156,7 @@ export default function HomePage({
                 alt={slide.headline}
                 fill
                 sizes="100vw"
+                quality={85}
                 className="object-cover transition-transform duration-[10000ms] ease-out scale-100 group-[.swiper-slide-active]:scale-110"
                 priority={i === 0}
                 loading={i === 0 ? 'eager' : 'lazy'}

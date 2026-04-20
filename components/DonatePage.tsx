@@ -155,7 +155,7 @@ export default function DonatePage() {
       <section
         className="relative min-h-[55vh] flex items-center overflow-hidden"
       >
-        <Image src="/img/sponsor_banner.jpg" alt="" fill className="object-cover object-center" priority />
+        <Image src="/img/sponsor_banner.jpg" alt="" fill className="object-cover object-center" priority sizes="100vw" quality={80} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/70 to-[#0a1628]/90" />
         
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 pt-28 pb-16 w-full flex flex-col items-center text-center">

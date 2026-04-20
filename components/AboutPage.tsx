@@ -40,7 +40,7 @@ export default function AboutPage({ teamMembers }: AboutPageProps) {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
       >
-        <Image src="/img/about_banner.jpg" alt="" fill className="object-cover object-center" priority />
+        <Image src="/img/about_banner.jpg" alt="" fill className="object-cover object-center" priority sizes="100vw" quality={80} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/60 via-[#0a1628]/70 to-[#0a1628]/90" />
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 w-full text-center flex flex-col items-center">
           <Section className="flex flex-col items-center">
@@ -57,7 +57,7 @@ export default function AboutPage({ teamMembers }: AboutPageProps) {
       <section
         className="py-20 lg:py-28 relative parallax-section overflow-hidden"
       >
-        <Image src="/img/problem_hero_bg.png" alt="" fill className="object-cover object-center" />
+        <Image src="/img/problem_hero_bg.png" alt="" fill className="object-cover object-center" sizes="100vw" quality={80} />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/95 via-[#0a1628]/90 to-[#0a1628]/70" />
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">

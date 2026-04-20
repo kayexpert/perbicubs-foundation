@@ -1,15 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Preloader() {
   const [visible, setVisible] = useState(true);
+  const pathname = usePathname();
+  const isInitialMount = useRef(true);
+  const renderKey = useRef(0);
 
+  // Initial page load
   useEffect(() => {
     const MIN_MS = 2200;
     const MAX_MS = 6000;
-
     let minDone = false;
     let loadDone = false;
 
@@ -17,32 +21,35 @@ export default function Preloader() {
       if (minDone && loadDone) setVisible(false);
     }
 
-    const minTimer = setTimeout(() => {
-      minDone = true;
-      tryHide();
-    }, MIN_MS);
+    const minTimer = setTimeout(() => { minDone = true; tryHide(); }, MIN_MS);
 
     if (document.readyState === 'complete') {
       loadDone = true;
     } else {
-      window.addEventListener('load', () => {
-        loadDone = true;
-        tryHide();
-      }, { once: true });
+      window.addEventListener('load', () => { loadDone = true; tryHide(); }, { once: true });
     }
 
     const maxTimer = setTimeout(() => setVisible(false), MAX_MS);
-
-    return () => {
-      clearTimeout(minTimer);
-      clearTimeout(maxTimer);
-    };
+    return () => { clearTimeout(minTimer); clearTimeout(maxTimer); };
   }, []);
+
+  // Route change detection — skip first render
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    renderKey.current += 1;
+    setVisible(true);
+    const timer = setTimeout(() => setVisible(false), 1800);
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
+          key={renderKey.current}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: 'easeInOut' }}
@@ -85,7 +92,7 @@ export default function Preloader() {
             <motion.div
               initial={{ width: '0%' }}
               animate={{ width: '100%' }}
-              transition={{ duration: 2.1, ease: 'easeInOut' }}
+              transition={{ duration: 1.6, ease: 'easeInOut' }}
               className="h-full bg-[#00ABBE] rounded-full"
             />
           </div>

@@ -29,7 +29,7 @@ export default function DonationSection() {
           className="absolute inset-0"
           style={{ filter: 'grayscale(1)', opacity: 0.2 }}
         >
-          <Image src="/img/impact.jpg" alt="" fill className="object-cover object-center" />
+          <Image src="/img/impact.jpg" alt="" fill className="object-cover object-center" sizes="100vw" quality={75} />
         </div>
         <div className="absolute inset-0 bg-[#0a1628]/65" />
       </div>
