@@ -117,7 +117,7 @@ export default function TheProblemPage() {
           {/* Left: full-bleed image */}
           <RevealSection className="relative w-full lg:w-[55%] flex-shrink-0 min-h-[300px] lg:min-h-[580px] overflow-hidden">
             <Image
-              src="/img/conceq.JPG"
+              src="/img/conceq.jpg"
               alt="Student affected by literacy crisis"
               fill
               className="object-cover"
@@ -166,7 +166,7 @@ export default function TheProblemPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url(/img/intervention.JPG)',
+            backgroundImage: 'url(/img/intervention.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'grayscale(1)',

@@ -35,7 +35,7 @@ const INVOLVE_CARDS = [
     desc: 'For just $35 a year, you can give a child full access to our digital literacy platform. Your donation directly funds their education.',
     action: 'Donate Now',
     href: '/donate', // Fixed routing
-    image: '/img/conceq.JPG'
+    image: '/img/conceq.jpg'
   },
   {
     id: 'corporate',
@@ -44,7 +44,7 @@ const INVOLVE_CARDS = [
     desc: 'Align your brand with our mission. We work with corporations to scale our impact through CSR initiatives and employee engagement.',
     action: 'Become a Partner',
     href: '#contact', // Scrolls down
-    image: '/img/flagship_ini.JPG'
+    image: '/img/flagship_ini.jpg'
   },
   {
     id: 'volunteer',
@@ -53,7 +53,7 @@ const INVOLVE_CARDS = [
     desc: 'Give your time or platform. We need advocates to help spread the word, organize book drives, or support our operations.',
     action: 'Join the Movement',
     href: '#contact', // Scrolls down
-    image: '/img/wea_1.JPG'
+    image: '/img/wea_1.jpg'
   },
 ];
 
@@ -66,7 +66,7 @@ export default function GetInvolvedPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/img/get_involved_banner.JPG)', // Using one of the cinematic hero images
+          backgroundImage: 'url(/img/get_involved_banner.jpg)', // Using one of the cinematic hero images
           backgroundSize: 'cover',
           backgroundPosition: 'center 30%', 
         }}
@@ -96,7 +96,7 @@ export default function GetInvolvedPage() {
             <RevealSection>
               <div className="relative rounded-[40px] overflow-hidden aspect-square lg:aspect-[4/5] shadow-2xl">
                 <Image
-                  src="/img/get_involved_2.JPG" 
+                  src="/img/get_involved_2.jpg" 
                   alt="Student reading"
                   fill
                   className="object-cover"

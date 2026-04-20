@@ -155,7 +155,7 @@ export default function DonatePage() {
       <section
         className="relative min-h-[55vh] flex items-center overflow-hidden"
         style={{
-          backgroundImage: 'url(/img/sponsor_banner.JPG)',
+          backgroundImage: 'url(/img/sponsor_banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
         }}

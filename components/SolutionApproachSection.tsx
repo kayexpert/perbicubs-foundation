@@ -146,7 +146,7 @@ export default function SolutionApproachSection() {
               {/* Main circle */}
               <div className="w-72 h-72 xl:w-80 xl:h-80 rounded-full shadow-2xl border-[10px] border-[#FF6B56]/20 flex items-center justify-center relative z-10 overflow-hidden">
                 {/* Background image */}
-                <Image src="/img/solution.JPG" alt="Our Approach" fill className="object-cover" sizes="320px" />
+                <Image src="/img/solution.jpg" alt="Our Approach" fill className="object-cover" sizes="320px" />
                 {/* Dark overlay */}
                 <div className="absolute inset-0 bg-[#0a1628]/65" />
                 {/* Inner dashed ring */}

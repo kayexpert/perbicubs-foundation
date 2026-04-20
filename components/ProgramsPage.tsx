@@ -19,7 +19,7 @@ const programs = [
       'Personalised reading level placements',
       'Offline access capabilities for remote areas',
     ],
-    image: '/img/pg_1.JPG',
+    image: '/img/pg_1.jpg',
     color: 'bg-[#0a1628]',
     accent: '#00ABBE',
     stats: { value: '12,000+', label: 'Children Targeted' },
@@ -35,7 +35,7 @@ const programs = [
       'School-based reading clubs',
       'Community literacy festivals & events',
     ],
-    image: '/img/pg_2.JPG',
+    image: '/img/pg_2.jpg',
     color: 'bg-[#00ABBE]', // Changed from #FF6B56 to primary color to balance
     accent: '#00ABBE',
     stats: { value: 'UNESCO', label: 'Recognized Impact' },
@@ -51,7 +51,7 @@ const programs = [
       'Impact reports for schools and partners',
       'EdTech innovation and policy recommendations',
     ],
-    image: '/img/pg_3.JPG',
+    image: '/img/pg_3.jpg',
     color: 'bg-[#0a1628]', // Shifted to dark blue
     accent: '#0a1628',
     stats: { value: '700K+', label: 'Books Read' },
@@ -101,7 +101,7 @@ export default function ProgramsPage() {
       <section
         className="relative min-h-[45vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden parallax-section"
         style={{
-          backgroundImage: 'url(/img/programs_banner.JPG)',
+          backgroundImage: 'url(/img/programs_banner.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -234,7 +234,7 @@ export default function ProgramsPage() {
       <section className="relative overflow-hidden bg-white py-20 lg:py-28">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <Image src="/img/flagship_ini.JPG" alt="Student using tablet" fill className="object-cover object-right" />
+          <Image src="/img/flagship_ini.jpg" alt="Student using tablet" fill className="object-cover object-right" />
           {/* Gradient: solid white left → transparent right */}
           <div
             className="absolute inset-0"

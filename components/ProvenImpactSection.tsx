@@ -27,7 +27,7 @@ export default function ProvenImpactSection({ stats = defaultStats }: ProvenImpa
     <section ref={ref} className="relative overflow-hidden bg-white">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <Image src="/img/impact.JPG" alt="" fill className="object-cover object-right" />
+        <Image src="/img/impact.jpg" alt="" fill className="object-cover object-right" />
         {/* Gradient: solid white left → transparent right */}
         <div
           className="absolute inset-0"
