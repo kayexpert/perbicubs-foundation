@@ -17,7 +17,7 @@ export default function LogoutButton({ onClose }: LogoutButtonProps) {
     >
       <button
         type="submit"
-        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-red-500/20 hover:text-red-300 transition-all text-sm"
+        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-500 hover:bg-red-50 hover:text-red-600 transition-all text-sm"
       >
         <LogOut size={16} className="flex-shrink-0" />
         Log Out

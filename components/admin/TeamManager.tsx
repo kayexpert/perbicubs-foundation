@@ -99,7 +99,7 @@ export default function TeamManager({ initialMembers }: TeamManagerProps) {
         </div>
         <button
           onClick={openCreate}
-          className="flex items-center gap-2 bg-[#0a1628] hover:bg-[#1a2d48] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
+          className="flex items-center gap-2 bg-[#00ABBE] hover:bg-[#009aab] text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
         >
           <Plus size={16} /> Add Member
         </button>
@@ -235,7 +235,7 @@ export default function TeamManager({ initialMembers }: TeamManagerProps) {
             <button
               onClick={handleSave}
               disabled={isPending}
-              className="flex-1 flex items-center justify-center gap-2 bg-[#0a1628] hover:bg-[#1a2d48] disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 bg-[#00ABBE] hover:bg-[#009aab] disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
             >
               {isPending ? <Loader2 size={16} className="animate-spin" /> : null}
               {isPending ? 'Saving…' : isNew ? 'Add Member' : 'Save Changes'}

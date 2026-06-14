@@ -71,11 +71,11 @@ export default function TeamSection({ members }: TeamSectionProps) {
         <Section className="text-center mb-14">
           <p className="flex items-center justify-center gap-3 text-[#00ABBE] text-xs font-bold uppercase tracking-widest mb-4">
             <span className="w-8 h-px bg-[#00ABBE]" />
-            Our People
+            Our Leadership
             <span className="w-8 h-px bg-[#00ABBE]" />
           </p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628]">
-            The Team Behind <span className="text-[#00ABBE]">the Mission</span>
+            The Board <span className="text-[#00ABBE]">Members</span>
           </h2>
         </Section>
 

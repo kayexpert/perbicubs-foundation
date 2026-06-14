@@ -4,39 +4,16 @@ import { useEffect, useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const VISITED_KEY = 'pcf_visited';
-
-function getVisited(): Set<string> {
-  try {
-    const raw = sessionStorage.getItem(VISITED_KEY);
-    return raw ? new Set(JSON.parse(raw) as string[]) : new Set();
-  } catch {
-    return new Set();
-  }
-}
-
-function markVisited(path: string) {
-  try {
-    const visited = getVisited();
-    visited.add(path);
-    sessionStorage.setItem(VISITED_KEY, JSON.stringify([...visited]));
-  } catch {
-    // ignore storage errors (private browsing, quota)
-  }
-}
-
 export default function Preloader() {
   const [visible, setVisible] = useState(true);
   const pathname = usePathname();
   const isInitialMount = useRef(true);
-  const renderKey = useRef(0);
+  const [renderKey, setRenderKey] = useState(0);
 
-  // Initial page load — always show, then mark this page visited
+  // Initial page load — always show
   useEffect(() => {
-    markVisited(pathname);
-
-    const MIN_MS = 2200;
-    const MAX_MS = 6000;
+    const MIN_MS = 2500;
+    const MAX_MS = 5000;
     let minDone = false;
     let loadDone = false;
 
@@ -54,20 +31,20 @@ export default function Preloader() {
 
     const maxTimer = setTimeout(() => setVisible(false), MAX_MS);
     return () => { clearTimeout(minTimer); clearTimeout(maxTimer); };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Route change — skip if already visited, show + mark if new
+  // Route change — always show preloader
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
     }
-    if (getVisited().has(pathname)) return;  // already seen — skip
 
-    markVisited(pathname);
-    renderKey.current += 1;
-    setVisible(true);
-    const timer = setTimeout(() => setVisible(false), 1800);
+    const timer = setTimeout(() => {
+      setRenderKey(prev => prev + 1);
+      setVisible(true);
+      setTimeout(() => setVisible(false), 2000);
+    }, 0);
     return () => clearTimeout(timer);
   }, [pathname]);
 
@@ -75,7 +52,7 @@ export default function Preloader() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          key={renderKey.current}
+          key={renderKey}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: 'easeInOut' }}

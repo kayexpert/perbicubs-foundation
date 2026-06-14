@@ -10,32 +10,30 @@ import {
   BookOpen,
   Globe,
   Target,
-  Award,
-  Trophy,
 } from 'lucide-react';
 
 const tabs = [
   {
     id: 'mission',
     label: 'Our Mission',
-    text: 'To empower underprivileged children and youth through scholarships, advocacy, research, and dedicated digital access to structured literacy materials — giving every child the foundation to read, learn, and thrive.',
+    text: 'To empower underprivileged children and youth through scholarships, advocacy, research, and digital access to literacy.',
     boxes: [
       {
         icon: HeartHandshake,
-        title: 'Trusted Organization',
-        desc: 'We help companies develop powerful corporate social responsibility strategies.',
+        title: 'Community Focused',
+        desc: 'We partner directly with schools and communities to ensure long-term literacy success.',
       },
       {
         icon: BookOpen,
         title: 'Empower Learning',
-        desc: 'We help scale digital literacy across the continent seamlessly.',
+        desc: 'We help scale digital literacy across Africa seamlessly.',
       },
     ],
   },
   {
     id: 'vision',
     label: 'Our Vision',
-    text: 'Every family flourishing through equitable access to literacy and learning, creating equal opportunities to end learning poverty in our lifetime.',
+    text: 'Every family flourishing through equitable access to literacy and learning opportunities.',
     boxes: [
       {
         icon: Globe,
@@ -49,6 +47,7 @@ const tabs = [
       },
     ],
   },
+  /*
   {
     id: 'excellence',
     label: 'Our Excellence',
@@ -66,6 +65,7 @@ const tabs = [
       },
     ],
   },
+  */
 ];
 
 export default function WhoWeAreSection() {
@@ -148,7 +148,7 @@ export default function WhoWeAreSection() {
               {/* Inner dark card */}
               <div className="bg-[#0a1628] rounded-[30px] px-[30px] pt-[22px] pb-[30px]">
                 <h2 className="text-white text-[18px] sm:text-[22px] lg:text-[28px] font-bold leading-[1.4] capitalize mb-3">
-                  Africa&apos;s 186,548+ Children Need{' '}
+                  Millions of Children Need{' '}
                   <span className="text-[#FF6B56]">Literacy</span>
                 </h2>
                 <div className="relative">

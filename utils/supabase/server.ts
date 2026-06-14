@@ -28,3 +28,27 @@ export const createClient = async () => {
     },
   );
 };
+
+export const createAdminClient = async () => {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey) {
+    // Fallback to regular client if service role key is not provided.
+    // WARNING: This requires RLS to allow anon writes, which is insecure.
+    return createClient();
+  }
+
+  return createServerClient(
+    supabaseUrl!,
+    serviceRoleKey,
+    {
+      cookies: {
+        getAll() {
+          return [];
+        },
+        setAll() {
+          // No cookies for service role client
+        },
+      },
+    },
+  );
+};

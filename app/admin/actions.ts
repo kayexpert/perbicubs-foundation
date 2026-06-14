@@ -1,7 +1,48 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
+/**
+ * Admin CRUD server actions.
+ *
+ * ─── SECURITY NOTE ─────────────────────────────────────────────────────────
+ * The Supabase RLS policies in `supabase/migrations/003_add_write_policies.sql`
+ * currently allow the `anon` role to INSERT/UPDATE/DELETE on all content
+ * tables. This is intentional for the single-editor admin (so the `createClient()`
+ * returned by `@/utils/supabase/server` can mutate without service-role
+ * credentials), but it means the public Supabase URL + anon key are enough to
+ * write or delete every record. Mitigations:
+ *
+ *   1. The /admin UI is the only known writer; rows can be locked down later.
+ *   2. The `proxy.ts` middleware blocks all non-admin users from the UI.
+ *   3. Recommended hardening: add `SUPABASE_SERVICE_ROLE_KEY` to env, create
+ *      a second `createAdminClient()` here, switch all writes to it, and
+ *      restore the original restrictive RLS policies (see migration 001).
+ *
+ * If you change the RLS, every upsert/delete below continues to work
+ * unchanged as long as it goes through the service-role client.
+ * ───────────────────────────────────────────────────────────────────────────
+ */
+
+import { createClient, createAdminClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose';
+
+// ─── Authentication helper ────────────────────────────────────
+async function verifyAdminSession() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('admin_session')?.value;
+  
+  if (!token || !process.env.ADMIN_SESSION_SECRET) {
+    throw new Error('Unauthorized');
+  }
+  
+  try {
+    const secret = new TextEncoder().encode(process.env.ADMIN_SESSION_SECRET);
+    await jwtVerify(token, secret);
+  } catch {
+    throw new Error('Unauthorized');
+  }
+}
 
 // ─── Storage helpers ──────────────────────────────────────────
 const BUCKET = 'content-images';
@@ -38,293 +79,158 @@ function cleanData(data: Record<string, unknown>) {
   return rest;
 }
 
-// ─────────────────────────────────────────────────────────────
-// HERO SLIDES
-// ─────────────────────────────────────────────────────────────
+// ─── Generic CRUD helper ──────────────────────────────────────
 
-export async function upsertHeroSlide(data: Record<string, unknown>, id?: number) {
-  const supabase = await createClient();
+/** Fields that, when changed, require deleting the previous storage object. */
+type StorageField = 'image' | 'src';
 
-  if (id) {
-    // If image changed, clean up old storage file first
-    const { data: existing } = await supabase
-      .from('hero_slides')
-      .select('image')
-      .eq('id', id)
-      .single();
+interface ResourceConfig {
+  /** Table name */
+  table: 'hero_slides' | 'impact_stats' | 'gallery_images' | 'blog_posts' | 'team_members';
+  /** Public route(s) to revalidate after a write. */
+  revalidate: string[];
+  /** Field in the row whose value is a storage URL. Cleaned up on replace. */
+  storageField?: StorageField;
+}
 
-    if (existing?.image && existing.image !== data.image) {
-      await deleteStorageFile(supabase, existing.image as string);
+async function upsert(
+  cfg: ResourceConfig,
+  data: Record<string, unknown>,
+  id?: number,
+) {
+  await verifyAdminSession();
+  const supabase = await createAdminClient();
+
+  if (id !== undefined && id !== null) {
+    if (cfg.storageField) {
+      const { data: existing } = await supabase
+        .from(cfg.table)
+        .select(cfg.storageField)
+        .eq('id', id as number)
+        .single();
+
+      const prevUrl = (existing as Record<string, unknown> | null)?.[cfg.storageField] as
+        | string
+        | undefined;
+      if (prevUrl && prevUrl !== data[cfg.storageField]) {
+        await deleteStorageFile(supabase, prevUrl);
+      }
     }
 
     const { data: updated, error } = await supabase
-      .from('hero_slides')
+      .from(cfg.table)
       .update(cleanData(data))
-      .eq('id', id)
+      .eq('id', id as number)
       .select()
       .single();
 
-    revalidatePath('/');
-    revalidatePath('/admin/hero');
+    cfg.revalidate.forEach((p) => revalidatePath(p));
     return { error: error?.message, record: updated };
-  } else {
-    const { data: inserted, error } = await supabase
-      .from('hero_slides')
-      .insert(cleanData(data))
-      .select()
+  }
+
+  const { data: inserted, error } = await supabase
+    .from(cfg.table)
+    .insert(cleanData(data))
+    .select()
+    .single();
+
+  cfg.revalidate.forEach((p) => revalidatePath(p));
+  return { error: error?.message, record: inserted };
+}
+
+async function remove(cfg: ResourceConfig, id: number) {
+  await verifyAdminSession();
+  const supabase = await createAdminClient();
+
+  if (cfg.storageField) {
+    const { data: existing } = await supabase
+      .from(cfg.table)
+      .select(cfg.storageField)
+      .eq('id', id)
       .single();
 
-    revalidatePath('/');
-    revalidatePath('/admin/hero');
-    return { error: error?.message, record: inserted };
+    const prevUrl = (existing as Record<string, unknown> | null)?.[cfg.storageField] as
+      | string
+      | undefined;
+    if (prevUrl) {
+      await deleteStorageFile(supabase, prevUrl);
+    }
   }
+
+  const { error } = await supabase.from(cfg.table).delete().eq('id', id);
+  cfg.revalidate.forEach((p) => revalidatePath(p));
+  return { error: error?.message };
+}
+
+// ─── Resource configurations ──────────────────────────────────
+
+const HERO_CFG: ResourceConfig = {
+  table: 'hero_slides',
+  revalidate: ['/', '/admin/hero'],
+  storageField: 'image',
+};
+
+const IMPACT_CFG: ResourceConfig = {
+  table: 'impact_stats',
+  revalidate: ['/', '/admin/impact'],
+};
+
+const GALLERY_CFG: ResourceConfig = {
+  table: 'gallery_images',
+  revalidate: ['/', '/admin/gallery'],
+  storageField: 'src',
+};
+
+const BLOG_CFG: ResourceConfig = {
+  table: 'blog_posts',
+  revalidate: ['/', '/blog', '/admin/blog'],
+  storageField: 'image',
+};
+
+const TEAM_CFG: ResourceConfig = {
+  table: 'team_members',
+  revalidate: ['/about', '/our-solution', '/admin/team'],
+  storageField: 'image',
+};
+
+// ─── Public server actions ────────────────────────────────────
+
+export async function upsertHeroSlide(data: Record<string, unknown>, id?: number) {
+  return upsert(HERO_CFG, data, id);
 }
 
 export async function deleteHeroSlide(id: number) {
-  const supabase = await createClient();
-
-  // Fetch image URL before deleting so we can clean up storage
-  const { data: existing } = await supabase
-    .from('hero_slides')
-    .select('image')
-    .eq('id', id)
-    .single();
-
-  if (existing?.image) {
-    await deleteStorageFile(supabase, existing.image as string);
-  }
-
-  const { error } = await supabase.from('hero_slides').delete().eq('id', id);
-  revalidatePath('/');
-  revalidatePath('/admin/hero');
-  return { error: error?.message };
+  return remove(HERO_CFG, id);
 }
 
-// ─────────────────────────────────────────────────────────────
-// IMPACT STATS
-// ─────────────────────────────────────────────────────────────
-
 export async function upsertImpactStat(data: Record<string, unknown>, id?: number) {
-  const supabase = await createClient();
-
-  if (id) {
-    const { data: updated, error } = await supabase
-      .from('impact_stats')
-      .update(cleanData(data))
-      .eq('id', id)
-      .select()
-      .single();
-
-    revalidatePath('/');
-    revalidatePath('/admin/impact');
-    return { error: error?.message, record: updated };
-  } else {
-    const { data: inserted, error } = await supabase
-      .from('impact_stats')
-      .insert(cleanData(data))
-      .select()
-      .single();
-
-    revalidatePath('/');
-    revalidatePath('/admin/impact');
-    return { error: error?.message, record: inserted };
-  }
+  return upsert(IMPACT_CFG, data, id);
 }
 
 export async function deleteImpactStat(id: number) {
-  const supabase = await createClient();
-  const { error } = await supabase.from('impact_stats').delete().eq('id', id);
-  revalidatePath('/');
-  revalidatePath('/admin/impact');
-  return { error: error?.message };
+  return remove(IMPACT_CFG, id);
 }
 
-// ─────────────────────────────────────────────────────────────
-// GALLERY IMAGES
-// ─────────────────────────────────────────────────────────────
-
 export async function upsertGalleryImage(data: Record<string, unknown>, id?: number) {
-  const supabase = await createClient();
-
-  if (id) {
-    // If image (src) changed, delete old storage file
-    const { data: existing } = await supabase
-      .from('gallery_images')
-      .select('src')
-      .eq('id', id)
-      .single();
-
-    if (existing?.src && existing.src !== data.src) {
-      await deleteStorageFile(supabase, existing.src as string);
-    }
-
-    const { data: updated, error } = await supabase
-      .from('gallery_images')
-      .update(cleanData(data))
-      .eq('id', id)
-      .select()
-      .single();
-
-    revalidatePath('/');
-    revalidatePath('/admin/gallery');
-    return { error: error?.message, record: updated };
-  } else {
-    const { data: inserted, error } = await supabase
-      .from('gallery_images')
-      .insert(cleanData(data))
-      .select()
-      .single();
-
-    revalidatePath('/');
-    revalidatePath('/admin/gallery');
-    return { error: error?.message, record: inserted };
-  }
+  return upsert(GALLERY_CFG, data, id);
 }
 
 export async function deleteGalleryImage(id: number) {
-  const supabase = await createClient();
-
-  // Fetch src before deleting
-  const { data: existing } = await supabase
-    .from('gallery_images')
-    .select('src')
-    .eq('id', id)
-    .single();
-
-  if (existing?.src) {
-    await deleteStorageFile(supabase, existing.src as string);
-  }
-
-  const { error } = await supabase.from('gallery_images').delete().eq('id', id);
-  revalidatePath('/');
-  revalidatePath('/admin/gallery');
-  return { error: error?.message };
+  return remove(GALLERY_CFG, id);
 }
 
-// ─────────────────────────────────────────────────────────────
-// BLOG POSTS
-// ─────────────────────────────────────────────────────────────
-
 export async function upsertBlogPost(data: Record<string, unknown>, id?: number) {
-  const supabase = await createClient();
-
-  if (id) {
-    // If cover image changed, delete old storage file
-    const { data: existing } = await supabase
-      .from('blog_posts')
-      .select('image')
-      .eq('id', id)
-      .single();
-
-    if (existing?.image && existing.image !== data.image) {
-      await deleteStorageFile(supabase, existing.image as string);
-    }
-
-    const { data: updated, error } = await supabase
-      .from('blog_posts')
-      .update(cleanData(data))
-      .eq('id', id)
-      .select()
-      .single();
-
-    revalidatePath('/');
-    revalidatePath('/blog');
-    revalidatePath('/admin/blog');
-    return { error: error?.message, record: updated };
-  } else {
-    const { data: inserted, error } = await supabase
-      .from('blog_posts')
-      .insert(cleanData(data))
-      .select()
-      .single();
-
-    revalidatePath('/');
-    revalidatePath('/blog');
-    revalidatePath('/admin/blog');
-    return { error: error?.message, record: inserted };
-  }
+  return upsert(BLOG_CFG, data, id);
 }
 
 export async function deleteBlogPost(id: number) {
-  const supabase = await createClient();
-
-  // Fetch image before deleting
-  const { data: existing } = await supabase
-    .from('blog_posts')
-    .select('image')
-    .eq('id', id)
-    .single();
-
-  if (existing?.image) {
-    await deleteStorageFile(supabase, existing.image as string);
-  }
-
-  const { error } = await supabase.from('blog_posts').delete().eq('id', id);
-  revalidatePath('/');
-  revalidatePath('/blog');
-  revalidatePath('/admin/blog');
-  return { error: error?.message };
+  return remove(BLOG_CFG, id);
 }
 
-// ─────────────────────────────────────────────────────────────
-// TEAM MEMBERS
-// ─────────────────────────────────────────────────────────────
-
 export async function upsertTeamMember(data: Record<string, unknown>, id?: number) {
-  const supabase = await createClient();
-
-  if (id) {
-    const { data: existing } = await supabase
-      .from('team_members')
-      .select('image')
-      .eq('id', id)
-      .single();
-
-    if (existing?.image && existing.image !== data.image) {
-      await deleteStorageFile(supabase, existing.image as string);
-    }
-
-    const { data: updated, error } = await supabase
-      .from('team_members')
-      .update(cleanData(data))
-      .eq('id', id)
-      .select()
-      .single();
-
-    revalidatePath('/about');
-    revalidatePath('/our-solution');
-    revalidatePath('/admin/team');
-    return { error: error?.message, record: updated };
-  } else {
-    const { data: inserted, error } = await supabase
-      .from('team_members')
-      .insert(cleanData(data))
-      .select()
-      .single();
-
-    revalidatePath('/about');
-    revalidatePath('/our-solution');
-    revalidatePath('/admin/team');
-    return { error: error?.message, record: inserted };
-  }
+  return upsert(TEAM_CFG, data, id);
 }
 
 export async function deleteTeamMember(id: number) {
-  const supabase = await createClient();
-
-  const { data: existing } = await supabase
-    .from('team_members')
-    .select('image')
-    .eq('id', id)
-    .single();
-
-  if (existing?.image) {
-    await deleteStorageFile(supabase, existing.image as string);
-  }
-
-  const { error } = await supabase.from('team_members').delete().eq('id', id);
-  revalidatePath('/about');
-  revalidatePath('/our-solution');
-  revalidatePath('/admin/team');
-  return { error: error?.message };
+  return remove(TEAM_CFG, id);
 }

@@ -8,42 +8,42 @@ import { AlertTriangle, TrendingDown, BookX, Globe, ArrowRight } from 'lucide-re
 import DonationSection from './DonationSection';
 import ContactSection from './ContactSection';
 
-const crisisStats = [
-  {
-    stat: '87%',
-    label: 'of 10-year-olds in Sub-Saharan Africa cannot read and understand a simple story',
-    icon: BookX,
-    color: 'text-[#00ABBE]', // Changed to primary to balance
-    bg: 'bg-[#00ABBE]/10',
-  },
-  {
-    stat: '2x',
-    label: 'More likely to remain in poverty without basic literacy skills',
-    icon: TrendingDown,
-    color: 'text-[#FF6B56]', // Kept as accent
-    bg: 'bg-[#FF6B56]/10',
-  },
-  {
-    stat: '600M+',
-    label: 'Children worldwide affected by learning poverty',
-    icon: Globe,
-    color: 'text-[#00ABBE]', // Changed to primary
-    bg: 'bg-[#00ABBE]/10',
-  },
-  {
-    stat: 'SDG 4',
-    label: 'Quality Education — at risk of being unattainable without urgent intervention',
-    icon: AlertTriangle,
-    color: 'text-[#00ABBE]',
-    bg: 'bg-[#00ABBE]/10',
-  },
+const causes = [
+  { title: 'Limited Materials', desc: 'Limited access to age-appropriate and engaging reading materials, especially for children from low-income households' },
+  { title: 'Cost Barriers', desc: 'Cost barriers that prevent families from accessing quality literacy programmes and digital learning tools' },
+  { title: 'Weak Reading Culture', desc: 'Weak reading culture at home and in communities, where reading is not seen as a daily life skill' },
+  { title: 'Limited Data Use', desc: 'Limited use of data and evidence to improve literacy interventions and learning outcomes' },
 ];
 
-const causes = [
-  { title: 'Weak Academic Performance', desc: 'Students who cannot read struggle in all subjects, creating cascading educational failure.' },
-  { title: 'Reduced Confidence', desc: 'Literacy gaps damage children\'s self-image and communication skills, limiting participation.' },
-  { title: 'Limited Employment', desc: 'Adults with poor literacy have narrowed career options and economic mobility.' },
-  { title: 'Economic Inequality', desc: 'Illiteracy perpetuates cycles of poverty across generations and communities.' },
+const crisisStats = [
+  { 
+    stat: '87%', 
+    label: 'of 10-year-olds cannot read and understand a simple story',
+    icon: BookX,
+    color: 'text-[#00ABBE]',
+    detail: 'This represents millions of children across Sub-Saharan Africa who lack basic literacy skills despite attending school.'
+  },
+  { 
+    stat: '9/10', 
+    label: 'children in low-income countries cannot read by age 10',
+    icon: AlertTriangle,
+    color: 'text-[#FF6B56]',
+    detail: 'The learning crisis disproportionately affects the most vulnerable populations, perpetuating cycles of poverty.'
+  },
+  { 
+    stat: '617M', 
+    label: 'children and adolescents worldwide cannot read',
+    icon: Globe,
+    color: 'text-[#00ABBE]',
+    detail: 'This global statistic highlights the systemic nature of the literacy crisis across developing regions.'
+  },
+  { 
+    stat: '2x', 
+    label: 'more likely to be out of school if unable to read',
+    icon: TrendingDown,
+    color: 'text-[#FF6B56]',
+    detail: 'Children who fail to acquire basic literacy skills are at significantly higher risk of dropping out of school entirely.'
+  },
 ];
 
 function RevealSection({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -74,31 +74,45 @@ export default function TheProblemPage() {
         <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 w-full text-center flex flex-col items-center">
           <RevealSection className="flex flex-col items-center">
             <span className="section-tag mb-4 justify-center" >The Crisis</span>
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">The Problem</h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">The Problem</h1>
+            <p className="text-xl sm:text-2xl text-white/90 max-w-3xl leading-relaxed font-medium">
+              Sub-Saharan Africa is at the epicentre of a global learning crisis.
+            </p>
           </RevealSection>
         </div>
       </section>
 
       {/* Stats Cards */}
-      <section className="py-20 lg:py-28 bg-gray-50 relative overflow-hidden">
-        <div className="absolute inset-0 dot-pattern opacity-40" />
+      <section className="py-20 lg:py-28 bg-white relative overflow-hidden">
         <div className="relative max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
           <RevealSection className="text-center mb-16">
             <span className="section-tag" >By the Numbers</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0a1628]">
               The Scale of the Problem
             </h2>
           </RevealSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {crisisStats.map((item, i) => (
-              <RevealSection key={i} delay={i * 0.1}>
-                <div className={`bg-white rounded-3xl p-8 shadow-xl shadow-black/5 text-center card-hover border border-gray-100`}>
-                  <div className={`w-16 h-16 ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-5`}>
-                    <item.icon size={28} className={item.color} />
+              <RevealSection key={i} delay={0.1 + (i * 0.1)}>
+                <div className="group">
+                  {/* Stat number */}
+                  <div className="text-6xl lg:text-7xl font-black text-[#0a1628] mb-4 tracking-tight">
+                    {item.stat}
                   </div>
-                  <div className={`text-4xl font-black mb-3 ${item.color}`}>{item.stat}</div>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.label}</p>
+                  
+                  {/* Divider */}
+                  <div className="w-16 h-1 bg-[#00ABBE] mb-6 group-hover:w-24 transition-all duration-300" />
+                  
+                  {/* Label */}
+                  <p className="text-gray-700 text-base leading-relaxed mb-4 font-medium">
+                    {item.label}
+                  </p>
+                  
+                  {/* Detail */}
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    {item.detail}
+                  </p>
                 </div>
               </RevealSection>
             ))}
@@ -127,12 +141,12 @@ export default function TheProblemPage() {
             <RevealSection delay={0.2}>
               <p className="flex items-center gap-2.5 text-[#00ABBE] text-xs font-bold uppercase tracking-widest mb-5">
                 <span className="w-6 h-px bg-[#00ABBE]" />
-                The Consequences
+                Root Causes
                 <span className="w-6 h-px bg-[#00ABBE]" />
               </p>
               <h2 className="text-[32px] font-bold text-[#0a1628] leading-tight mb-7">
-                Low Literacy Leads To{' '}
-                <span >Life-Long Barriers</span>
+                The Literacy Crisis is Driven By{' '}
+                <span >Interconnected Factors</span>
               </h2>
             </RevealSection>
 
@@ -163,13 +177,14 @@ export default function TheProblemPage() {
           <Image src="/img/intervention.jpg" alt="" fill className="object-cover object-center" sizes="100vw" quality={75} />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-6 text-center">
-          <RevealSection>
+          <RevealSection className="flex flex-col items-center">
+            <span className="section-tag mb-4 justify-center">Why It Matters</span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628] mb-8">
               Without Urgent Intervention, We Risk Losing{' '}
               <span className="text-[#00ABBE]">an Entire Generation</span>
             </h2>
             <p className="text-gray-500 text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
-              Sub-Saharan Africa faces the risk of losing an entire generation to learning poverty — making SDG 4 (Quality Education) unattainable without decisive action now.
+              Sub-Saharan Africa risks losing an entire generation to learning poverty — making SDG 4 (Quality Education) unattainable.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/our-solution" className="btn-primary inline-flex">

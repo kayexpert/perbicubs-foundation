@@ -11,15 +11,15 @@ export const metadata: Metadata = {
 
 export default async function About() {
   const supabase = await createClient();
-  const { data: teamMembers } = await supabase
-    .from('team_members')
-    .select('*')
-    .order('ordering');
+  const [{ data: teamMembers }, { data: statsData }] = await Promise.all([
+    supabase.from('team_members').select('*').order('ordering'),
+    supabase.from('impact_stats').select('*').order('ordering')
+  ]);
 
   return (
     <>
       <Navbar />
-      <AboutPage teamMembers={teamMembers ?? undefined} />
+      <AboutPage teamMembers={teamMembers ?? undefined} stats={statsData ?? undefined} />
       <Footer />
     </>
   );

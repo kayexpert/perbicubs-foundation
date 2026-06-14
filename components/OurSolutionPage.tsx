@@ -4,12 +4,10 @@
 import Image from 'next/image';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { TabletSmartphone, Gamepad2, LineChart } from 'lucide-react';
-import SolutionApproachSection from './SolutionApproachSection';
-import ProvenImpactSection from './ProvenImpactSection';
+import { BookOpen, Sparkles, Target, BarChart3, Users } from 'lucide-react';
+import OurResponseSection from './OurResponseSection';
 import GallerySection from './GallerySection';
 import BlogSection from './BlogSection';
-import TeamSection, { type TeamMember } from './TeamSection';
 import type { GalleryImage } from './HomePage';
 
 
@@ -31,10 +29,9 @@ function RevealSection({ children, delay = 0, className = '' }: { children: Reac
 
 interface OurSolutionPageProps {
   galleryImages?: GalleryImage[];
-  teamMembers?: TeamMember[];
 }
 
-export default function OurSolutionPage({ galleryImages, teamMembers }: OurSolutionPageProps) {
+export default function OurSolutionPage({ galleryImages }: OurSolutionPageProps) {
   return (
     <main>
       {/* ═══════════════════════════════════════════════════════
@@ -54,54 +51,39 @@ export default function OurSolutionPage({ galleryImages, teamMembers }: OurSolut
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          SECTION 1: THE MODEL (Infographic)
+          SECTION 1: OUR RESPONSE
       ═══════════════════════════════════════════════════════ */}
-      <SolutionApproachSection />
+      <OurResponseSection />
 
       {/* ═══════════════════════════════════════════════════════
-          SECTION 2: WHY IT WORKS (Feature Cards)
+          SECTION 2: WHY IT WORKS (5-Point System)
       ═══════════════════════════════════════════════════════ */}
-      <section className="py-20 lg:py-28 bg-gray-50 border-y border-gray-100">
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-[#00ABBE]/5">
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
           <RevealSection className="text-center max-w-3xl mx-auto mb-16">
-            <span className="section-tag justify-center" >The Differentiator</span>
+            <span className="section-tag justify-center">The Differentiator</span>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Why The PerbiCubs Model Works</h2>
             <p className="text-gray-500 text-lg leading-relaxed">
-              We don&apos;t just distribute books and hope for the best. We&apos;ve engineered an ecosystem that guarantees engagement, tracks progress, and delivers measurable outcomes.
+              PerbiCubs Foundation uses an integrated system that transforms reading from a task into a habit.
             </p>
           </RevealSection>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              {
-                icon: TabletSmartphone,
-                title: 'Digital Scale',
-                desc: 'A physical library serves a neighborhood. A digital library serves a continent. Over 10,000 curated books available instantly, with offline fallbacks for remote areas.',
-                color: '#00ABBE',
-                bg: 'bg-[#00ABBE]/5',
-              },
-              {
-                icon: Gamepad2,
-                title: 'Gamified Engagement',
-                desc: 'Reading isn\'t a chore, it\'s an adventure. We use behavioral psychology and game mechanics (leaderboards, badges, levels) to build intrinsic motivation.',
-                color: '#00ABBE', // Changed from #FF6B56 to primary
-                bg: 'bg-[#00ABBE]/5',
-              },
-              {
-                icon: LineChart,
-                title: 'Real-Time Accountability',
-                desc: 'Every page turned, every quiz answered, and every minute spent reading is tracked. Teachers and parents intervene precisely when a child needs help.',
-                color: '#0a1628',
-                bg: 'bg-[#0a1628]/5',
-              },
-            ].map((card, i) => (
+              { title: 'Access', desc: 'Providing thousands of curated digital books for children.', icon: BookOpen, color: 'from-blue-500 to-blue-600' },
+              { title: 'Engagement', desc: 'Making reading fun through quizzes, rewards, and gamification.', icon: Sparkles, color: 'from-purple-500 to-purple-600' },
+              { title: 'Assessment', desc: 'Ensuring children start at the right reading level.', icon: Target, color: 'from-emerald-500 to-emerald-600' },
+              { title: 'Accountability', desc: 'Tracking progress through real-time reports.', icon: BarChart3, color: 'from-orange-500 to-orange-600' },
+              { title: 'Support', desc: 'On-the-ground and digital support for schools and learners.', icon: Users, color: 'from-pink-500 to-pink-600' },
+            ].map((item, i) => (
               <RevealSection key={i} delay={i * 0.1}>
-                <div className={`h-full rounded-3xl p-8 border border-gray-200 bg-white shadow-xl shadow-black-[0.02] transition-transform duration-300 hover:-translate-y-2`}>
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-colors ${card.bg}`}>
-                    <card.icon size={26} style={{ color: card.color }} />
+                <div className="group h-full rounded-3xl p-8 bg-white border border-gray-100 shadow-lg shadow-gray-200/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#00ABBE]/10 hover:-translate-y-1 relative overflow-hidden text-center">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#00ABBE]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 transition-transform duration-500 group-hover:scale-150" />
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-6 shadow-lg shadow-gray-200 group-hover:scale-110 transition-transform duration-300 mx-auto`}>
+                    <item.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{card.title}</h3>
-                  <p className="text-gray-500 leading-relaxed text-sm mb-0">{card.desc}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#00ABBE] transition-colors">{item.title}</h3>
+                  <p className="text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>
               </RevealSection>
             ))}
@@ -110,10 +92,55 @@ export default function OurSolutionPage({ galleryImages, teamMembers }: OurSolut
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          SECTION 3: IMPACT & GALLERY (Replaces "The Result")
+          SECTION 3: WHY IT WORKS & WHY IT MATTERS
       ═══════════════════════════════════════════════════════ */}
-      <ProvenImpactSection />
-      <TeamSection members={teamMembers} />
+      <section className="py-20 lg:py-28 relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/img/solution.jpg"
+            alt="Children reading"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            quality={80}
+          />
+          <div className="absolute inset-0 bg-[#0a1628]/95" />
+        </div>
+
+        <div className="relative max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Left: Why It Works */}
+            <RevealSection className="text-center lg:text-left">
+              <span className="section-tag">Why It Works</span>
+              <h2 className="text-xl sm:text-xl font-normal text-white mb-4">
+                We combine access, motivation, and accountability — turning reading into a habit, not a task.
+              </h2>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                Our integrated system ensures children have access to thousands of curated digital books, engage through gamified learning experiences, and stay motivated with real-time progress tracking. By making reading enjoyable and measurable, we transform it from a chore into a lifelong habit.
+              </p>
+            </RevealSection>
+
+            {/* Divider */}
+            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-white/20" style={{ transform: 'translateX(-50%)' }} />
+
+            {/* Right: Why It Matters */}
+            <RevealSection className="text-center lg:text-left">
+              <span className="section-tag">Why It Matters</span>
+              <h2 className="text-xl sm:text-xl font-normal text-white mb-4">
+                Literacy is the foundation of all learning and the key to breaking the cycle of poverty.
+              </h2>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                When children can read, they can learn anything. Our approach addresses the root causes of learning poverty by providing scalable, measurable interventions that give every child the power to read, understand, and thrive in school and beyond.
+              </p>
+            </RevealSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          SECTION 4: GALLERY & BLOG
+      ═══════════════════════════════════════════════════════ */}
       <BlogSection />
       <GallerySection images={galleryImages} />
 

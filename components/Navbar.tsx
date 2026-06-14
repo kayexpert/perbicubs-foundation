@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, BookOpen, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+
+import Image from 'next/image';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -54,17 +56,15 @@ export default function Navbar() {
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-300 ${isTransparent ? 'bg-white/20 border border-white/30' : 'bg-gray-900'}`}>
-              <BookOpen size={20} className="text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span
-                className={`font-bold text-[1.1rem] leading-none tracking-tight transition-colors duration-300 ${isTransparent ? 'text-white' : 'text-gray-900'}`}
-                style={{ fontFamily: 'Quicksand, sans-serif' }}
-              >
-                PerbiCubs
-              </span>
+          <Link href="/" className="flex items-center group">
+            <div className="relative w-[250px] h-[65px] transition-transform duration-300 group-hover:scale-105">
+              <Image 
+                src={isTransparent ? "/img/logo_dark.png" : "/img/logo_light.png"} 
+                alt="PerbiCubs Foundation" 
+                fill 
+                className="object-contain object-left"
+                priority
+              />
             </div>
           </Link>
 
@@ -89,8 +89,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-6">
             <Link
               href="/donate"
-              className="bg-[#56B543] hover:bg-[#489938] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center gap-2"
-              style={{ background: '#00ABBE' }}
+              className="bg-[#00ABBE] hover:bg-[#008fa0] text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md flex items-center gap-2"
             >
               Sponsor a Child <ArrowRight size={16} />
             </Link>
@@ -127,13 +126,15 @@ export default function Navbar() {
         >
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-                  <BookOpen size={16} className="text-white" />
-                </div>
-                <span className="font-bold text-gray-900">PerbiCubs Foundation</span>
-              </div>
+              <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                <Link href="/" className="relative w-[160px] h-[40px]" onClick={() => setIsOpen(false)}>
+                  <Image 
+                    src="/img/logo_dark.png" 
+                    alt="PerbiCubs Foundation" 
+                    fill 
+                    className="object-contain object-left"
+                  />
+                </Link>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
@@ -168,7 +169,7 @@ export default function Navbar() {
               <Link href="/donate" className="btn-accent w-full justify-center">
                 Sponsor a Child
               </Link>
-              <Link href="/get-involved" className="btn-primary w-full justify-center" style={{ background: 'transparent', border: '2px solid #00ABBE', color: '#00ABBE' }}>
+              <Link href="/get-involved" className="btn-outline w-full justify-center text-[#00ABBE] border-[#00ABBE]">
                 Become a Partner
               </Link>
             </div>

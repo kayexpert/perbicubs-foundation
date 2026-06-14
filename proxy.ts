@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from '@/utils/supabase/middleware';
 import { jwtVerify } from 'jose';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ── Protect /admin routes (except /admin/login) ───────────────
@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
   return updateSession(request);
 }
 
-export const config = {
+export const proxyConfig = {
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],

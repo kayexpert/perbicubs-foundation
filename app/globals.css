@@ -244,7 +244,6 @@ h1, h2, h3, h4, h5 {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0,171,190,0.4);
 }
 
 .btn-accent {
@@ -268,7 +267,6 @@ h1, h2, h3, h4, h5 {
 
 .btn-accent:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(255,107,86,0.4);
 }
 
 .btn-outline {

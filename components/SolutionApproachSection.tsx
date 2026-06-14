@@ -8,15 +8,15 @@ import { motion, useInView } from 'framer-motion';
 const leftSteps = [
   {
     num: '01',
-    title: 'Access',
-    desc: 'Digital reading materials for every child, removing financial and geographic barriers.',
+    title: 'Expanding Literacy Access',
+    desc: 'Removing financial barriers so underserved children can access quality literacy and learning opportunities.',
     color: '#00ABBE',
     bg: 'bg-[#00ABBE]',
   },
   {
-    num: '03',
-    title: 'Assessment',
-    desc: 'Placement-based learning levels ensuring every child starts where they need to be.',
+    num: '02',
+    title: 'Research, Data & Innovation',
+    desc: 'Using evidence, technology, and insights to improve literacy outcomes and inform action.',
     color: '#00ABBE',
     bg: 'bg-[#00ABBE]',
   },
@@ -25,19 +25,19 @@ const leftSteps = [
 // Right col: 02 (top-right) and 04 (bottom-right)
 const rightSteps = [
   {
-    num: '02',
-    title: 'Engagement',
-    desc: 'Quizzes, rewards, and gamified learning that make reading exciting and habitual.',
+    num: '03',
+    title: 'Building a Reading Culture',
+    desc: 'Promoting reading as enjoyable, valuable, and essential for lifelong success.',
     color: '#00ABBE',
     bg: 'bg-[#00ABBE]',
   },
-  {
-    num: '04',
-    title: 'Accountability',
-    desc: 'Real-time reporting and progress tracking for schools, parents, and partners.',
-    color: '#00ABBE',
-    bg: 'bg-[#00ABBE]',
-  },
+  // {
+  //   num: '04',
+  //   title: 'Accountability',
+  //   desc: 'Real-time reporting and progress tracking for schools, parents, and partners.',
+  //   color: '#00ABBE',
+  //   bg: 'bg-[#00ABBE]',
+  // },
 ];
 
 export default function SolutionApproachSection() {
@@ -67,7 +67,7 @@ export default function SolutionApproachSection() {
             <span className="text-[#00ABBE]">Literacy Transformation</span>
           </h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            PerbiCubs Foundation removes barriers to literacy through an integrated, evidence-based system.
+            PerbiCubs Foundation removes barriers to literacy through 
           </p>
         </motion.div>
 

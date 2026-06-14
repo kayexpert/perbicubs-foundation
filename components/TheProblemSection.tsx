@@ -7,10 +7,10 @@ import { motion, useInView } from 'framer-motion';
 import { BookX, TrendingDown, Briefcase, RotateCcw, ArrowRight } from 'lucide-react';
 
 const consequences = [
-  { icon: BookX,        label: 'Poor academic performance' },
-  { icon: TrendingDown, label: 'High dropout rates' },
-  { icon: Briefcase,    label: 'Limited job opportunities' },
-  { icon: RotateCcw,    label: 'Intergenerational poverty' },
+  { icon: BookX,        label: '87% of 10-year-olds cannot read' },
+  { icon: TrendingDown, label: 'Outcomes remain critically low' },
+  { icon: Briefcase,    label: 'No foundational literacy' },
+  { icon: RotateCcw,    label: 'Large class sizes worsen issue' },
 ];
 
 export default function TheProblemSection() {
@@ -73,18 +73,17 @@ export default function TheProblemSection() {
             {/* Body text */}
             <p className="text-base text-gray-500 leading-relaxed mb-3">
               <span className="font-bold text-[#0a1628]">
-                87% of 10-year-olds in Sub-Saharan Africa
+                Sub-Saharan Africa
               </span>{' '}
-              cannot read and understand a simple story.
+              is at the epicentre of a global learning crisis.
             </p>
             <p className="text-base text-gray-500 leading-relaxed mb-7">
-              This means millions of children are sitting in classrooms without foundational
-              skills — unable to fully learn, grow, or succeed.
+              Despite increased school enrolment, learning outcomes remain critically low. Many children progress through school without foundational literacy.
             </p>
 
             {/* Key consequences — 2×2 grid, primary */}
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
-              Key Consequences
+              The Reality
             </p>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-3 mb-8">
               {consequences.map((item, i) => (

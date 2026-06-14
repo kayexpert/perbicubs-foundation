@@ -1,27 +1,43 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { validateCheckoutPayload, ValidationError } from '@/lib/validation';
 
-// Ensure the secret key is provided before initializing Stripe
+// Ensure the secret key is provided before initializing Stripe.
 // If it's missing, we instantiate it but API calls will fail when actually checking out.
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
   apiVersion: '2026-03-25.dahlia',
 });
 
+const MAX_REQUEST_BODY_BYTES = 8 * 1024; // 8 KB — donations never need more
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { amount, currency, email, name, payMethod, isDedicated, dedicateName } = body;
+    const contentLength = Number(req.headers.get('content-length') ?? '0');
+    if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BODY_BYTES) {
+      return NextResponse.json({ error: 'Request body is too large.' }, { status: 413 });
+    }
 
-    // Validate inputs
-    if (!amount || amount <= 0) {
-      return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
+    let raw: unknown;
+    try {
+      raw = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Request body must be valid JSON.' }, { status: 400 });
     }
-    if (!currency) {
-      return NextResponse.json({ error: 'Invalid currency' }, { status: 400 });
+
+    let payload;
+    try {
+      payload = validateCheckoutPayload(raw);
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        return NextResponse.json({ error: err.message }, { status: 400 });
+      }
+      throw err;
     }
+
+    const { amount, currency, email, name, payMethod, isDedicated, dedicateName } = payload;
 
     // Convert amount to cents/pesewas (Stripe uses smallest currency unit)
-    const unitAmount = Math.round(Number(amount) * 100);
+    const unitAmount = Math.round(amount * 100);
 
     // Create Checkout Session
     // Define the base URL dynamically based on the request origin
@@ -62,10 +78,11 @@ export async function POST(req: Request) {
     const session = await stripe.checkout.sessions.create(sessionConfig);
 
     return NextResponse.json({ url: session.url });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Stripe Checkout Error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Error creating checkout session';
     return NextResponse.json(
-      { error: error.message || 'Error creating checkout session' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

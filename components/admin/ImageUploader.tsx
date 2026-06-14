@@ -112,10 +112,24 @@ export default function ImageUploader({
   }, [doUpload]);
 
   const applyUrl = () => {
-    if (urlInput.trim()) {
-      onChange(urlInput.trim());
-      setUploadError('');
+    const url = urlInput.trim();
+    if (!url) return;
+
+    // Only allow http(s) URLs to prevent javascript:/data:/vbscript: schemes
+    // from being inserted into <img src>.
+    try {
+      const parsed = new URL(url);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        setUploadError('URL must start with http:// or https://');
+        return;
+      }
+    } catch {
+      setUploadError('Please enter a valid URL');
+      return;
     }
+
+    onChange(url);
+    setUploadError('');
   };
 
   return (
@@ -239,7 +253,7 @@ export default function ImageUploader({
           <button
             type="button"
             onClick={applyUrl}
-            className="px-4 py-3 bg-[#0a1628] text-white text-sm font-semibold rounded-xl hover:bg-[#1a2d48] transition-colors whitespace-nowrap"
+            className="px-4 py-3 bg-[#00ABBE] text-white text-sm font-semibold rounded-xl hover:bg-[#009aab] transition-colors whitespace-nowrap"
           >
             Use this
           </button>

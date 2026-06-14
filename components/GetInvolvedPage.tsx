@@ -40,8 +40,8 @@ const INVOLVE_CARDS = [
   {
     id: 'corporate',
     icon: Building2,
-    title: 'Corporate Partnership',
-    desc: 'Align your brand with our mission. We work with corporations to scale our impact through CSR initiatives and employee engagement.',
+    title: 'Partner With Us',
+    desc: 'Collaborate through schools, CSR, or research.',
     action: 'Become a Partner',
     href: '#contact', // Scrolls down
     image: '/img/flagship_ini.jpg'

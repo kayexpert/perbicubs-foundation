@@ -13,6 +13,8 @@ import DonationSection from './DonationSection';
 import ContactSection from './ContactSection';
 import TeamSection, { type TeamMember } from './TeamSection';
 
+import type { ImpactStat } from './HomePage';
+
 function Section({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -31,9 +33,10 @@ function Section({ children, className = '' }: { children: React.ReactNode; clas
 
 interface AboutPageProps {
   teamMembers?: TeamMember[];
+  stats?: ImpactStat[];
 }
 
-export default function AboutPage({ teamMembers }: AboutPageProps) {
+export default function AboutPage({ teamMembers, stats }: AboutPageProps) {
   return (
     <main>
       {/* ─── Page Hero ─── */}
@@ -53,6 +56,63 @@ export default function AboutPage({ teamMembers }: AboutPageProps) {
       {/* ─── Who We Are (interactive tabs component) ─── */}
       <WhoWeAreSection />
 
+      {/* ─── The PerbiCubs Story ─── */}
+      <section className="py-14 lg:py-20 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 dot-pattern opacity-15" aria-hidden />
+        <div className="relative max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-6">
+          <Section className="text-center mb-10">
+            <p className="flex items-center justify-center gap-3 text-[#FF6B56] text-xs font-bold uppercase tracking-widest mb-4">
+              <span className="w-8 h-px bg-[#FF6B56]" />
+              The PerbiCubs Story
+              <span className="w-8 h-px bg-[#FF6B56]" />
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628] leading-tight">
+              From a Reading App to a{' '}
+              <span className="text-[#00ABBE]">Literacy Movement</span>
+            </h2>
+          </Section>
+
+          <div className="max-w-[760px] mx-auto">
+            <Section>
+              <p
+                className="text-gray-500 text-xl leading-[1.8] mb-6 font-medium"
+                style={{ textAlign: 'left' }}
+              >
+                <span
+                  className="float-left text-5xl font-bold leading-[0.9] mr-2 mt-1"
+                  style={{ color: '#00ABBE' }}
+                >
+                  P
+                </span>
+                erbiCubs was founded to address one of the most significant
+                barriers to educational success in Africa: low literacy levels
+                among children.
+              </p>
+            </Section>
+
+            <Section>
+              <p className="text-gray-500 text-lg leading-[1.85] mb-6">
+                As an education technology and literacy company, PerbiCubs is
+                dedicated to making reading engaging, measurable, and
+                rewarding. Through its digital platform and programmes,
+                PerbiCubs helps children build strong reading habits by
+                combining access to books, quizzes, gamification, and
+                structured engagement.
+              </p>
+            </Section>
+
+            <Section>
+              <p className="text-gray-500 text-lg leading-[1.85]">
+                The PerbiCubs model goes beyond simply providing access to
+                books. It combines access, engagement, assessment,
+                accountability, and support to ensure that children not only
+                read more but also grow into confident, lifelong learners.
+              </p>
+            </Section>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Why We Exist ─── */}
       <section
         className="py-20 lg:py-28 relative parallax-section overflow-hidden"
@@ -67,16 +127,28 @@ export default function AboutPage({ teamMembers }: AboutPageProps) {
                 Why We Exist
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8">
-                Millions Are in School, But Cannot Read
+                Bridging the Gap Between Access and Literacy
               </h2>
-              <p className="text-white/80 text-xl leading-relaxed mb-6">
-                Without foundational literacy, children are unable to progress academically or economically — trapping families in cycles of poverty.
+              <p className="text-white/80 text-lg leading-relaxed mb-6">
+                While PerbiCubs provides an effective literacy solution, access
+                remains one of the greatest barriers facing millions of
+                children across Sub-Saharan Africa. The PerbiCubs Foundation
+                was established to bridge this gap.
+              </p>
+              <p className="text-white/70 text-lg leading-relaxed mb-6">
+                As a mission-driven non-profit organisation, the PerbiCubs
+                Foundation is dedicated to expanding access to quality
+                literacy and learning opportunities to underprivileged
+                children and youth.
               </p>
               <p className="text-white/70 text-lg leading-relaxed mb-10">
-                We exist to change that. By combining digital access, engaging content, and real-time accountability, we are giving every child the tools they need to read — and to thrive.
+                Building on the proven literacy model developed by PerbiCubs,
+                the Foundation focuses on ensuring that children who would
+                otherwise be left behind have the opportunity to develop the
+                literacy skills needed to thrive in school and beyond.
               </p>
-              <Link href="/the-problem" className="btn-accent inline-flex">
-                Understand the Crisis <ArrowRight size={18} />
+              <Link href="/get-involved" className="btn-accent inline-flex">
+                Support Our Mission <ArrowRight size={18} />
               </Link>
             </Section>
 
@@ -95,10 +167,10 @@ export default function AboutPage({ teamMembers }: AboutPageProps) {
         </div>
       </section>
 
-      {/* ─── Team Members ─── */}
+      {/* ─── Board Members ─── */}
       <TeamSection members={teamMembers} />
       {/* ─── Proven Impact ─── */}
-      <ProvenImpactSection />
+      <ProvenImpactSection stats={stats} />
 
       {/* ─── Donation ─── */}
       <DonationSection />

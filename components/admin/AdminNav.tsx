@@ -76,12 +76,12 @@ export default function AdminNav({ onClose }: AdminNavProps) {
             className={`group flex items-center gap-3.5 px-4 py-3.5 rounded-2xl transition-all duration-200 ${
               active
                 ? 'bg-[#00ABBE] text-white'
-                : 'text-white/60 hover:bg-white/8 hover:text-white'
+                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             }`}
           >
             <div
               className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
-                active ? 'bg-white/20' : 'bg-white/8 group-hover:bg-white/12'
+                active ? 'bg-white/20' : 'bg-slate-100 group-hover:bg-slate-200'
               }`}
             >
               <Icon size={18} />
@@ -90,7 +90,7 @@ export default function AdminNav({ onClose }: AdminNavProps) {
               <p className="text-sm font-semibold leading-tight">{label}</p>
               <p
                 className={`text-[11px] mt-0.5 leading-tight truncate ${
-                  active ? 'text-white/70' : 'text-white/35'
+                  active ? 'text-white/70' : 'text-slate-500'
                 }`}
               >
                 {desc}
@@ -104,12 +104,12 @@ export default function AdminNav({ onClose }: AdminNavProps) {
       <div className="flex-1 min-h-8" />
 
       {/* Footer links */}
-      <div className="border-t border-white/10 pt-4 mt-2 flex flex-col gap-1">
+      <div className="border-t border-slate-200 pt-4 mt-2 flex flex-col gap-1">
         <Link
           href="/"
           target="_blank"
           onClick={onClose}
-          className="flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-white/8 hover:text-white/70 transition-all text-sm"
+          className="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-all text-sm"
         >
           <ExternalLink size={16} className="flex-shrink-0" />
           View Website

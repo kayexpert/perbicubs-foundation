@@ -13,8 +13,6 @@ import {
   CheckCircle2,
   Heart,
   Users,
-  BookOpen,
-  Star,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
@@ -23,9 +21,9 @@ import {
 type Currency = 'USD' | 'GHS';
 type PayMethod = 'card' | 'bank' | 'mobile';
 
-const USD_AMOUNTS = [20, 35, 50, 100, 200, 500];
-const GHS_AMOUNTS = [200, 350, 500, 1000, 2000, 5000];
-const GHS_RATE = 15.5; // approx — update when Stripe FX is live
+const USD_AMOUNTS = [35, 100, 500];
+const GHS_RATE = 15.5; // Current exchange rate - update as needed
+const GHS_AMOUNTS = USD_AMOUNTS.map(amt => Math.round(amt * GHS_RATE));
 
 const PAYMENT_METHODS: { id: PayMethod; label: string; sub: string; icon: typeof CreditCard }[] = [
   { id: 'card', label: 'Credit / Debit Card', sub: 'Visa, Mastercard, Amex', icon: CreditCard },
@@ -73,7 +71,7 @@ export default function DonatePage() {
   const [dedicateName, setDedicateName] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   const amounts = currency === 'USD' ? USD_AMOUNTS : GHS_AMOUNTS;
@@ -171,19 +169,6 @@ export default function DonatePage() {
             </p>
           </RevealSection>
 
-          {/* Trust badges */}
-          <RevealSection delay={0.5} className="flex flex-wrap justify-center gap-4 mt-10">
-            {[
-              { icon: Shield, text: 'Secure & Encrypted' },
-              { icon: CheckCircle2, text: 'UNESCO Recognized' },
-              { icon: Star, text: 'Mastercard Foundation Partner' },
-            ].map(({ icon: Icon, text }, i) => (
-              <div key={i} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-white/80 text-sm font-medium">
-                <Icon size={14} className="text-[#00ABBE]" />
-                {text}
-              </div>
-            ))}
-          </RevealSection>
         </div>
       </section>
 
@@ -447,57 +432,39 @@ export default function DonatePage() {
               <div className="space-y-6">
                 {/* Impact Calculator */}
                 <RevealSection delay={0.1}>
-                  <div className="bg-[#00ABBE] rounded-3xl p-8 text-white shadow-xl shadow-[#00ABBE]/20">
+                  <div className="bg-[#00ABBE] rounded-3xl p-8 text-white">
                     <h3 className="text-lg font-bold mb-1 flex items-center gap-2">
                       Your Impact
                     </h3>
                     <p className="text-white/80 text-sm mb-6">See what your donation accomplishes</p>
 
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={`${displayAmt}-${currency}`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="space-y-5"
-                      >
-                        {impact.children > 0 ? (
-                          <div className="border border-white/20 rounded-2xl p-5 bg-white/10">
-                            <div className="text-4xl font-black text-white mb-1">
-                              {impact.children.toLocaleString()}
-                            </div>
-                            <div className="flex items-center gap-2 text-white/70 text-sm">
-                              <Users size={14} />
-                              {impact.children === 1 ? 'child receives' : 'children receive'} a full year of digital literacy access
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="border border-white/10 rounded-2xl p-5 bg-white/5">
-                            <div className="text-white/40 text-sm">Enter an amount to see your impact</div>
-                          </div>
-                        )}
+                    <div className="space-y-4">
+                      <div className="border border-white/20 rounded-2xl p-5 bg-white/10">
+                        <div className="text-4xl font-black text-white mb-1">
+                          {symbol}{displayAmt > 0 ? displayAmt.toLocaleString() : '—'}
+                        </div>
+                        <div className="text-white/70 text-sm">
+                          Your donation amount
+                        </div>
+                      </div>
 
-                        {impact.books > 0 && (
-                          <div className="border border-white/10 rounded-2xl p-5 bg-white/5">
-                            <div className="text-4xl font-black  mb-1">
-                              {impact.books.toLocaleString()}+
-                            </div>
-                            <div className="flex items-center gap-2 text-white/70 text-sm">
-                              <BookOpen size={14} />
-                              estimated books read by sponsored children
-                            </div>
-                          </div>
-                        )}
-                      </motion.div>
-                    </AnimatePresence>
+                      <div className="border border-white/20 rounded-2xl p-5 bg-white/10">
+                        <div className="text-4xl font-black text-white mb-1">
+                          {impact.children > 0 ? impact.children.toLocaleString() : '—'}
+                        </div>
+                        <div className="flex items-center gap-2 text-white/70 text-sm">
+                          <Users size={14} />
+                          {impact.children === 1 ? 'child receives' : 'children receive'} a full year of digital literacy access
+                        </div>
+                      </div>
+                    </div>
 
                     {/* Quick reference */}
                     <div className="mt-6 pt-6 border-t border-white/20 space-y-3">
                       {[
-                        { amt: symbol === '$' ? '$35' : '₵543', label: '= 1 child, full year' },
-                        { amt: symbol === '$' ? '$175' : '₵2,713', label: '= 5 children' },
-                        { amt: symbol === '$' ? '$350' : '₵5,425', label: '= 10 children' },
+                        { amt: symbol === '$' ? '$35' : `₵${Math.round(35 * GHS_RATE).toLocaleString()}`, label: '= 1 child, full year' },
+                        { amt: symbol === '$' ? '$175' : `₵${Math.round(175 * GHS_RATE).toLocaleString()}`, label: '= 5 children' },
+                        { amt: symbol === '$' ? '$350' : `₵${Math.round(350 * GHS_RATE).toLocaleString()}`, label: '= 10 children' },
                       ].map((row, i) => (
                         <div key={i} className="flex justify-between items-center text-sm">
                           <span className="text-white font-bold">{row.amt}</span>
@@ -515,52 +482,28 @@ export default function DonatePage() {
                       <DollarSign size={18} className="text-[#00ABBE]" />
                       How We Use Funds
                     </h3>
-                    {[
-                      { label: 'Program Delivery', pct: 80, color: '#00ABBE' },
-                      { label: 'Operations', pct: 12, color: '#0a1628' },
-                      { label: 'Outreach & Awareness', pct: 8, color: '#FF6B56' },
-                    ].map((item, i) => (
-                      <div key={i} className="mb-4">
-                        <div className="flex justify-between mb-1.5">
-                          <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                          <span className="text-sm font-bold" style={{ color: item.color }}>{item.pct}%</span>
-                        </div>
-                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${item.pct}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, delay: i * 0.15, ease: 'easeOut' }}
-                            className="h-full rounded-full"
-                            style={{ background: item.color }}
-                          />
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 rounded-full bg-[#00ABBE] mt-2 flex-shrink-0" />
+                        <div>
+                          <p className="font-medium text-gray-900 mb-1">Scholarships & Access</p>
+                          <p className="text-sm text-gray-500">Your donation funds scholarships that provide underprivileged children with full access to the PerbiCubs digital literacy platform, including curated books, quizzes, and reading tools.</p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </RevealSection>
-
-                {/* Trust signals */}
-                <RevealSection delay={0.2}>
-                  <div className="bg-white rounded-3xl p-6 shadow-xl shadow-black/5 border border-gray-100">
-                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Recognized & Trusted By</p>
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        { src: '/img/unesco%20logo.png', alt: 'UNESCO' },
-                        { src: '/img/Master%20card%20foundation%20.png', alt: 'Mastercard Foundation' },
-                        { src: '/img/world%20book%20capital%20logo.png', alt: 'World Book Capital' },
-                        { src: '/img/mest%20logo.png', alt: 'MEST' },
-                      ].map((logo, i) => (
-                        <div key={i} className="relative h-10">
-                          <Image
-                            src={logo.src}
-                            alt={logo.alt}
-                            fill
-                            sizes="120px"
-                            className="object-contain"
-                          />
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 rounded-full bg-[#0a1628] mt-2 flex-shrink-0" />
+                        <div>
+                          <p className="font-medium text-gray-900 mb-1">National Reading Campaigns</p>
+                          <p className="text-sm text-gray-500">Supports initiatives like the Inter-School Reading Quiz and behavioral change campaigns that promote reading culture across communities.</p>
                         </div>
-                      ))}
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 rounded-full bg-[#FF6B56] mt-2 flex-shrink-0" />
+                        <div>
+                          <p className="font-medium text-gray-900 mb-1">Research & Impact Measurement</p>
+                          <p className="text-sm text-gray-500">Enables data-driven interventions by tracking reading progress, quiz performance, and engagement trends to refine programs and inform policy decisions.</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </RevealSection>

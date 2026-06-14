@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -15,7 +15,7 @@ import TheProblemSection from './TheProblemSection';
 import ProvenImpactSection from './ProvenImpactSection';
 import DonationSection from './DonationSection';
 import GallerySection from './GallerySection';
-import SolutionApproachSection from './SolutionApproachSection';
+import OurResponseSection from './OurResponseSection';
 import BlogSection from './BlogSection';
 import ContactSection from './ContactSection';
 
@@ -119,8 +119,7 @@ interface HomePageProps {
   heroSlides?: HeroSlide[];
   stats?: ImpactStat[];
   galleryImages?: GalleryImage[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  blogPosts?: any[]; // using any for blog posts to skip complex type
+  blogPosts?: BlogPost[];
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -233,6 +232,7 @@ export default function HomePage({
       {/* ═══════════════════════════════════════════════════════
           PARTNERS MARQUEE
       ═══════════════════════════════════════════════════════ */}
+      {/* 
       <section className="bg-gray-50 py-10 border-b border-gray-100">
         <div className="overflow-hidden">
           <div className="marquee-track flex gap-20 whitespace-nowrap items-center w-max">
@@ -268,6 +268,7 @@ export default function HomePage({
           </div>
         </div>
       </section>
+      */}
 
       {/* ═══════════════════════════════════════════════════════
           THE PROBLEM
@@ -277,7 +278,7 @@ export default function HomePage({
       {/* ═══════════════════════════════════════════════════════
           OUR RESPONSE
       ═══════════════════════════════════════════════════════ */}
-      <SolutionApproachSection />
+      <OurResponseSection />
 
       {/* ═══════════════════════════════════════════════════════
           PROVEN IMPACT

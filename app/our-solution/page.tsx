@@ -11,17 +11,13 @@ export const metadata: Metadata = {
 
 export default async function OurSolution() {
   const supabase = await createClient();
-  const [{ data: galleryImages }, { data: teamMembers }] = await Promise.all([
-    supabase.from('gallery_images').select('*').order('id'),
-    supabase.from('team_members').select('*').order('ordering'),
-  ]);
+  const { data: galleryImages } = await supabase.from('gallery_images').select('*').order('id');
 
   return (
     <>
       <Navbar />
       <OurSolutionPage
         galleryImages={galleryImages ?? undefined}
-        teamMembers={teamMembers ?? undefined}
       />
       <Footer />
     </>

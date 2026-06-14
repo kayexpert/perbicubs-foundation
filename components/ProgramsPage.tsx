@@ -11,13 +11,13 @@ const programs = [
   {
     icon: BookOpen,
     number: '01',
-    title: 'Access to Literacy',
+    title: 'Expanding Equitable Access to Literacy and Learning',
     subtitle: 'Scholarships & Access',
-    desc: 'We remove the financial and geographic barriers to reading. Through the PerbiCubs literacy scholarship, children from low-income families gain full, subsidised access to a world-class digital library and structured reading platform.',
+    desc: 'Expanding access for underprivileged children and youth through targeted scholarships that remove financial barriers to quality literacy and learning tools. This includes providing funded access to the PerbiCubs digital literacy platform, ensuring children can read curated books, complete quizzes, and engage in structured reading regardless of their socio-economic background.',
     features: [
-      'Digital library of 10,000+ books',
-      'Personalised reading level placements',
-      'Offline access capabilities for remote areas',
+      'Targeted scholarships for underprivileged youth',
+      'Funded access to digital literacy tools',
+      'Curated books, quizzes, and structured reading',
     ],
     image: '/img/pg_1.jpg',
     color: 'bg-[#0a1628]',
@@ -27,34 +27,34 @@ const programs = [
   {
     icon: Globe,
     number: '02',
-    title: 'Reading Culture',
+    title: 'Promoting a National Reading Culture',
     subtitle: 'National Campaigns',
-    desc: 'Access alone isn\'t enough; reading must become an aspiration. We partner with schools and communities to run national campaigns, reading competitions, and book clubs that celebrate literacy and make reading exciting.',
+    desc: 'Driving public awareness, behavioural change campaigns, and national initiatives that position reading as enjoyable, aspirational, and essential for life success. This includes flagship initiatives such as the Inter-School Reading Quiz, which encourages schools to compete, collaborate, and build strong reading habits while making literacy visible, exciting, and socially rewarding across communities.',
     features: [
-      'National and regional reading competitions',
-      'School-based reading clubs',
-      'Community literacy festivals & events',
+      'Behavioural change and public awareness campaigns',
+      'Inter-School Reading Quiz and competitions',
+      'Making literacy visible and socially rewarding',
     ],
     image: '/img/pg_2.jpg',
     color: 'bg-[#00ABBE]', // Changed from #FF6B56 to primary color to balance
     accent: '#00ABBE',
-    stats: { value: 'UNESCO', label: 'Recognized Impact' },
+    stats: { value: 'Proven', label: 'Measurable Impact' },
   },
   {
     icon: BarChart3,
     number: '03',
-    title: 'Research & Policy',
+    title: 'Literacy Research, Evidence, and Technology',
     subtitle: 'Evidence-Based Impact',
-    desc: 'We don\'t guess; we measure. Our interventions are backed by real-time data tracking that allows us to monitor reading progress, adjust strategies, and provide irrefutable evidence to shape national educational policy.',
+    desc: 'Generating and using evidence, data, and technology to strengthen literacy interventions, improve learning outcomes, and inform policy and practice. The Foundation leverages real-time data from the PerbiCubs platform such as reading activity, quiz performance, and engagement trends to measure impact, refine programmes, and contribute to evidence-based decision-making in the reading systems.',
     features: [
-      'Real-time student progress tracking',
-      'Impact reports for schools and partners',
-      'EdTech innovation and policy recommendations',
+      'Real-time data on reading and quiz performance',
+      'Refining programmes based on engagement trends',
+      'Contributing to evidence-based policy making',
     ],
     image: '/img/pg_3.jpg',
     color: 'bg-[#0a1628]', // Shifted to dark blue
     accent: '#0a1628',
-    stats: { value: '700K+', label: 'Books Read' },
+    stats: { value: 'Data', label: 'Driven Interventions' },
   },
 ];
 
@@ -115,13 +115,15 @@ export default function ProgramsPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          HOW IT WORKS (Methodology) - MOVED TO TOP
+          OVERVIEW SECTION
       ═══════════════════════════════════════════════════════ */}
       <section className="py-20 bg-gray-50 border-b border-gray-200">
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
           <RevealSection className="text-center mb-16">
-            <span className="section-tag" >Methodology</span>
-            <h2 className="text-3xl font-bold text-gray-900">How The Platform Works</h2>
+            <span className="section-tag" >Overview</span>
+            <h2 className="text-3xl font-bold text-gray-900 max-w-3xl mx-auto leading-tight">
+              The Foundation focuses on scalable, measurable literacy interventions that remove barriers and create opportunity.
+            </h2>
           </RevealSection>
 
           <div className="grid md:grid-cols-3 gap-10 relative">
@@ -251,23 +253,23 @@ export default function ProgramsPage() {
                 Flagship Initiative
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628] mb-6 leading-tight">
-                The PerbiCubs <br className="hidden sm:block" />
-                <span className="text-[#00ABBE]">Literacy Scholarship</span>
+                <span className="text-[#00ABBE]">PerbiCubs Literacy</span> <br className="hidden sm:block" />
+                Scholarship Programme
               </h2>
               <p className="text-gray-500 text-lg leading-[1.8] mb-10 max-w-[480px]">
-                Our flagship programme provides fully subsidised access to the entire PerbiCubs digital literacy ecosystem for children who need it most.
+                12,000 children gaining access to literacy tools that can change their future.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 mb-10 mt-2">
                 <div className="border-l-[3px] pl-5 border-[#FF6B56]">
-                  <div className="text-4xl lg:text-5xl font-bold leading-none tabular-nums text-[#0a1628] mb-2">$35</div>
-                  <div className="text-[#0a1628] font-bold mb-1">Per Child, Per Year</div>
-                  <p className="text-gray-500 text-sm font-medium mt-1 leading-snug">Provides 365 days of unlimited digital library access.</p>
+                  <div className="text-4xl lg:text-5xl font-bold leading-none tabular-nums text-[#0a1628] mb-2">12k</div>
+                  <div className="text-[#0a1628] font-bold mb-1">Children Targeted</div>
+                  <p className="text-gray-500 text-sm font-medium mt-1 leading-snug">Targeted in Year 1</p>
                 </div>
                 <div className="border-l-[3px] pl-5 border-[#FF6B56]">
-                  <div className="text-4xl lg:text-5xl font-bold leading-none tabular-nums text-[#0a1628] mb-2">12k</div>
-                  <div className="text-[#0a1628] font-bold mb-1">Year One Target</div>
-                  <p className="text-gray-500 text-sm font-medium mt-1 leading-snug">Children targeted across Sub-Saharan Africa.</p>
+                  <div className="text-4xl lg:text-5xl font-bold leading-none tabular-nums text-[#0a1628] mb-2">Full</div>
+                  <div className="text-[#0a1628] font-bold mb-1">Access</div>
+                  <p className="text-gray-500 text-sm font-medium mt-1 leading-snug">Reading, quizzes, rewards, and progress tracking</p>
                 </div>
               </div>
 

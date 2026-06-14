@@ -49,7 +49,7 @@ export default function ProvenImpactSection({ stats = defaultStats }: ProvenImpa
             transition={{ duration: 0.5 }}
             className="section-tag mb-5"
           >
-            Proven Impact
+            Evidence. Scale. Impact.
           </motion.span>
 
           <motion.h2
@@ -58,18 +58,33 @@ export default function ProvenImpactSection({ stats = defaultStats }: ProvenImpa
             transition={{ delay: 0.12, duration: 0.65 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628] leading-tight mb-5"
           >
-            Numbers That{' '}
-            <span className="text-[#00ABBE]">Tell Our Story</span>
+            A Track Record of {' '}
+            <span className="text-[#00ABBE]">Literacy Impact</span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.22, duration: 0.6 }}
-            className="text-gray-500 leading-[1.8] mb-10 max-w-[480px]"
+            className="text-gray-500 leading-[1.8] mb-5 max-w-[480px]"
           >
-            Every number represents a child who can now read, a family empowered, and a
-            community transformed. Our model is proven, scalable, and built for Africa.
+            Our foundation builds on the proven success of PerbiCubs, a literacy 
+            model that has demonstrated measurable impact across schools and communities. 
+            Through the platform, children have read over 1,000,000 books, while initiatives such as 
+            the Inter-School Reading Quiz have engaged thousands of students and reached millions of viewers. 
+            This work has also earned recognition through partnerships with UNESCO Accra World Book Capital, 
+            the Mastercard Foundation EdTech Fellowship, and the International Centre for EdTech Impact.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.26, duration: 0.6 }}
+            className="text-gray-500 leading-[1.8] mb-8 max-w-[480px]"
+          >
+            These achievements demonstrate that when children are given the right
+            tools, support, and motivation, meaningful improvements in literacy
+            outcomes are possible.
           </motion.p>
 
           {/* Stats */}
