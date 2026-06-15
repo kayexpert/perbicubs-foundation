@@ -80,10 +80,15 @@ export default function TeamManager({ initialMembers }: TeamManagerProps) {
   const handleDelete = (id: number) => {
     setDeleteId(id);
     startTransition(async () => {
-      await deleteTeamMember(id);
-      setMembers((prev) => prev.filter((m) => m.id !== id));
-      setDeleteId(null);
-      router.refresh();
+      const { error: err } = await deleteTeamMember(id);
+      if (!err) {
+        setMembers((prev) => prev.filter((m) => m.id !== id));
+        setDeleteId(null);
+        router.refresh();
+      } else {
+        setDeleteId(null);
+        setError(err);
+      }
     });
   };
 
