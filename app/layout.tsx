@@ -38,7 +38,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "NGO",
+              "name": "PerbiCubs Foundation",
+              "url": "https://perbicubsfoundation.org",
+              "logo": "https://perbicubsfoundation.org/icon.png",
+              "sameAs": [
+                "https://www.facebook.com/perbicubs",
+                "https://www.instagram.com/perbicubs"
+              ],
+              "description": "PerbiCubs Foundation is a non-profit organization dedicated to closing the literacy gap in Sub-Saharan Africa.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Accra",
+                "addressCountry": "GH"
+              }
+            })
+          }}
+        />
       </head>
       <body>
         <Preloader />
