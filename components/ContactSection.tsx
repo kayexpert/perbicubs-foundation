@@ -97,7 +97,7 @@ export default function ContactSection() {
 
             <div className="space-y-5 mt-auto">
               {[
-                { icon: MapPin, text: 'Third, st 11 3rd Avenue, Westlands Blvd, Accra' },
+                { icon: MapPin, text: 'No.11 3rd Avenue, Westlands Blvd, Accra' },
                 { icon: Phone, text: '+233 55 279 9525' },
                 { icon: Mail, text: 'info@perbicubsfoundation.org' },
               ].map(({ icon: Icon, text }, i) => (

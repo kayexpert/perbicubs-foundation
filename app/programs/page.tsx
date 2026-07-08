@@ -4,8 +4,8 @@ import ProgramsPage from "@/components/ProgramsPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Programs | PerbiCubs Foundation",
-  description: "Explore PerbiCubs Foundation's literacy programs: Access to Literacy scholarships, Reading Culture campaigns, and Research & Technology initiatives.",
+  title: "Digital Reading & Literacy Programs",
+  description: "Explore PerbiCubs Foundation's education NGO initiatives: Scholarships for underprivileged children, Reading Culture campaigns, and Digital Reading platforms.",
 };
 
 export default function Programs() {

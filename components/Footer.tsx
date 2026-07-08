@@ -19,7 +19,7 @@ const footerLinks = {
   ],
   contact: [
     { href: 'mailto:info@perbicubsfoundation.org', label: 'info@perbicubsfoundation.org', icon: Mail },
-    { href: 'tel:+233XXXXXXXXXX', label: '+233 XXX XXX XXX', icon: Phone },
+    { href: 'tel:+233XXXXXXXXXX', label: '+233 55 279 9525', icon: Phone },
     { href: '#', label: 'Sub-Saharan Africa', icon: MapPin },
   ],
 };
@@ -29,10 +29,10 @@ type ContactLink = { href: string; label: string; icon: typeof Mail };
 // Real social URLs. Replace these with the foundation's verified accounts.
 const socialLinks: { label: string; href: string; icon: string }[] = [
   // Update with the real Facebook page URL when available.
-  { label: 'Facebook',  href: '#', icon: 'f' },
-  { label: 'X',         href: '#', icon: '𝕏' },
+  { label: 'Facebook', href: '#', icon: 'f' },
+  { label: 'X', href: '#', icon: '𝕏' },
   { label: 'Instagram', href: '#', icon: '📷' },
-  { label: 'LinkedIn',  href: '#', icon: 'in' },
+  { label: 'LinkedIn', href: '#', icon: 'in' },
 ];
 
 export default function Footer() {
@@ -44,15 +44,15 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="block mb-2 relative w-[280px] h-[70px]">
-              <Image 
-                src="/img/logo_dark.png" 
-                alt="PerbiCubs Foundation" 
-                fill 
-                className="object-contain" 
+              <Image
+                src="/img/logo_dark.png"
+                alt="PerbiCubs Foundation"
+                fill
+                className="object-contain"
               />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
-              Dedicated to closing the literacy gap in Sub-Saharan Africa through scalable, measurable interventions that give every child the power to read.
+              Every family flourishing through equitable access to literacy and learning opportunities.
             </p>
           </div>
 

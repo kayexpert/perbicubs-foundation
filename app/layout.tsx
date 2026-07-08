@@ -1,17 +1,33 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Preloader from "@/components/Preloader";
 import BackToTopButton from "@/components/BackToTopButton";
 
 export const metadata: Metadata = {
-  title: "PerbiCubs Foundation | Ending Learning Poverty Through Literacy",
+  title: {
+    template: "%s | PerbiCubs Foundation",
+    default: "PerbiCubs Foundation | Ending Learning Poverty Through Literacy",
+  },
   description: "PerbiCubs Foundation is a non-profit organization dedicated to closing the literacy gap in Sub-Saharan Africa. We partner with schools, families, and communities to give every child access to reading, learning, and opportunity.",
-  keywords: "literacy, education, Africa, children, reading, PerbiCubs, foundation, Sub-Saharan Africa",
+  icons: {
+    icon: "/img/fav_icon.png",
+  },
+  keywords: [
+    "literacy", "education", "Africa", "children", "reading", "PerbiCubs", "foundation", "Sub-Saharan Africa",
+    "Child literacy foundation", "Education NGO Africa", "Digital reading for children", "EdTech in Africa"
+  ],
   openGraph: {
     title: "PerbiCubs Foundation | Ending Learning Poverty Through Literacy",
     description: "Every child deserves the ability to read, understand, and thrive. We are building a future where no child is left behind.",
     type: "website",
+    siteName: "PerbiCubs Foundation",
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@perbicubsfoundation",
+    creator: "@perbicubsfoundation",
+  }
 };
 
 export default function RootLayout({
@@ -22,17 +38,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+
       </head>
       <body>
         <Preloader />
         {children}
         <BackToTopButton />
+
+        {/* Google Analytics - Placeholder, replace G-XXXXXXXXXX with your actual Measurement ID */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XXXXXXXXXX');
+          `}
+        </Script>
       </body>
     </html>
   );

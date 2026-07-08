@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
             <div className="w-16 h-16 rounded-2xl bg-[#00ABBE]/10 border border-[#00ABBE]/20 flex items-center justify-center mb-5">
               <div className="relative w-10 h-10">
                 <Image
-                  src="/img/logo_dark.png"
+                  src="/img/logo_light.png"
                   alt="PerbiCubs"
                   fill
                   className="object-contain"

@@ -229,46 +229,7 @@ export default function HomePage({
         </Swiper>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════
-          PARTNERS MARQUEE
-      ═══════════════════════════════════════════════════════ */}
-      {/* 
-      <section className="bg-gray-50 py-10 border-b border-gray-100">
-        <div className="overflow-hidden">
-          <div className="marquee-track flex gap-20 whitespace-nowrap items-center w-max">
-            {[1, 2, 3].map((set) => (
-              <div key={set} className="flex gap-16 items-center">
-                <div className="flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                  <div className="relative w-32 h-14">
-                    <Image src="/img/unesco%20logo.png" alt="UNESCO" fill sizes="128px" className="object-contain" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                  <div className="relative w-32 h-14">
-                    <Image src="/img/world%20book%20capital%20logo.png" alt="World Book Capital" fill sizes="128px" className="object-contain" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                  <div className="relative w-36 h-14">
-                    <Image src="/img/Master%20card%20foundation%20.png" alt="Mastercard Foundation" fill sizes="144px" className="object-contain" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                  <div className="relative w-28 h-14">
-                    <Image src="/img/mest%20logo.png" alt="MEST" fill sizes="112px" className="object-contain" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-                  <div className="relative w-32 h-14">
-                    <Image src="/img/perbicubs%20logo.png" alt="PerbiCubs Foundation" fill sizes="128px" className="object-contain" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      */}
+
 
       {/* ═══════════════════════════════════════════════════════
           THE PROBLEM

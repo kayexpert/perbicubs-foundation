@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 import CountUp from 'react-countup';
+import { CheckCircle2 } from 'lucide-react';
 import type { ImpactStat } from './HomePage';
 import { defaultStats } from './HomePage';
 
@@ -27,7 +28,7 @@ export default function ProvenImpactSection({ stats = defaultStats }: ProvenImpa
     <section ref={ref} className="relative overflow-hidden bg-white">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <Image src="/img/impact.jpg" alt="" fill className="object-cover object-right" sizes="100vw" quality={80} />
+        <Image src="/img/impact.jpg" alt="Literacy programs in Ghana improving student reading skills" fill className="object-cover object-right" sizes="100vw" quality={80} />
         {/* Gradient: solid white left → transparent right */}
         <div
           className="absolute inset-0"
@@ -62,19 +63,30 @@ export default function ProvenImpactSection({ stats = defaultStats }: ProvenImpa
             <span className="text-[#00ABBE]">Literacy Impact</span>
           </motion.h2>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.22, duration: 0.6 }}
-            className="text-gray-500 leading-[1.8] mb-5 max-w-[480px]"
+            className="text-gray-500 leading-[1.8] mb-5 max-w-[500px]"
           >
-            Our foundation builds on the proven success of PerbiCubs, a literacy 
-            model that has demonstrated measurable impact across schools and communities. 
-            Through the platform, children have read over 1,000,000 books, while initiatives such as 
-            the Inter-School Reading Quiz have engaged thousands of students and reached millions of viewers. 
-            This work has also earned recognition through partnerships with UNESCO Accra World Book Capital, 
-            the Mastercard Foundation EdTech Fellowship, and the International Centre for EdTech Impact.
-          </motion.p>
+            Our foundation builds on the proven success of PerbiCubs, a literacy
+            model that has demonstrated measurable impact across schools and communities.
+
+            <ul className="mt-6 space-y-4 text-gray-600 bg-[#00ABBE]/8 p-6 rounded-2xl border border-[#00ABBE]/15 shadow-sm">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#00ABBE] mt-0.5 flex-shrink-0" />
+                <span><strong className="text-[#0a1628]">1,000,000+ books read</strong> by children on the Perbicubs platform.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#FF6B56] mt-0.5 flex-shrink-0" />
+                <span><strong className="text-[#0a1628]">Millions of viewers</strong> reached through the Inter-School Reading Quiz.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#00ABBE] mt-0.5 flex-shrink-0" />
+                <span><strong className="text-[#0a1628]">Global recognition</strong> from <strong className="text-[#0a1628]">UNESCO</strong> and the <strong className="text-[#0a1628]">Mastercard Foundation</strong>.</span>
+              </li>
+            </ul>
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 18 }}

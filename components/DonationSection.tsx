@@ -2,20 +2,12 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { DollarSign, ArrowRight } from 'lucide-react';
 
-const amounts = [20, 35, 50, 100, 200];
-const paymentMethods = ['Online Transfer', 'Offline Donation', 'Credit Card'];
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Smartphone, CreditCard } from 'lucide-react';
 
 export default function DonationSection() {
-  const [selected, setSelected] = useState(35);
-  const [isCustom, setIsCustom] = useState(false);
-  const [custom, setCustom] = useState('');
-  const [payMethod, setPayMethod] = useState('Online Transfer');
-
-
+  const [activeTab, setActiveTab] = useState<'local' | 'international'>('local');
 
   return (
     <section className="relative pt-16 lg:pt-24">
@@ -29,7 +21,7 @@ export default function DonationSection() {
           className="absolute inset-0"
           style={{ filter: 'grayscale(1)', opacity: 0.2 }}
         >
-          <Image src="/img/impact.jpg" alt="" fill className="object-cover object-center" sizes="100vw" quality={75} />
+          <Image src="/img/impact.jpg" alt="Literacy programs in Ghana improving student reading skills" fill className="object-cover object-center" sizes="100vw" quality={75} />
         </div>
         <div className="absolute inset-0 bg-[#0a1628]/65" />
       </div>
@@ -59,13 +51,13 @@ export default function DonationSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7 }}
-          className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] rounded-2xl overflow-hidden shadow-2xl shadow-black/30"
+          className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] rounded-2xl overflow-hidden shadow-2xl shadow-black/30 bg-white"
         >
           {/* Left col — image */}
-          <div className="relative min-h-[260px] lg:min-h-0">
+          <div className="relative min-h-[260px] lg:min-h-[500px]">
             <Image
               src="/img/donation.jpg"
-              alt="Children receiving literacy support"
+              alt="Ghanaian students using tablets provided by our education NGO sponsorship program"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 40vw"
@@ -74,81 +66,95 @@ export default function DonationSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/40 via-transparent to-transparent" />
           </div>
 
-          {/* Right col — form (white) */}
-          <div className="bg-white p-7 sm:p-9">
-            <h3 className="text-base font-medium text-gray-500 leading-relaxed mb-5">Your support can give a child access to reading, learning, and opportunity.</h3>
-
-            {/* Dollar input */}
-            <p className="text-sm font-semibold text-gray-600 mb-2">Your Donation:</p>
-            <div className="flex items-center gap-3 border-2 border-gray-200 focus-within:border-[#00ABBE] rounded-full px-4 py-2.5 mb-4 transition-colors">
-              <div className="w-8 h-8 rounded-full bg-[#0a1628] flex items-center justify-center flex-shrink-0">
-                <DollarSign className="w-4 h-4 text-white" />
-              </div>
-              <input
-                type="number"
-                value={isCustom ? custom : selected}
-                onChange={(e) => { setIsCustom(true); setCustom(e.target.value); }}
-                className="flex-1 text-lg font-bold text-[#0a1628] outline-none bg-transparent"
-                min={1}
-              />
+          {/* Right col — Interactive Tabs */}
+          <div className="p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+            
+            <div className="mb-8">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#0a1628] mb-3">Choose How to Donate</h3>
+              <p className="text-gray-500 text-sm leading-relaxed max-w-lg">
+                Your support gives a child access to reading, learning, and opportunity. Choose your preferred secure donation method.
+              </p>
             </div>
 
-            {/* Amount pills */}
-            <div className="flex flex-wrap gap-2 mb-5">
-              {amounts.map((amt) => (
-                <button
-                  key={amt}
-                  onClick={() => { setSelected(amt); setIsCustom(false); }}
-                  className={`px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all ${
-                    !isCustom && selected === amt
-                      ? 'bg-[#00ABBE] text-white border-[#00ABBE] shadow-md'
-                      : 'border-gray-200 text-gray-600 hover:border-[#00ABBE] hover:text-[#00ABBE]'
-                  }`}
-                >
-                  ${amt}
-                </button>
-              ))}
-              <button
-                onClick={() => setIsCustom(true)}
-                className={`px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all ${
-                  isCustom ? 'bg-[#00ABBE] text-white border-[#00ABBE] shadow-md' : 'border-gray-200 text-gray-600 hover:border-[#00ABBE]'
-                }`}
+            {/* Tab Toggle */}
+            <div className="relative flex p-1.5 bg-slate-100 rounded-full mb-8 max-w-[400px]">
+              <div 
+                className="absolute inset-y-1.5 left-1.5 w-[calc(50%-6px)] bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out" 
+                style={{ transform: activeTab === 'local' ? 'translateX(0)' : 'translateX(100%)' }}
+              />
+              <button 
+                onClick={() => setActiveTab('local')}
+                className={`relative flex-1 py-3 text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-2 ${activeTab === 'local' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
               >
-                Custom
+                <Smartphone size={16} /> Local / MoMo
+              </button>
+              <button 
+                onClick={() => setActiveTab('international')}
+                className={`relative flex-1 py-3 text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-2 ${activeTab === 'international' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+              >
+                <CreditCard size={16} /> International
               </button>
             </div>
 
-            {/* Payment method */}
-            <p className="text-sm font-semibold text-gray-600 mb-2">Select Payment Method</p>
-            <div className="flex flex-wrap gap-4 mb-7">
-              {paymentMethods.map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setPayMethod(m)}
-                  className="flex items-center gap-2 cursor-pointer"
-                >
-                  <span
-                    className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                      payMethod === m ? 'border-[#00ABBE]' : 'border-gray-300'
-                    }`}
+            {/* Tab Content Container */}
+            <div className="relative min-h-[160px]">
+              <AnimatePresence mode="wait">
+                
+                {activeTab === 'local' && (
+                  <motion.div
+                    key="local"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-6"
                   >
-                    {payMethod === m && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#00ABBE]" />
-                    )}
-                  </span>
-                  <span className="text-sm text-gray-600">{m}</span>
-                </button>
-              ))}
+                    <div>
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        Make a direct impact through Mobile Money or a local bank transfer via Chango. It is quick, secure, and ensures 100% of your donation goes directly towards our mission.
+                      </p>
+                    </div>
+                    
+                    <a
+                      href="#CHANGO_LINK_HERE"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 bg-[#00ABBE] hover:bg-[#0097a6] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#00ABBE]/20"
+                    >
+                      Donate via Chango <ArrowRight size={16} />
+                    </a>
+                  </motion.div>
+                )}
+
+                {activeTab === 'international' && (
+                  <motion.div
+                    key="international"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-6"
+                  >
+                    <div>
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        Support our mission from anywhere in the world. We accept all major credit cards globally via our secure integration with Myriad Canada.
+                      </p>
+                    </div>
+
+                    <a
+                      href="#MYRIAD_LINK_HERE"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 bg-[#FF6B56] hover:bg-[#e55944] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#FF6B56]/20"
+                    >
+                      Donate via Myriad Canada <ArrowRight size={16} />
+                    </a>
+                  </motion.div>
+                )}
+
+              </AnimatePresence>
             </div>
 
-            {/* CTA */}
-            <Link
-              href="/donate"
-              className="inline-flex items-center gap-2 bg-[#00ABBE] hover:bg-[#0097a6] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300"
-            >
-              Donate Now <ArrowRight size={16} />
-            </Link>
           </div>
         </motion.div>
       </div>

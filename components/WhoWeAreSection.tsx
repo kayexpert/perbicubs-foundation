@@ -112,7 +112,7 @@ export default function WhoWeAreSection() {
                   <div className="relative h-full rounded-[30px] overflow-hidden bg-[#0a1628] shadow-2xl">
                     <Image
                       src="/img/wea_1.jpg"
-                      alt="Children in need of literacy"
+                      alt="Underprivileged children in Sub-Saharan Africa gaining access to digital literacy"
                       fill
                       className="object-cover  transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"
                       sizes="(max-width: 1024px) 100vw, 45vw"
@@ -126,7 +126,7 @@ export default function WhoWeAreSection() {
               <div className="relative rounded-[30px] overflow-hidden bg-[#0a1628] shadow-xl w-full mt-3 h-[240px] lg:flex-1 lg:h-[370px] lg:mt-[30px] lg:self-start lg:flex-shrink-0">
                 <Image
                   src="/img/wea_2.jpg"
-                  alt="Child learning"
+                  alt="African child improving reading skills using the PerbiCubs digital reading platform"
                   fill
                   className="object-cover transition-all duration-500 hover:opacity-50 hover:scale-[1.05]"
                   sizes="(max-width: 1024px) 100vw, 45vw"

@@ -12,6 +12,13 @@ import {
   type BlogPost,
 } from '@/components/HomePage';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "PerbiCubs Foundation | Education NGO & Child Literacy in Africa",
+  description: "Join our mission to end learning poverty. PerbiCubs Foundation is an education NGO in Sub-Saharan Africa providing digital reading access and scholarships for children.",
+};
+
 export default async function Home() {
   const supabase = await createClient();
 

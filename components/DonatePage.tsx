@@ -1,42 +1,27 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   DollarSign,
-  CreditCard,
-  Building2,
   Smartphone,
-  Shield,
-  CheckCircle2,
+  CreditCard,
   Heart,
-  Users,
   ChevronDown,
   ChevronUp,
+  ArrowRight,
+  Users,
+  BookOpen,
+  CheckCircle2
 } from 'lucide-react';
+import BlogSection from './BlogSection';
+import type { BlogPost } from './HomePage';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-type Currency = 'USD' | 'GHS';
-type PayMethod = 'card' | 'bank' | 'mobile';
-
-const USD_AMOUNTS = [35, 100, 500];
-const GHS_RATE = 15.5; // Current exchange rate - update as needed
-const GHS_AMOUNTS = USD_AMOUNTS.map(amt => Math.round(amt * GHS_RATE));
-
-const PAYMENT_METHODS: { id: PayMethod; label: string; sub: string; icon: typeof CreditCard }[] = [
-  { id: 'card', label: 'Credit / Debit Card', sub: 'Visa, Mastercard, Amex', icon: CreditCard },
-  { id: 'bank', label: 'Bank Transfer', sub: 'Direct bank payment', icon: Building2 },
-  { id: 'mobile', label: 'Mobile Money', sub: 'MTN, Airtel, Vodafone Cash', icon: Smartphone },
-];
-
-function calcImpact(amount: number, currency: Currency) {
-  const usd = currency === 'USD' ? amount : amount / GHS_RATE;
-  const children = Math.floor(usd / 35);
-  const books = Math.floor(usd * 20);
-  return { children: Math.max(children, 0), books: Math.max(books, 0) };
-}
+// Using placeholders for the actual links
+const MYRIAD_LINK = '#MYRIAD_LINK_HERE';
+const CHANGO_LINK = '#CHANGO_LINK_HERE';
 
 function RevealSection({
   children,
@@ -60,71 +45,13 @@ function RevealSection({
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
-export default function DonatePage() {
-  const [currency, setCurrency] = useState<Currency>('USD');
-  const [selectedAmt, setSelectedAmt] = useState(35);
-  const [isCustom, setIsCustom] = useState(false);
-  const [customAmt, setCustomAmt] = useState('');
-  const [payMethod, setPayMethod] = useState<PayMethod>('card');
-  const [dedicate, setDedicate] = useState(false);
-  const [dedicateName, setDedicateName] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [submitted] = useState(false);
+interface DonatePageProps {
+  blogPosts?: BlogPost[];
+}
+
+export default function DonatePage({ blogPosts }: DonatePageProps) {
+  const [activeTab, setActiveTab] = useState<'local' | 'international'>('local');
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
-
-  const amounts = currency === 'USD' ? USD_AMOUNTS : GHS_AMOUNTS;
-  const symbol = currency === 'USD' ? '$' : '₵';
-  const displayAmt = isCustom ? Number(customAmt) || 0 : selectedAmt;
-  const impact = calcImpact(displayAmt, currency);
-
-  // When switching currency, pick the nearest preset
-  useEffect(() => {
-    const t = setTimeout(() => {
-      const newAmounts = currency === 'USD' ? USD_AMOUNTS : GHS_AMOUNTS;
-      setSelectedAmt(newAmounts[1]); // default to ~$35 equivalent
-      setIsCustom(false);
-      setCustomAmt('');
-    }, 0);
-    return () => clearTimeout(t);
-  }, [currency]);
-
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          amount: displayAmt,
-          currency,
-          name,
-          email,
-          payMethod,
-          isDedicated: dedicate,
-          dedicateName,
-        }),
-      });
-
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error(data.error || 'Failed to initialize checkout');
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      alert('Checkout error. Please try again or check your Stripe API keys.');
-      setLoading(false);
-    }
-  };
 
   const faqs = [
     {
@@ -133,11 +60,11 @@ export default function DonatePage() {
     },
     {
       q: 'Is my donation tax-deductible?',
-      a: 'PerbiCubs Foundation is a registered NGO. Tax deductibility depends on your country\'s laws. Please consult your local tax authority or contact us for a donation receipt.',
+      a: 'PerbiCubs Foundation is a registered NGO. Tax deductibility depends on your country\'s laws. For international donations via Myriad Canada, eligible Canadian and US donors may receive tax receipts. Please consult your local tax authority.',
     },
     {
       q: 'Can I make a recurring donation?',
-      a: 'Yes — recurring monthly donations will be available once Stripe integration is live. For now, reach out to info@perbicubsfoundation.org to set up a recurring gift.',
+      a: 'Yes — recurring donations can be set up through both our local and international payment partners. Just select the recurring option on their respective checkout pages.',
     },
     {
       q: 'What is Mobile Money?',
@@ -148,7 +75,7 @@ export default function DonatePage() {
   return (
     <main>
       {/* ═══════════════════════════════════════════════════════
-          HERO
+          1. HERO
       ═══════════════════════════════════════════════════════ */}
       <section
         className="relative min-h-[55vh] flex items-center overflow-hidden"
@@ -165,358 +92,222 @@ export default function DonatePage() {
               You Can Change a Child&apos;s Story
             </h1>
             <p className="text-white/70 text-xl leading-relaxed max-w-xl mx-auto">
-              For just <span className="text-[#00ABBE] font-bold">$35 a year</span>, a child gains full access to digital literacy tools, a curated reading library, and the future they deserve.
+              Your contribution ensures a child gains full access to digital literacy tools, a curated reading library, and the bright future they deserve.
+            </p>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          2. HOW WE USE FUNDS (Redesigned)
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-16 lg:py-24 bg-white relative z-20">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
+          <RevealSection className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#0a1628] flex items-center justify-center gap-3">
+              <DollarSign size={32} className="text-[#00ABBE]" />
+              How We Use Funds
+            </h2>
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-lg">
+              Every donation is an investment in a child&apos;s future. Here is how your generosity translates into tangible impact.
             </p>
           </RevealSection>
 
+          <div className="grid md:grid-cols-3 gap-8">
+            <RevealSection delay={0.1}>
+              <div className="bg-gray-50 rounded-3xl p-8 h-full border border-gray-100 hover:shadow-lg transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[#00ABBE]/10 flex items-center justify-center mb-6">
+                  <BookOpen size={24} className="text-[#00ABBE]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Scholarships & Access</h3>
+                <p className="text-gray-500 leading-relaxed">
+                  Your donation funds scholarships that provide underprivileged children with full access to the PerbiCubs digital literacy platform, removing the financial barrier to reading.
+                </p>
+              </div>
+            </RevealSection>
+            
+            <RevealSection delay={0.2}>
+              <div className="bg-gray-50 rounded-3xl p-8 h-full border border-gray-100 hover:shadow-lg transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[#FF6B56]/10 flex items-center justify-center mb-6">
+                  <Users size={24} className="text-[#FF6B56]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">National Campaigns</h3>
+                <p className="text-gray-500 leading-relaxed">
+                  Supports large-scale initiatives like the Inter-School Reading Quiz and behavioral change campaigns that actively promote reading culture across communities.
+                </p>
+              </div>
+            </RevealSection>
+
+            <RevealSection delay={0.3}>
+              <div className="bg-gray-50 rounded-3xl p-8 h-full border border-gray-100 hover:shadow-lg transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[#0a1628]/10 flex items-center justify-center mb-6">
+                  <Heart size={24} className="text-[#0a1628]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Impact Measurement</h3>
+                <p className="text-gray-500 leading-relaxed">
+                  Enables data-driven interventions by tracking reading progress, quiz performance, and engagement trends to continuously refine our programs.
+                </p>
+              </div>
+            </RevealSection>
+          </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          DONATION FORM + IMPACT PANEL
+          3. DONATION SECTION (Original Design adapted)
       ═══════════════════════════════════════════════════════ */}
-      <section className="py-16 lg:py-24 bg-gray-50">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
+      <section className="relative pt-16 lg:pt-24 pb-16 lg:pb-24 bg-gray-50">
+        <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6">
+          <RevealSection className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0a1628] leading-tight">
+              Start Sponsoring A Child
+            </h2>
+          </RevealSection>
 
-          {submitted ? (
-            /* ── Success State ── */
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="max-w-lg mx-auto text-center py-20"
-            >
-              <div className="w-24 h-24 bg-[#00ABBE]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Heart size={42} className="text-[#00ABBE]" fill="#00ABBE" />
+          <RevealSection delay={0.1}>
+            <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] rounded-2xl overflow-hidden shadow-2xl shadow-black/10 bg-white">
+              {/* Left col — image */}
+              <div className="relative min-h-[300px] lg:min-h-full">
+                <Image
+                  src="/img/donation.jpg"
+                  alt="Ghanaian students using tablets"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/40 via-transparent to-transparent" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
-              <p className="text-gray-500 text-lg leading-relaxed mb-8">
-                Your donation is being processed. You&apos;ll receive a confirmation email shortly. Together, we&apos;re changing lives.
-              </p>
-              <Link href="/" className="btn-primary">
-                Return Home
-              </Link>
-            </motion.div>
-          ) : (
-            <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 items-start">
 
-              {/* ── Left: Donation Form ── */}
-              <RevealSection>
-                <form
-                  onSubmit={handleSubmit}
-                  className="bg-white rounded-3xl shadow-xl shadow-black/5 border border-gray-100 overflow-hidden"
-                >
-                  {/* Form header */}
-                  <div className="bg-[#00ABBE] px-8 py-6">
-                    <h2 className="text-2xl font-bold text-white mb-1">Complete Your Donation</h2>
-                    <p className="text-white/80 text-sm">All transactions are secure and encrypted.</p>
-                  </div>
+              {/* Right col — Interactive Tabs & Impact */}
+              <div className="p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+                
+                <div className="mb-8">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[#0a1628] mb-3">Choose How to Donate</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-lg">
+                    Your support gives a child access to reading, learning, and opportunity. Choose your preferred secure donation method.
+                  </p>
+                </div>
 
-                  <div className="p-8 space-y-8">
-                    {/* ── Currency Toggle ── */}
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">
-                        Currency
-                      </label>
-                      <div className="inline-flex bg-gray-100 p-1 rounded-full">
-                        {(['USD', 'GHS'] as Currency[]).map((c) => (
-                          <button
-                            key={c}
-                            type="button"
-                            onClick={() => setCurrency(c)}
-                            className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
-                              currency === c
-                                ? 'bg-[#00ABBE] text-white shadow-md'
-                                : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                          >
-                            {c === 'USD' ? '🇺🇸 USD ($)' : '🇬🇭 GHS (₵)'}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                {/* Tab Toggle */}
+                <div className="relative flex p-1.5 bg-slate-100 rounded-full mb-8 w-full">
+                  <div 
+                    className="absolute inset-y-1.5 left-1.5 w-[calc(50%-6px)] bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out" 
+                    style={{ transform: activeTab === 'local' ? 'translateX(0)' : 'translateX(100%)' }}
+                  />
+                  <button 
+                    onClick={() => setActiveTab('local')}
+                    className={`relative flex-1 py-3 text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-2 ${activeTab === 'local' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    <Smartphone size={16} /> Local / MoMo
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('international')}
+                    className={`relative flex-1 py-3 text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-2 ${activeTab === 'international' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    <CreditCard size={16} /> International
+                  </button>
+                </div>
 
-                    {/* ── Amount Selector ── */}
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">
-                        Donation Amount
-                      </label>
-                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-4">
-                        {amounts.map((amt) => (
-                          <button
-                            key={amt}
-                            type="button"
-                            onClick={() => { setSelectedAmt(amt); setIsCustom(false); }}
-                            className={`py-3 rounded-2xl text-sm font-bold border-2 transition-all duration-200 ${
-                              !isCustom && selectedAmt === amt
-                                ? 'bg-[#00ABBE] text-white border-[#00ABBE] shadow-lg'
-                                : 'border-gray-200 text-gray-700 hover:border-[#00ABBE] hover:text-[#00ABBE] bg-white'
-                            }`}
-                          >
-                            {symbol}{amt.toLocaleString()}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Custom amount */}
-                      <div
-                        className={`flex items-center gap-3 border-2 rounded-2xl px-4 py-3 transition-all ${
-                          isCustom ? 'border-[#00ABBE] bg-[#00ABBE]/5' : 'border-gray-200 bg-gray-50'
-                        }`}
-                        onClick={() => setIsCustom(true)}
+                {/* Tab Content Container */}
+                <div className="relative min-h-[160px] mb-10">
+                  <AnimatePresence mode="wait">
+                    
+                    {activeTab === 'local' && (
+                      <motion.div
+                        key="local"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-6"
                       >
-                        <span className="text-gray-400 font-bold text-lg">{symbol}</span>
-                        <input
-                          type="number"
-                          placeholder="Enter custom amount"
-                          value={isCustom ? customAmt : ''}
-                          onChange={(e) => { setIsCustom(true); setCustomAmt(e.target.value); }}
-                          className="flex-1 text-base font-bold text-gray-900 outline-none bg-transparent placeholder-gray-400"
-                          min={1}
-                        />
-                        {isCustom && (
-                          <span className="text-[#00ABBE] text-xs font-bold uppercase">Custom</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* ── Payment Method ── */}
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">
-                        Payment Method
-                      </label>
-                      <div className="grid gap-3">
-                        {PAYMENT_METHODS.map((m) => (
-                          <button
-                            key={m.id}
-                            type="button"
-                            onClick={() => setPayMethod(m.id)}
-                            className={`flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
-                              payMethod === m.id
-                                ? 'border-[#00ABBE] bg-[#00ABBE]/5'
-                                : 'border-gray-200 bg-white hover:border-gray-300'
-                            }`}
+                        <div>
+                          <p className="text-gray-600 leading-relaxed mb-4">
+                            Make a direct impact through Mobile Money or a local bank transfer via Chango. It is quick, secure, and ensures 100% of your donation goes directly towards our mission.
+                          </p>
+                        </div>
+                        
+                        <div className="flex justify-end">
+                          <a
+                            href={CHANGO_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 bg-[#00ABBE] hover:bg-[#0097a6] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#00ABBE]/20"
                           >
-                            <div
-                              className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                                payMethod === m.id ? 'bg-[#00ABBE]' : 'bg-gray-100'
-                              }`}
-                            >
-                              <m.icon
-                                size={18}
-                                className={payMethod === m.id ? 'text-white' : 'text-gray-500'}
-                              />
-                            </div>
-                            <div className="flex-1">
-                              <div className={`font-bold text-sm ${payMethod === m.id ? 'text-gray-900' : 'text-gray-700'}`}>
-                                {m.label}
-                              </div>
-                              <div className="text-gray-400 text-xs">{m.sub}</div>
-                            </div>
-                            {m.id === 'mobile' && (
-                              <span className="text-[10px] bg-[#FF6B56] text-white font-bold px-2 py-0.5 rounded-full uppercase">Ghana</span>
-                            )}
-                            <div
-                              className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                                payMethod === m.id ? 'border-[#00ABBE]' : 'border-gray-300'
-                              }`}
-                            >
-                              {payMethod === m.id && (
-                                <div className="w-2.5 h-2.5 rounded-full bg-[#00ABBE]" />
-                              )}
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-
-                      {payMethod === 'mobile' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          className="mt-3 bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm text-amber-800"
-                        >
-                          <strong>Mobile Money</strong> payment will be handled via Stripe&apos;s Ghana payment gateway. You&apos;ll receive a prompt on your phone to confirm the transaction.
-                        </motion.div>
-                      )}
-                    </div>
-
-                    {/* ── Personal Details ── */}
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">
-                        Your Details
-                      </label>
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div>
-                          <input
-                            type="text"
-                            required
-                            placeholder="Full Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#00ABBE]/40 focus:border-[#00ABBE] bg-gray-50 text-gray-900 transition-all"
-                          />
+                            Donate via Chango <ArrowRight size={16} />
+                          </a>
                         </div>
-                        <div>
-                          <input
-                            type="email"
-                            required
-                            placeholder="Email Address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#00ABBE]/40 focus:border-[#00ABBE] bg-gray-50 text-gray-900 transition-all"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      </motion.div>
+                    )}
 
-                    {/* ── Dedicate Donation ── */}
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => setDedicate(!dedicate)}
-                        className="flex items-center gap-3 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                    {activeTab === 'international' && (
+                      <motion.div
+                        key="international"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-6"
                       >
-                        <div
-                          className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                            dedicate ? 'bg-[#00ABBE] border-[#00ABBE]' : 'border-gray-300'
-                          }`}
-                        >
-                          {dedicate && <CheckCircle2 size={12} className="text-white" />}
+                        <div>
+                          <p className="text-gray-600 leading-relaxed mb-4">
+                            Support our mission from anywhere in the world. We accept all major credit cards globally via our secure integration with Myriad Canada.
+                          </p>
                         </div>
-                        Dedicate this donation in someone&apos;s name (optional)
-                      </button>
 
-                      <AnimatePresence>
-                        {dedicate && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="mt-3 overflow-hidden"
+                        <div className="flex justify-end">
+                          <a
+                            href={MYRIAD_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 bg-[#FF6B56] hover:bg-[#e55944] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#FF6B56]/20"
                           >
-                            <input
-                              type="text"
-                              placeholder="Enter the name to dedicate this to"
-                              value={dedicateName}
-                              onChange={(e) => setDedicateName(e.target.value)}
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#00ABBE]/40 focus:border-[#00ABBE] bg-gray-50 text-gray-900 transition-all"
-                            />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                            Donate via Myriad Canada <ArrowRight size={16} />
+                          </a>
+                        </div>
+                      </motion.div>
+                    )}
 
-                    {/* ── Submit ── */}
-                    <button
-                      type="submit"
-                      disabled={displayAmt < 1 || loading}
-                      className="btn-primary w-full justify-center text-base disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {loading ? (
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          <Heart size={18} />
-                          Donate {symbol}{displayAmt > 0 ? displayAmt.toLocaleString() : '—'} {currency}
-                        </>
-                      )}
-                    </button>
+                  </AnimatePresence>
+                </div>
 
-                    <p className="text-center text-gray-400 text-xs flex items-center justify-center gap-2">
-                      <Shield size={12} /> Secured by Stripe. Your payment details are never stored.
-                    </p>
-                  </div>
-                </form>
-              </RevealSection>
+                {/* Impact of Change */}
+                <div className="bg-[#0a1628]/5 rounded-2xl p-6 border border-[#0a1628]/10">
+                  <h4 className="font-bold text-[#0a1628] mb-4 flex items-center gap-2">
+                    <Heart size={18} className="text-[#FF6B56]" />
+                    The Impact of Change
+                  </h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 size={18} className="text-[#00ABBE] mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-600 text-sm">Empowering students to read at their grade level and beyond.</p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 size={18} className="text-[#00ABBE] mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-600 text-sm">Providing essential digital tools and culturally relevant books.</p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 size={18} className="text-[#00ABBE] mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-600 text-sm">Inspiring families to engage in reading together at home.</p>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* ── Right: Impact Panel ── */}
-              <div className="space-y-6">
-                {/* Impact Calculator */}
-                <RevealSection delay={0.1}>
-                  <div className="bg-[#00ABBE] rounded-3xl p-8 text-white">
-                    <h3 className="text-lg font-bold mb-1 flex items-center gap-2">
-                      Your Impact
-                    </h3>
-                    <p className="text-white/80 text-sm mb-6">See what your donation accomplishes</p>
-
-                    <div className="space-y-4">
-                      <div className="border border-white/20 rounded-2xl p-5 bg-white/10">
-                        <div className="text-4xl font-black text-white mb-1">
-                          {symbol}{displayAmt > 0 ? displayAmt.toLocaleString() : '—'}
-                        </div>
-                        <div className="text-white/70 text-sm">
-                          Your donation amount
-                        </div>
-                      </div>
-
-                      <div className="border border-white/20 rounded-2xl p-5 bg-white/10">
-                        <div className="text-4xl font-black text-white mb-1">
-                          {impact.children > 0 ? impact.children.toLocaleString() : '—'}
-                        </div>
-                        <div className="flex items-center gap-2 text-white/70 text-sm">
-                          <Users size={14} />
-                          {impact.children === 1 ? 'child receives' : 'children receive'} a full year of digital literacy access
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Quick reference */}
-                    <div className="mt-6 pt-6 border-t border-white/20 space-y-3">
-                      {[
-                        { amt: symbol === '$' ? '$35' : `₵${Math.round(35 * GHS_RATE).toLocaleString()}`, label: '= 1 child, full year' },
-                        { amt: symbol === '$' ? '$175' : `₵${Math.round(175 * GHS_RATE).toLocaleString()}`, label: '= 5 children' },
-                        { amt: symbol === '$' ? '$350' : `₵${Math.round(350 * GHS_RATE).toLocaleString()}`, label: '= 10 children' },
-                      ].map((row, i) => (
-                        <div key={i} className="flex justify-between items-center text-sm">
-                          <span className="text-white font-bold">{row.amt}</span>
-                          <span className="text-white/80">{row.label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </RevealSection>
-
-                {/* Fund Allocation */}
-                <RevealSection delay={0.15}>
-                  <div className="bg-white rounded-3xl p-8 shadow-xl shadow-black/5 border border-gray-100">
-                    <h3 className="font-bold text-gray-900 mb-5 flex items-center gap-2">
-                      <DollarSign size={18} className="text-[#00ABBE]" />
-                      How We Use Funds
-                    </h3>
-                    <div className="space-y-4">
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-[#00ABBE] mt-2 flex-shrink-0" />
-                        <div>
-                          <p className="font-medium text-gray-900 mb-1">Scholarships & Access</p>
-                          <p className="text-sm text-gray-500">Your donation funds scholarships that provide underprivileged children with full access to the PerbiCubs digital literacy platform, including curated books, quizzes, and reading tools.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-[#0a1628] mt-2 flex-shrink-0" />
-                        <div>
-                          <p className="font-medium text-gray-900 mb-1">National Reading Campaigns</p>
-                          <p className="text-sm text-gray-500">Supports initiatives like the Inter-School Reading Quiz and behavioral change campaigns that promote reading culture across communities.</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-[#FF6B56] mt-2 flex-shrink-0" />
-                        <div>
-                          <p className="font-medium text-gray-900 mb-1">Research & Impact Measurement</p>
-                          <p className="text-sm text-gray-500">Enables data-driven interventions by tracking reading progress, quiz performance, and engagement trends to refine programs and inform policy decisions.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </RevealSection>
               </div>
             </div>
-          )}
+          </RevealSection>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          FAQ
+          4. STORIES OF IMPACT (BlogSection)
       ═══════════════════════════════════════════════════════ */}
-      <section className="py-16 lg:py-24 bg-white">
+      <BlogSection posts={blogPosts} />
+
+      {/* ═══════════════════════════════════════════════════════
+          5. FAQ
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-16 lg:py-24 bg-white border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-6">
           <RevealSection className="text-center mb-12">
             <span className="section-tag justify-center">Common Questions</span>
@@ -526,7 +317,7 @@ export default function DonatePage() {
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <RevealSection key={i} delay={i * 0.05}>
-                <div className="border border-gray-200 rounded-2xl overflow-hidden">
+                <div className="border border-gray-200 bg-white rounded-2xl overflow-hidden hover:border-[#00ABBE]/30 transition-colors">
                   <button
                     type="button"
                     onClick={() => setFaqOpen(faqOpen === i ? null : i)}

@@ -2,16 +2,34 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from 'lucide-react';
-import { blogPosts, getPostBySlug } from '@/lib/blogData';
+import { createClient } from '@/utils/supabase/server';
 import Navbar from '@/components/Navbar';
 
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+export const dynamic = 'force-dynamic';
+
+interface BlogPost {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  body: string;
+  category: string;
+  date: string;
+  read_time: string;
+  image: string;
+  author: string;
+  author_role: string;
+  created_at: string;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const supabase = await createClient();
+  const { data: post } = await supabase
+    .from('blog_posts')
+    .select('title, excerpt')
+    .eq('slug', slug)
+    .single();
   if (!post) return {};
   return {
     title: `${post.title} — PerbiCubs Foundation`,
@@ -21,27 +39,44 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const supabase = await createClient();
+
+  // Fetch current post
+  const { data: post } = await supabase
+    .from('blog_posts')
+    .select('*')
+    .eq('slug', slug)
+    .single<BlogPost>();
+
   if (!post) notFound();
 
-  const currentIndex = blogPosts.findIndex((p) => p.slug === slug);
-  const prev = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
-  const next = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+  // Fetch adjacent posts (prev/next by created_at)
+  const { data: allPosts } = await supabase
+    .from('blog_posts')
+    .select('id, slug, title, created_at')
+    .order('created_at', { ascending: false });
 
-  const bodyParagraphs = post.body.split('\n\n');
+  const posts = allPosts ?? [];
+  const currentIndex = posts.findIndex((p) => p.slug === slug);
+  const prev = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+  const next = currentIndex > 0 ? posts[currentIndex - 1] : null;
+
+  const bodyParagraphs = (post.body ?? '').split('\n\n');
 
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
       {/* Hero image */}
       <div className="relative h-[55vh] min-h-[380px] bg-[#0a1628]">
-        <Image
-          src={post.image}
-          alt={post.title}
-          fill
-          className="object-cover opacity-75"
-          priority
-        />
+        {post.image && (
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover opacity-75"
+            priority
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/80 via-[#0a1628]/40 to-transparent" />
 
         {/* Back link */}
@@ -75,14 +110,14 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             </div>
             <div>
               <p className="font-semibold text-[#0a1628] text-sm">{post.author}</p>
-              <p className="text-xs text-gray-400">{post.authorRole}</p>
+              <p className="text-xs text-gray-400">{post.author_role}</p>
             </div>
           </div>
           <span className="flex items-center gap-1.5 text-gray-400 text-sm">
             <Calendar size={14} /> {post.date}
           </span>
           <span className="flex items-center gap-1.5 text-gray-400 text-sm">
-            <Clock size={14} /> {post.readTime}
+            <Clock size={14} /> {post.read_time}
           </span>
         </div>
 
@@ -140,10 +175,10 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             For just $35 a year you can give one child full access to digital literacy education.
           </p>
           <Link
-            href="/get-involved"
+            href="/donate"
             className="inline-flex items-center gap-2 bg-[#FF6B56] hover:bg-[#e5533e] text-white px-8 py-3.5 rounded-full font-bold transition-all duration-300"
           >
-            Sponsor a Child <ArrowRight size={16} />
+            Donate Now <ArrowRight size={16} />
           </Link>
         </div>
 

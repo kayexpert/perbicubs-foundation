@@ -5,8 +5,8 @@ import { createClient } from "@/utils/supabase/server";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us | PerbiCubs Foundation",
-  description: "Learn about PerbiCubs Foundation's mission, vision, and proven track record in transforming literacy in Sub-Saharan Africa.",
+  title: "About Us",
+  description: "Learn about PerbiCubs Foundation's mission, vision, and proven youth literacy programs. We are an African children's charity dedicated to transforming literacy in Sub-Saharan Africa.",
 };
 
 export default async function About() {

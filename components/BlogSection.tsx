@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { ArrowRight } from 'lucide-react';
-import { blogPosts as staticBlogPosts } from '@/lib/blogData';
+
 import type { BlogPost } from './HomePage';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -19,21 +19,7 @@ interface BlogSectionProps {
 }
 
 export default function BlogSection({ posts }: BlogSectionProps) {
-  // Use DB posts if provided, else fall back to static lib/blogData
-  const displayPosts: BlogPost[] = posts && posts.length > 0
-    ? posts
-    : staticBlogPosts.map((p) => ({
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt,
-        body: p.body,
-        category: p.category,
-        date: p.date,
-        read_time: p.readTime,
-        image: p.image,
-        author: p.author,
-        author_role: p.authorRole,
-      }));
+  const displayPosts: BlogPost[] = posts && posts.length > 0 ? posts : [];
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -53,6 +39,8 @@ export default function BlogSection({ posts }: BlogSectionProps) {
     setPaused(true);
     setTickKey((k) => k + 1);
   };
+
+  if (displayPosts.length === 0) return null;
 
   return (
     <section className="bg-white">

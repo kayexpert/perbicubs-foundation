@@ -167,10 +167,10 @@ export default function AboutPage({ teamMembers, stats }: AboutPageProps) {
         </div>
       </section>
 
-      {/* ─── Board Members ─── */}
-      <TeamSection members={teamMembers} />
       {/* ─── Proven Impact ─── */}
       <ProvenImpactSection stats={stats} />
+      {/* ─── Board Members ─── */}
+      <TeamSection members={teamMembers} />
 
       {/* ─── Donation ─── */}
       <DonationSection />

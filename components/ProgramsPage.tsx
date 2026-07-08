@@ -233,7 +233,7 @@ export default function ProgramsPage() {
       <section className="relative overflow-hidden bg-white py-20 lg:py-28">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <Image src="/img/flagship_ini.jpg" alt="Student using tablet" fill className="object-cover object-right" sizes="100vw" quality={80} />
+          <Image src="/img/flagship_ini.jpg" alt="Student interacting with digital reading initiatives and inter-school reading quiz" fill className="object-cover object-right" sizes="100vw" quality={80} />
           {/* Gradient: solid white left → transparent right */}
           <div
             className="absolute inset-0"
@@ -262,7 +262,7 @@ export default function ProgramsPage() {
 
               <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 mb-10 mt-2">
                 <div className="border-l-[3px] pl-5 border-[#FF6B56]">
-                  <div className="text-4xl lg:text-5xl font-bold leading-none tabular-nums text-[#0a1628] mb-2">12k</div>
+                  <div className="text-4xl lg:text-5xl font-bold leading-none tabular-nums text-[#0a1628] mb-2">12,000</div>
                   <div className="text-[#0a1628] font-bold mb-1">Children Targeted</div>
                   <p className="text-gray-500 text-sm font-medium mt-1 leading-snug">Targeted in Year 1</p>
                 </div>
