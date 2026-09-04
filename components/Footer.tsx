@@ -20,7 +20,7 @@ const footerLinks = {
   contact: [
     { href: 'mailto:info@perbicubsfoundation.org', label: 'info@perbicubsfoundation.org', icon: Mail },
     { href: 'tel:+233XXXXXXXXXX', label: '+233 55 279 9525', icon: Phone },
-    { href: '#', label: 'Sub-Saharan Africa', icon: MapPin },
+    { href: '#', label: 'House No. 11, 3rd Avenue (near the Police Station), Westland, Ga East District, Accra, Greater Accra, Ghana', icon: MapPin },
   ],
 };
 
@@ -40,7 +40,7 @@ export default function Footer() {
     <footer style={{ background: 'linear-gradient(135deg, #0a1628 0%, #112240 100%)' }}>
       {/* Main Footer */}
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-6 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_1.15fr] gap-10 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="block mb-2 relative w-[280px] h-[70px]">
@@ -51,9 +51,12 @@ export default function Footer() {
                 className="object-contain"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
-              Every family flourishing through equitable access to literacy and learning opportunities.
+             <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-md">
+              PerbiCubs Foundation Ghana LBG is a Ghanaian NGO registered under Registration No. CG078901125 and licensed as a National Non-Profit Organisation under NPO Licence No. NPOS/GR01/LN03568/26.
             </p>
+            {/* <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
+              Every family flourishing through equitable access to literacy and learning opportunities.
+            </p> */}
           </div>
 
           {/* Links */}
@@ -68,7 +71,7 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {group.links.map((link) => (
-                  <li key={link.label} className="flex items-center gap-2 whitespace-nowrap">
+                  <li key={link.label} className="flex items-start gap-2">
                     {group.hasIcons ? (
                       <>
                         {(() => {

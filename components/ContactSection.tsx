@@ -97,7 +97,7 @@ export default function ContactSection() {
 
             <div className="space-y-5 mt-auto">
               {[
-                { icon: MapPin, text: 'No.11 3rd Avenue, Westlands Blvd, Accra' },
+                { icon: MapPin, text: 'House No. 11, 3rd Avenue (near the Police Station), Westland, Ga East District, Accra, Greater Accra, Ghana' },
                 { icon: Phone, text: '+233 55 279 9525' },
                 { icon: Mail, text: 'info@perbicubsfoundation.org' },
               ].map(({ icon: Icon, text }, i) => (
@@ -107,7 +107,7 @@ export default function ContactSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.5, delay: 0.18 + i * 0.1 }}
-                  className="flex items-center gap-4"
+                  className="flex items-start gap-4"
                 >
                   <div className="w-10 h-10 rounded-full bg-[#00ABBE]/10 flex items-center justify-center flex-shrink-0">
                     <Icon size={17} className="text-[#00ABBE]" />
