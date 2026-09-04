@@ -32,7 +32,7 @@ const INVOLVE_CARDS = [
     id: 'sponsor',
     icon: HandHeart,
     title: 'Sponsor a Child',
-    desc: 'For just $35 a year, you can give a child full access to our digital literacy platform. Your donation directly funds their education.',
+    desc: 'For just $53 a year, you can give a child full access to our digital literacy platform. Your donation directly funds their education.',
     action: 'Donate Now',
     href: '/donate', // Fixed routing
     image: '/img/conceq.jpg'

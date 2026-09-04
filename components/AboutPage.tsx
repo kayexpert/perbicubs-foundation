@@ -129,6 +129,9 @@ export default function AboutPage({ teamMembers, stats }: AboutPageProps) {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-8">
                 Bridging the Gap Between Access and Literacy
               </h2>
+              <p className="text-white/80 text-lg leading-relaxed mb-6 font-semibold">
+                PerbiCubs Foundation Ghana LBG is a private company limited by guarantee registered in Ghana (Reg. No. CG078901125) and licensed as a National Non-Profit Organisation (Licence No. NPOS/GR01/LN03568/26).
+              </p>
               <p className="text-white/80 text-lg leading-relaxed mb-6">
                 While PerbiCubs provides an effective literacy solution, access
                 remains one of the greatest barriers facing millions of

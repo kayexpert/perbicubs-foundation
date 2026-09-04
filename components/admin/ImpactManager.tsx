@@ -97,7 +97,7 @@ export default function ImpactManager({ initialStats }: ImpactManagerProps) {
           <h1 className="text-2xl font-bold text-[#0a1628]">Impact Numbers</h1>
           <p className="text-gray-400 text-sm mt-1.5 max-w-lg">
             These are the key statistics that appear in the &quot;Numbers That Tell Our Story&quot; section —
-            things like &quot;700,000+ Books Read&quot; and &quot;17,000+ Children Reached.&quot;
+            things like &quot;700,000+ Quizzes Passed&quot; and &quot;17,000+ Children Reached.&quot;
           </p>
         </div>
         <div className="flex justify-end sm:justify-start flex-shrink-0">
@@ -262,7 +262,7 @@ export default function ImpactManager({ initialStats }: ImpactManagerProps) {
         <FormField label="Label" required hint="Short description of what this number represents">
           <input
             className={inputCls}
-            placeholder="Books Read"
+            placeholder="Quizzes Passed"
             value={form.label}
             onChange={(e) => set('label', e.target.value)}
           />

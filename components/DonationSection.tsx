@@ -142,7 +142,7 @@ export default function DonationSection() {
                     </div>
 
                     <a
-                      href="#MYRIAD_LINK_HERE"
+                      href="https://www.myriadcanada.org/en/project/the-reading-champions-scholarship-program-in-ghana/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 bg-[#FF6B56] hover:bg-[#e55944] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#FF6B56]/20"

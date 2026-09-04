@@ -27,7 +27,7 @@ const sections = [
     icon: BarChart3,
     color: '#FF6B56',
     bg: 'bg-[#FF6B56]/8',
-    desc: 'The statistics like "700,000+ Books Read" that demonstrate the Foundation\'s reach.',
+    desc: 'The statistics like "700,000+ Quizzes Passed" that demonstrate the Foundation\'s reach.',
     action: 'Edit Numbers',
   },
   {

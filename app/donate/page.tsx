@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sponsor a Child in Africa",
-  description: "Your donation gives an African student a full year of digital literacy access. Support our education NGO and make your literacy charity donations today.",
+  description: "Your donation gives an African student a full year of digital literacy access. Support our grant-making charity and make your literacy charity donations today.",
 };
 
 export default async function Donate() {

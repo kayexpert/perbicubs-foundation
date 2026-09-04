@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Get Involved | PerbiCubs Foundation",
-  description: "Join PerbiCubs Foundation in transforming literacy. Sponsor a child for $35/year, become a founding partner, or collaborate to scale literacy in Sub-Saharan Africa.",
+  description: "Join PerbiCubs Foundation in transforming literacy. Sponsor a child for $53/year, become a founding partner, or collaborate to scale literacy in Sub-Saharan Africa.",
 };
 
 export default function GetInvolved() {

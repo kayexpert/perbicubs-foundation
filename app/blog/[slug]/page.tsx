@@ -172,7 +172,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             Help Us End the Literacy Crisis
           </h3>
           <p className="text-white/70 mb-7 max-w-md mx-auto">
-            For just $35 a year you can give one child full access to digital literacy education.
+            For just $53 a year you can give one child full access to digital literacy education.
           </p>
           <Link
             href="/donate"

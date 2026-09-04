@@ -97,18 +97,18 @@ export const defaultHeroSlides: HeroSlide[] = [
 ];
 
 export const defaultStats: ImpactStat[] = [
-  { value: 700000, suffix: '+', prefix: '', label: 'Books Read',        accent: '#FF6B56' },
-  { value: 17000,  suffix: '+', prefix: '', label: 'Children Reached',  accent: '#FF6B56' },
-  { value: 12000,  suffix: '',  prefix: '', label: 'Year-One Target',   accent: '#FF6B56' },
-  { value: 35,     suffix: '',  prefix: '$', label: 'Per Child Per Year', accent: '#FF6B56' },
+  { value: 700000, suffix: '+', prefix: '', label: 'Books Read', accent: '#FF6B56' },
+  { value: 17000, suffix: '+', prefix: '', label: 'Children Reached', accent: '#FF6B56' },
+  { value: 12000, suffix: '', prefix: '', label: 'Year-One Target', accent: '#FF6B56' },
+  { value: 35, suffix: '', prefix: '$', label: 'Per Child Per Year', accent: '#FF6B56' },
 ];
 
 export const defaultGalleryImages: GalleryImage[] = [
-  { src: '/img/about_child_bw.png',   caption: 'Children Ready to Learn', category: 'Education' },
-  { src: '/img/about_learning.png',   caption: "A Teacher's Dedication",  category: 'Community' },
-  { src: '/img/problem_student.png',  caption: 'Literacy Opens Doors',    category: 'Impact'    },
-  { src: '/img/program_literacy.png', caption: 'Joyful Learning Moments', category: 'Impact'    },
-  { src: '/img/program_digital.png',  caption: 'Every Book, A New World', category: 'Literacy'  },
+  { src: '/img/about_child_bw.png', caption: 'Children Ready to Learn', category: 'Education' },
+  { src: '/img/about_learning.png', caption: "A Teacher's Dedication", category: 'Community' },
+  { src: '/img/problem_student.png', caption: 'Literacy Opens Doors', category: 'Impact' },
+  { src: '/img/program_literacy.png', caption: 'Joyful Learning Moments', category: 'Impact' },
+  { src: '/img/program_digital.png', caption: 'Every Book, A New World', category: 'Literacy' },
   { src: '/img/program_advocacy.png', caption: 'Building Bright Futures', category: 'Education' },
 ];
 

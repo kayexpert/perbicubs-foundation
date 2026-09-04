@@ -49,7 +49,7 @@ export default function RootLayout({
                 "https://www.facebook.com/perbicubs",
                 "https://www.instagram.com/perbicubs"
               ],
-              "description": "PerbiCubs Foundation is an education NGO dedicated to closing the literacy gap in Sub-Saharan Africa through digital reading and scholarships.",
+              "description": "PerbiCubs Foundation is a grant-making charity dedicated to closing the literacy gap in Sub-Saharan Africa through digital reading and scholarships.",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "No.11 3rd Avenue, Westlands Blvd",

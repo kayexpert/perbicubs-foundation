@@ -20,7 +20,7 @@ import BlogSection from './BlogSection';
 import type { BlogPost } from './HomePage';
 
 // Using placeholders for the actual links
-const MYRIAD_LINK = '#MYRIAD_LINK_HERE';
+const MYRIAD_LINK = 'https://www.myriadcanada.org/en/project/the-reading-champions-scholarship-program-in-ghana/';
 const CHANGO_LINK = '#CHANGO_LINK_HERE';
 
 function RevealSection({

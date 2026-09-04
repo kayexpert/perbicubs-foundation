@@ -15,8 +15,8 @@ import {
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "PerbiCubs Foundation | Education NGO & Child Literacy in Africa",
-  description: "Join our mission to end learning poverty. PerbiCubs Foundation is an education NGO in Sub-Saharan Africa providing digital reading access and scholarships for children.",
+  title: "PerbiCubs Foundation Ghana LBG | Grant-Making Charity & Child Literacy in Africa",
+  description: "Join our mission to end learning poverty. PerbiCubs Foundation Ghana LBG is a grant-making charity in Sub-Saharan Africa providing digital reading access and scholarships for children.",
 };
 
 export default async function Home() {

@@ -137,7 +137,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-500 text-sm">
-          <p>© {new Date().getFullYear()} PerbiCubs Foundation. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} PerbiCubs Foundation Ghana LBG. All rights reserved.</p>
         </div>
       </div>
     </footer>
