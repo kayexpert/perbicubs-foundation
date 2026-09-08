@@ -21,7 +21,7 @@ import type { BlogPost } from './HomePage';
 
 // Using placeholders for the actual links
 const MYRIAD_LINK = 'https://www.myriadcanada.org/en/project/the-reading-champions-scholarship-program-in-ghana/';
-const CHANGO_LINK = '#CHANGO_LINK_HERE';
+const CHANGO_LINK = 'https://donate.changoapp.com/campaign/2ad999dd-8947-4f5f-a041-621a04270270';
 
 function RevealSection({
   children,

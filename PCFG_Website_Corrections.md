@@ -39,11 +39,11 @@ Neither of these needs new design work — plain text is enough. The goal is tha
 
 The **“Donate via Chango”** button on the homepage currently points to a placeholder:
 
-```text
-Donate via Chango href="#CHANGO_LINK_HERE"
+```html
+Donate via Chango href="https://donate.changoapp.com/campaign/2ad999dd-8947-4f5f-a041-621a04270270"
 ```
 
-Needs the live Chango link before any donor clicks it.
+Needs the live Chango link before any donor clicks it. (Fixed)
 
 ## 2.2 Two figures on the homepage are out of date
 
@@ -75,7 +75,7 @@ This is the same phrasing Google’s nonprofit exclusion targets (schools, acade
 |---|---|---|---|
 | 1 | Add legal name + registration numbers to footer | — | Open |
 | 2 | Add legal name + registration numbers to About page | — | Open |
-| 3 | Fix Chango donation link | — | Open |
+| 3 | Fix Chango donation link | — | Done |
 | 4 | Change “books read” → “quizzes passed” in impact section | — | Open |
 | 5 | Update or remove “$35 donation” in blog blurb | — | Open |
 | 6 | Update meta description away from “education NGO” | — | Open |

@@ -116,7 +116,7 @@ export default function DonationSection() {
                     </div>
                     
                     <a
-                      href="#CHANGO_LINK_HERE"
+                      href="https://donate.changoapp.com/campaign/2ad999dd-8947-4f5f-a041-621a04270270"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 bg-[#00ABBE] hover:bg-[#0097a6] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#00ABBE]/20"
