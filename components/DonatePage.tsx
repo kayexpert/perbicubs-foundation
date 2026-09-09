@@ -14,14 +14,16 @@ import {
   ArrowRight,
   Users,
   BookOpen,
-  CheckCircle2
+  CheckCircle2,
+  Globe
 } from 'lucide-react';
 import BlogSection from './BlogSection';
 import type { BlogPost } from './HomePage';
 
-// Using placeholders for the actual links
+// Donation Links
 const MYRIAD_LINK = 'https://www.myriadcanada.org/en/project/the-reading-champions-scholarship-program-in-ghana/';
 const CHANGO_LINK = 'https://donate.changoapp.com/campaign/2ad999dd-8947-4f5f-a041-621a04270270';
+const EVERY_ORG_LINK = 'https://www.every.org/perbicubs-foundation';
 
 function RevealSection({
   children,
@@ -50,7 +52,7 @@ interface DonatePageProps {
 }
 
 export default function DonatePage({ blogPosts }: DonatePageProps) {
-  const [activeTab, setActiveTab] = useState<'local' | 'international'>('local');
+  const [activeTab, setActiveTab] = useState<'ghana' | 'canada' | 'usa'>('ghana');
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   const faqs = [
@@ -60,11 +62,11 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
     },
     {
       q: 'Is my donation tax-deductible?',
-      a: 'PerbiCubs Foundation is a registered NGO. Tax deductibility depends on your country\'s laws. For international donations via Myriad Canada, eligible Canadian and US donors may receive tax receipts. Please consult your local tax authority.',
+      a: 'PerbiCubs Foundation is a registered NGO. Tax deductibility depends on your country\'s laws. Donations from the USA via Every.org and from Canada via Myriad Canada are tax-deductible with official receipts issued. Please consult your local tax authority.',
     },
     {
       q: 'Can I make a recurring donation?',
-      a: 'Yes — recurring donations can be set up through both our local and international payment partners. Just select the recurring option on their respective checkout pages.',
+      a: 'Yes — recurring donations can be set up through our payment partners (Chango, Myriad Canada, and Every.org). Just select the recurring option on their respective checkout pages.',
     },
     {
       q: 'What is Mobile Money?',
@@ -189,22 +191,36 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
                 </div>
 
                 {/* Tab Toggle */}
-                <div className="relative flex p-1.5 bg-slate-100 rounded-full mb-8 w-full">
+                <div className="relative flex p-1.5 bg-slate-100 rounded-full mb-8 w-full max-w-[500px]">
                   <div 
-                    className="absolute inset-y-1.5 left-1.5 w-[calc(50%-6px)] bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out" 
-                    style={{ transform: activeTab === 'local' ? 'translateX(0)' : 'translateX(100%)' }}
+                    className="absolute inset-y-1.5 left-1.5 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out" 
+                    style={{
+                      width: 'calc((100% - 12px) / 3)',
+                      transform:
+                        activeTab === 'ghana'
+                          ? 'translateX(0%)'
+                          : activeTab === 'canada'
+                          ? 'translateX(100%)'
+                          : 'translateX(200%)',
+                    }}
                   />
                   <button 
-                    onClick={() => setActiveTab('local')}
-                    className={`relative flex-1 py-3 text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-2 ${activeTab === 'local' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                    onClick={() => setActiveTab('ghana')}
+                    className={`relative flex-1 py-3 text-xs sm:text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-1.5 sm:gap-2 ${activeTab === 'ghana' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
                   >
-                    <Smartphone size={16} /> Local / MoMo
+                    <Smartphone size={16} /> Ghana
                   </button>
                   <button 
-                    onClick={() => setActiveTab('international')}
-                    className={`relative flex-1 py-3 text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-2 ${activeTab === 'international' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                    onClick={() => setActiveTab('canada')}
+                    className={`relative flex-1 py-3 text-xs sm:text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-1.5 sm:gap-2 ${activeTab === 'canada' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
                   >
-                    <CreditCard size={16} /> International
+                    <CreditCard size={16} /> Canada
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('usa')}
+                    className={`relative flex-1 py-3 text-xs sm:text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-1.5 sm:gap-2 ${activeTab === 'usa' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    <Globe size={16} /> USA
                   </button>
                 </div>
 
@@ -212,9 +228,9 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
                 <div className="relative min-h-[160px] mb-10">
                   <AnimatePresence mode="wait">
                     
-                    {activeTab === 'local' && (
+                    {activeTab === 'ghana' && (
                       <motion.div
-                        key="local"
+                        key="ghana"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
@@ -240,9 +256,9 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
                       </motion.div>
                     )}
 
-                    {activeTab === 'international' && (
+                    {activeTab === 'canada' && (
                       <motion.div
-                        key="international"
+                        key="canada"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
@@ -251,7 +267,7 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
                       >
                         <div>
                           <p className="text-gray-600 leading-relaxed mb-4">
-                            Support our mission from anywhere in the world. We accept all major credit cards globally via our secure integration with Myriad Canada.
+                            Support our mission from Canada or internationally. We accept all major credit cards globally via our secure integration with Myriad Canada.
                           </p>
                         </div>
 
@@ -263,6 +279,34 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
                             className="inline-flex items-center justify-center gap-2 bg-[#FF6B56] hover:bg-[#e55944] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#FF6B56]/20"
                           >
                             Donate via Myriad Canada <ArrowRight size={16} />
+                          </a>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {activeTab === 'usa' && (
+                      <motion.div
+                        key="usa"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-6"
+                      >
+                        <div>
+                          <p className="text-gray-600 leading-relaxed mb-4">
+                            Support our mission from the United States. Donate securely and receive a US tax-deductible receipt through our partner Every.org.
+                          </p>
+                        </div>
+
+                        <div className="flex justify-end">
+                          <a
+                            href={EVERY_ORG_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 bg-[#0a1628] hover:bg-[#162740] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 w-full sm:w-auto shadow-lg shadow-[#0a1628]/20"
+                          >
+                            Donate via Every.org <ArrowRight size={16} />
                           </a>
                         </div>
                       </motion.div>
