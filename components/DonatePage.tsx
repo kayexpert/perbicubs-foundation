@@ -23,7 +23,7 @@ import type { BlogPost } from './HomePage';
 // Donation Links
 const MYRIAD_LINK = 'https://www.myriadcanada.org/en/project/the-reading-champions-scholarship-program-in-ghana/';
 const CHANGO_LINK = 'https://donate.changoapp.com/campaign/2ad999dd-8947-4f5f-a041-621a04270270';
-const EVERY_ORG_LINK = 'https://www.every.org/perbicubs-foundation';
+const EVERY_ORG_LINK = 'https://www.every.org/perbicubs-foundation/f/60-for-60-give-6000-children';
 
 function RevealSection({
   children,
@@ -190,37 +190,45 @@ export default function DonatePage({ blogPosts }: DonatePageProps) {
                   </p>
                 </div>
 
-                {/* Tab Toggle */}
-                <div className="relative flex p-1.5 bg-slate-100 rounded-full mb-8 w-full max-w-[500px]">
-                  <div 
-                    className="absolute inset-y-1.5 left-1.5 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out" 
-                    style={{
-                      width: 'calc((100% - 12px) / 3)',
-                      transform:
-                        activeTab === 'ghana'
-                          ? 'translateX(0%)'
-                          : activeTab === 'canada'
-                          ? 'translateX(100%)'
-                          : 'translateX(200%)',
-                    }}
-                  />
-                  <button 
+                {/* Separate Country Buttons */}
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8">
+                  <button
+                    type="button"
                     onClick={() => setActiveTab('ghana')}
-                    className={`relative flex-1 py-3 text-xs sm:text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-1.5 sm:gap-2 ${activeTab === 'ghana' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#00ABBE] text-white transition-all duration-200 cursor-pointer ${
+                      activeTab === 'ghana'
+                        ? 'opacity-100 shadow-lg shadow-[#00ABBE]/30 ring-2 ring-offset-2 ring-[#00ABBE] scale-105'
+                        : 'opacity-40 hover:opacity-75 hover:scale-[1.02]'
+                    }`}
                   >
-                    <Smartphone size={16} /> Ghana
+                    <Smartphone size={18} className="text-white" />
+                    <span>Ghana</span>
                   </button>
-                  <button 
+
+                  <button
+                    type="button"
                     onClick={() => setActiveTab('canada')}
-                    className={`relative flex-1 py-3 text-xs sm:text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-1.5 sm:gap-2 ${activeTab === 'canada' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#FF6B56] text-white transition-all duration-200 cursor-pointer ${
+                      activeTab === 'canada'
+                        ? 'opacity-100 shadow-lg shadow-[#FF6B56]/30 ring-2 ring-offset-2 ring-[#FF6B56] scale-105'
+                        : 'opacity-40 hover:opacity-75 hover:scale-[1.02]'
+                    }`}
                   >
-                    <CreditCard size={16} /> Canada
+                    <CreditCard size={18} className="text-white" />
+                    <span>Canada</span>
                   </button>
-                  <button 
+
+                  <button
+                    type="button"
                     onClick={() => setActiveTab('usa')}
-                    className={`relative flex-1 py-3 text-xs sm:text-sm font-bold rounded-full transition-colors z-10 flex items-center justify-center gap-1.5 sm:gap-2 ${activeTab === 'usa' ? 'text-[#0a1628]' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#0a1628] text-white transition-all duration-200 cursor-pointer ${
+                      activeTab === 'usa'
+                        ? 'opacity-100 shadow-lg shadow-[#0a1628]/30 ring-2 ring-offset-2 ring-[#0a1628] scale-105'
+                        : 'opacity-40 hover:opacity-75 hover:scale-[1.02]'
+                    }`}
                   >
-                    <Globe size={16} /> USA
+                    <Globe size={18} className="text-white" />
+                    <span>USA</span>
                   </button>
                 </div>
 
