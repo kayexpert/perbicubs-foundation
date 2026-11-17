@@ -14,7 +14,7 @@ const footerLinks = {
   getInvolved: [
     { href: '/donate', label: 'Sponsor a Child' },
     { href: '/get-involved', label: 'Become a Partner' },
-    { href: '/get-involved', label: 'Corporate Partnerships' },
+    { href: '/corporate-partnerships', label: 'Corporate Partnerships' },
     { href: '/get-involved', label: 'Research Collaboration' },
   ],
   contact: [
